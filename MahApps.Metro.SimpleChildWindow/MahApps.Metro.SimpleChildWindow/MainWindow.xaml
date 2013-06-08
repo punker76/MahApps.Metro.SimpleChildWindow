@@ -1,0 +1,111 @@
+﻿<controls:MetroWindow x:Class="testproject.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow"
+                      Title="MainWindow"
+                      Height="600"
+                      Width="800"
+                      WindowStartupLocation="CenterScreen">
+
+  <controls:MetroWindow.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+    </ResourceDictionary>
+  </controls:MetroWindow.Resources>
+
+  <controls:MetroWindow.GlowBrush>
+    <SolidColorBrush Color="{DynamicResource AccentColor}" />
+  </controls:MetroWindow.GlowBrush>
+
+  <Grid>
+
+    <StackPanel>
+      <Button Margin="20"
+              VerticalAlignment="Top"
+              FontSize="36"
+              FontWeight="Thin"
+              Content="Hello to my test"
+              Click="FirstTest_OnClick" />
+
+      <Button Margin="20"
+              VerticalAlignment="Top"
+              FontSize="36"
+              FontWeight="Thin"
+              Content="another testo..."
+              Click="SecTest_OnClick" />
+
+      <Button Margin="20"
+              VerticalAlignment="Top"
+              FontSize="36"
+              FontWeight="Thin"
+              Content="this one is great!"
+              Click="ThirdTest_OnClick" />
+    </StackPanel>
+
+    <simpleChildWindow:ChildWindow x:Name="child01"
+                                   Header="TestChild 1">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"></RowDefinition>
+          <RowDefinition Height="Auto"></RowDefinition>
+          <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Margin="20"
+                   FontSize="36"
+                   FontWeight="Thin"
+                   Text="der geht" />
+        <TextBox Grid.Row="1" />
+        <Button Grid.Row="2"
+                Margin="20"
+                IsDefault="True"
+                VerticalAlignment="Top"
+                FontSize="20"
+                FontWeight="Thin"
+                Content="Close Me"
+                Click="CloseFirst_OnClick" />
+      </Grid>
+    </simpleChildWindow:ChildWindow>
+
+    <simpleChildWindow:ChildWindow x:Name="child02"
+                                   ChildWindowWidth="400"
+                                   ChildWindowHeight="300"
+                                   Header="TestChild 2">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"></RowDefinition>
+          <RowDefinition Height="Auto"></RowDefinition>
+          <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Margin="20"
+                   FontSize="36"
+                   FontWeight="Thin"
+                   Text="das hier auch" />
+        <TextBox Grid.Row="1" />
+        <Button Grid.Row="2"
+                Margin="20"
+                IsDefault="True"
+                VerticalAlignment="Top"
+                FontSize="20"
+                FontWeight="Thin"
+                Content="Close Me"
+                Click="CloseSec_OnClick" />
+      </Grid>
+    </simpleChildWindow:ChildWindow>
+
+    <simpleChildWindow:CoolChildWindow x:Name="child03"
+                                   Header="TestChild 3" />
+
+  </Grid>
+</controls:MetroWindow>
