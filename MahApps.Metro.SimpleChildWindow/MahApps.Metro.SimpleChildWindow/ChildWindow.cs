@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using MS.Internal;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
@@ -34,10 +31,12 @@ namespace MahApps.Metro.SimpleChildWindow
       VisualStateManager.GoToState(childWindow, (bool)e.NewValue == false ? "Hide" : "Show", true);
       if ((bool)e.NewValue) {
         Canvas.SetZIndex(childWindow, 1);
-        var child = FindVisualChilds<UIElement>(childWindow, true).FirstOrDefault(c => c.Focusable);
+        var child = childWindow.FindVisualChilds<UIElement>(true).FirstOrDefault(c => c.Focusable);
         if (child != null) {
           child.IsVisibleChanged += (sender, args) => child.Focus();
         }
+      } else {
+        childWindow.DataContext = null;
       }
       if (childWindow.IsOpenChanged != null) {
         childWindow.IsOpenChanged(childWindow, EventArgs.Empty);
@@ -79,38 +78,12 @@ namespace MahApps.Metro.SimpleChildWindow
       DefaultStyleKeyProperty.OverrideMetadata(typeof(ChildWindow), new FrameworkPropertyMetadata(typeof(ChildWindow)));
     }
 
-    /// <summary>
-    /// Finds the typed visual at dependency object visual tree.
-    /// </summary>
-    public static T FindVisualChild<T>(DependencyObject obj, bool applyTemplateIfNeeded = false) where T : DependencyObject {
-      return FindVisualChilds<T>(obj, applyTemplateIfNeeded).FirstOrDefault();
-    }
-
-    /// <summary>
-    /// Finds the typed visual at dependency object visual tree.
-    /// </summary>
-    public static IEnumerable<T> FindVisualChilds<T>(DependencyObject obj, bool applyTemplateIfNeeded = false) where T : DependencyObject {
-      if (obj != null) {
-        var childrenCount = VisualTreeHelper.GetChildrenCount(obj);
-        if (childrenCount == 0 && applyTemplateIfNeeded) {
-          var fe = obj as FrameworkElement;
-          if (fe != null) {
-            if (fe.ApplyTemplate()) {
-              childrenCount = VisualTreeHelper.GetChildrenCount(obj);
-            }
-          }
-        }
-        for (var i = 0; i < childrenCount; i++) {
-          var child = VisualTreeHelper.GetChild(obj, i);
-          if (child is T) {
-            yield return (T)child;
-          }
-          var childOfChild = FindVisualChilds<T>(child, applyTemplateIfNeeded);
-          foreach (var c in childOfChild) {
-            yield return c;
-          }
-        }
+    protected override void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e) {
+      if (e.Key == System.Windows.Input.Key.Escape) {
+        this.IsOpen = false;
+        e.Handled = true;
       }
+      base.OnPreviewKeyUp(e);
     }
   }
 }
