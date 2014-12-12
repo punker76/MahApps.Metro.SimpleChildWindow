@@ -14,7 +14,7 @@ namespace MahApps.Metro.SimpleChildWindow.ValueConverter
 
     private MessageBoxImageToImageSourceConverter() {
       var resDict = new ResourceDictionary {Source = new Uri("pack://application:,,,/MahApps.Metro.SimpleChildWindow;component/Resources/Icons.xaml", UriKind.RelativeOrAbsolute)};
-      this.hand_stop_error = resDict["appbar_error"] as Visual;
+	  this.hand_stop_error = resDict["appbar_noentry"] as Visual;
       this.question = resDict["appbar_question"] as Visual;
     }
 

@@ -35,19 +35,22 @@
 		</StackPanel>
 
 		<simpleChildWindow:ChildWindow x:Name="child01"
+									   HorizontalContentAlignment="Stretch"
+									   VerticalContentAlignment="Stretch"
+									   Padding="15"
 									   ChildWindowImage="Error"
 									   Header="TestChild 1">
 			<Grid>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"></RowDefinition>
-					<RowDefinition Height="Auto"></RowDefinition>
-					<RowDefinition Height="Auto"></RowDefinition>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 				<TextBlock Grid.Row="0"
 						   Margin="20"
 						   FontSize="36"
 						   FontWeight="Thin"
-						   Text="der geht" />
+						   Text="awesome!" />
 				<TextBox Grid.Row="1" />
 				<Button Grid.Row="2"
 						Margin="20"
@@ -66,9 +69,9 @@
 									   Header="TestChild 2">
 			<Grid>
 				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"></RowDefinition>
-					<RowDefinition Height="Auto"></RowDefinition>
-					<RowDefinition Height="Auto"></RowDefinition>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 				<TextBlock Grid.Row="0"
 						   Margin="20"
