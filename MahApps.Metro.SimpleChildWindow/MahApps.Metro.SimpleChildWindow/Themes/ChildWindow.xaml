@@ -29,7 +29,7 @@
 				<VisualStateGroup>
 					<VisualState x:Name="Default" />
 					<VisualState x:Name="Hide">
-						<Storyboard>
+						<Storyboard x:Name="HideStoryboard">
 							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
 														   Storyboard.TargetProperty="(UIElement.Opacity)"
 														   Storyboard.TargetName="PART_Overlay">

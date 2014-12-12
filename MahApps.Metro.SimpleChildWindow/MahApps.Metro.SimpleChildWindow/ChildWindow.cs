@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
@@ -11,8 +13,78 @@ namespace MahApps.Metro.SimpleChildWindow
 	public partial class ChildWindow : ContentControl
 	{
 		public static readonly DependencyProperty ShowTitleBarProperty
-			= DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(ChildWindow),
-			                              new PropertyMetadata(true));
+			= DependencyProperty.Register("ShowTitleBar",
+										  typeof(bool),
+										  typeof(ChildWindow),
+										  new PropertyMetadata(true));
+
+		public static readonly DependencyProperty TitlebarHeightProperty
+			= DependencyProperty.Register("TitlebarHeight",
+										  typeof(int),
+										  typeof(ChildWindow),
+										  new PropertyMetadata(30));
+
+		public static readonly DependencyProperty HeaderProperty
+			= DependencyProperty.Register("Header",
+										  typeof(string),
+										  typeof(ChildWindow),
+										  new PropertyMetadata(default(string)));
+
+		public static readonly DependencyProperty IsOpenProperty
+			= DependencyProperty.Register("IsOpen",
+										  typeof(bool),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+
+		public static readonly DependencyProperty ChildWindowWidthProperty
+			= DependencyProperty.Register("ChildWindowWidth",
+										  typeof(double),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
+
+		public static readonly DependencyProperty ChildWindowHeightProperty
+			= DependencyProperty.Register("ChildWindowHeight",
+										  typeof(double),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
+
+		public static readonly DependencyProperty ChildWindowImageProperty
+			= DependencyProperty.Register("ChildWindowImage",
+										  typeof(MessageBoxImage),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(MessageBoxImage.None, FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+		private Storyboard hideStoryboard;
+
+		/// <summary>
+		/// An event that is raised when IsOpen changes.
+		/// </summary>
+		public static readonly RoutedEvent IsOpenChangedEvent
+			= EventManager.RegisterRoutedEvent("IsOpenChanged",
+											   RoutingStrategy.Bubble,
+											   typeof(RoutedEventHandler),
+											   typeof(ChildWindow));
+
+		public event RoutedEventHandler IsOpenChanged
+		{
+			add { AddHandler(IsOpenChangedEvent, value); }
+			remove { RemoveHandler(IsOpenChangedEvent, value); }
+		}
+
+		/// <summary>
+		/// An event that is raised when the closing animation has finished.
+		/// </summary>
+		public static readonly RoutedEvent ClosingFinishedEvent
+			= EventManager.RegisterRoutedEvent("ClosingFinished",
+											   RoutingStrategy.Bubble,
+											   typeof(RoutedEventHandler),
+											   typeof(ChildWindow));
+
+		public event RoutedEventHandler ClosingFinished
+		{
+			add { AddHandler(ClosingFinishedEvent, value); }
+			remove { RemoveHandler(ClosingFinishedEvent, value); }
+		}
 
 		/// <summary>
 		/// Gets/sets whether the TitleBar is visible or not.
@@ -23,10 +95,6 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { SetValue(ShowTitleBarProperty, value); }
 		}
 
-		public static readonly DependencyProperty TitlebarHeightProperty
-			= DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(ChildWindow),
-			                              new PropertyMetadata(30));
-
 		/// <summary>
 		/// Gets/sets the TitleBar's height.
 		/// </summary>
@@ -36,18 +104,11 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { SetValue(TitlebarHeightProperty, value); }
 		}
 
-		public static readonly DependencyProperty HeaderProperty
-		  = DependencyProperty.Register("Header", typeof(string), typeof(ChildWindow), new PropertyMetadata(default(string)));
-
 		public string Header
 		{
 			get { return (string)this.GetValue(HeaderProperty); }
 			set { this.SetValue(HeaderProperty, value); }
 		}
-
-		public static readonly DependencyProperty IsOpenProperty
-			= DependencyProperty.Register("IsOpen", typeof(bool), typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
 
 		public bool IsOpen
 		{
@@ -58,43 +119,64 @@ namespace MahApps.Metro.SimpleChildWindow
 		private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
 		{
 			var childWindow = (ChildWindow)dependencyObject;
-			VisualStateManager.GoToState(childWindow, (bool)e.NewValue == false ? "Hide" : "Show", true);
-			if ((bool)e.NewValue)
-			{
-				Canvas.SetZIndex(childWindow, 1);
-				var child = childWindow.FindVisualChilds<UIElement>(true).FirstOrDefault(c => c.Focusable);
-				if (child != null)
+
+			Action openedChangedAction = () => {
+				if (e.NewValue != e.OldValue)
 				{
-					child.IsVisibleChanged += (sender, args) => child.Focus();
+					if ((bool)e.NewValue)
+					{
+						if (childWindow.hideStoryboard != null)
+						{
+							// don't let the storyboard end it's completed event
+							// otherwise it could be hidden on start
+							childWindow.hideStoryboard.Completed -= childWindow.HideStoryboard_Completed;
+						}
+
+						Canvas.SetZIndex(childWindow, 1);
+						var child = childWindow.FindVisualChilds<UIElement>(true).FirstOrDefault(c => c.Focusable);
+						if (child != null)
+						{
+							child.IsVisibleChanged += (sender, args) => child.Focus();
+						}
+					}
+					else
+					{
+						if (childWindow.hideStoryboard != null)
+						{
+							childWindow.hideStoryboard.Completed += childWindow.HideStoryboard_Completed;
+						}
+						else
+						{
+							childWindow.Hide();
+						}
+					}
+
+					VisualStateManager.GoToState(childWindow, (bool)e.NewValue == false ? "Hide" : "Show", true);
+
+					childWindow.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
 				}
-			}
-			else
-			{
-				childWindow.DataContext = null;
-			}
-			if (childWindow.IsOpenChanged != null)
-			{
-				childWindow.IsOpenChanged(childWindow, EventArgs.Empty);
-			}
+			};
+
+			childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Background, openedChangedAction);
 		}
 
-		public event EventHandler IsOpenChanged;
+		private void HideStoryboard_Completed(object sender, EventArgs e)
+		{
+			this.hideStoryboard.Completed -= this.HideStoryboard_Completed;
+			this.Hide();
+		}
 
-		public static readonly DependencyProperty ChildWindowWidthProperty
-			= DependencyProperty.Register("ChildWindowWidth", typeof(double), typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure),
-										  new ValidateValueCallback(IsWidthHeightValid));
+		private void Hide()
+		{
+			this.DataContext = null;
+			this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
+		}
 
 		public double ChildWindowWidth
 		{
 			get { return (double)this.GetValue(ChildWindowWidthProperty); }
 			set { this.SetValue(ChildWindowWidthProperty, value); }
 		}
-
-		public static readonly DependencyProperty ChildWindowHeightProperty
-			= DependencyProperty.Register("ChildWindowHeight", typeof(double), typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure),
-										  new ValidateValueCallback(IsWidthHeightValid));
 
 		private static bool IsWidthHeightValid(object value)
 		{
@@ -108,10 +190,6 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(ChildWindowHeightProperty, value); }
 		}
 
-		public static readonly DependencyProperty ChildWindowImageProperty
-			= DependencyProperty.Register("ChildWindowImage", typeof(MessageBoxImage), typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(MessageBoxImage.None, FrameworkPropertyMetadataOptions.AffectsMeasure));
-
 		public MessageBoxImage ChildWindowImage
 		{
 			get { return (MessageBoxImage)this.GetValue(ChildWindowImageProperty); }
@@ -121,6 +199,13 @@ namespace MahApps.Metro.SimpleChildWindow
 		static ChildWindow()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(ChildWindow), new FrameworkPropertyMetadata(typeof(ChildWindow)));
+		}
+
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+
+			this.hideStoryboard = (Storyboard)GetTemplateChild("HideStoryboard");
 		}
 
 		protected override void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e)
