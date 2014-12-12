@@ -5,97 +5,132 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
-  /// <summary>
-  /// Interaction logic for ChildWindow.xaml
-  /// </summary>
-  public partial class ChildWindow : ContentControl
-  {
-    public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header",
-                                                                                           typeof(string),
-                                                                                           typeof(ChildWindow),
-                                                                                           new PropertyMetadata(default(string)));
+	/// <summary>
+	/// Interaction logic for ChildWindow.xaml
+	/// </summary>
+	public partial class ChildWindow : ContentControl
+	{
+		public static readonly DependencyProperty ShowTitleBarProperty
+			= DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(ChildWindow),
+			                              new PropertyMetadata(true));
 
-    public string Header {
-      get { return (string)this.GetValue(HeaderProperty); }
-      set { this.SetValue(HeaderProperty, value); }
-    }
+		/// <summary>
+		/// Gets/sets whether the TitleBar is visible or not.
+		/// </summary>
+		public bool ShowTitleBar
+		{
+			get { return (bool)GetValue(ShowTitleBarProperty); }
+			set { SetValue(ShowTitleBarProperty, value); }
+		}
 
-    public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen",
-                                                                                           typeof(bool),
-                                                                                           typeof(ChildWindow),
-                                                                                           new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+		public static readonly DependencyProperty TitlebarHeightProperty
+			= DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(ChildWindow),
+			                              new PropertyMetadata(30));
 
-    public bool IsOpen {
-      get { return (bool)this.GetValue(IsOpenProperty); }
-      set { this.SetValue(IsOpenProperty, value); }
-    }
+		/// <summary>
+		/// Gets/sets the TitleBar's height.
+		/// </summary>
+		public int TitlebarHeight
+		{
+			get { return (int)GetValue(TitlebarHeightProperty); }
+			set { SetValue(TitlebarHeightProperty, value); }
+		}
 
-    private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e) {
-      var childWindow = (ChildWindow)dependencyObject;
-      VisualStateManager.GoToState(childWindow, (bool)e.NewValue == false ? "Hide" : "Show", true);
-      if ((bool)e.NewValue) {
-        Canvas.SetZIndex(childWindow, 1);
-        var child = childWindow.FindVisualChilds<UIElement>(true).FirstOrDefault(c => c.Focusable);
-        if (child != null) {
-          child.IsVisibleChanged += (sender, args) => child.Focus();
-        }
-      } else {
-        childWindow.DataContext = null;
-      }
-      if (childWindow.IsOpenChanged != null) {
-        childWindow.IsOpenChanged(childWindow, EventArgs.Empty);
-      }
-    }
+		public static readonly DependencyProperty HeaderProperty
+		  = DependencyProperty.Register("Header", typeof(string), typeof(ChildWindow), new PropertyMetadata(default(string)));
 
-    public event EventHandler IsOpenChanged;
+		public string Header
+		{
+			get { return (string)this.GetValue(HeaderProperty); }
+			set { this.SetValue(HeaderProperty, value); }
+		}
 
-    public static readonly DependencyProperty ChildWindowWidthProperty = DependencyProperty.Register("ChildWindowWidth",
-                                                                                                     typeof(double),
-                                                                                                     typeof(ChildWindow),
-                                                                                                     new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure),
-                                                                                                     new ValidateValueCallback(IsWidthHeightValid));
+		public static readonly DependencyProperty IsOpenProperty
+			= DependencyProperty.Register("IsOpen", typeof(bool), typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
 
-    public double ChildWindowWidth {
-      get { return (double)this.GetValue(ChildWindowWidthProperty); }
-      set { this.SetValue(ChildWindowWidthProperty, value); }
-    }
+		public bool IsOpen
+		{
+			get { return (bool)this.GetValue(IsOpenProperty); }
+			set { this.SetValue(IsOpenProperty, value); }
+		}
 
-    public static readonly DependencyProperty ChildWindowHeightProperty = DependencyProperty.Register("ChildWindowHeight",
-                                                                                                      typeof(double),
-                                                                                                      typeof(ChildWindow),
-                                                                                                      new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure),
-                                                                                                      new ValidateValueCallback(IsWidthHeightValid));
+		private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+		{
+			var childWindow = (ChildWindow)dependencyObject;
+			VisualStateManager.GoToState(childWindow, (bool)e.NewValue == false ? "Hide" : "Show", true);
+			if ((bool)e.NewValue)
+			{
+				Canvas.SetZIndex(childWindow, 1);
+				var child = childWindow.FindVisualChilds<UIElement>(true).FirstOrDefault(c => c.Focusable);
+				if (child != null)
+				{
+					child.IsVisibleChanged += (sender, args) => child.Focus();
+				}
+			}
+			else
+			{
+				childWindow.DataContext = null;
+			}
+			if (childWindow.IsOpenChanged != null)
+			{
+				childWindow.IsOpenChanged(childWindow, EventArgs.Empty);
+			}
+		}
 
-    private static bool IsWidthHeightValid(object value) {
-      var v = (double)value;
-      return (double.IsNaN(v)) || (v >= 0.0d && !double.IsPositiveInfinity(v));
-    }
+		public event EventHandler IsOpenChanged;
 
-    public double ChildWindowHeight {
-      get { return (double)this.GetValue(ChildWindowHeightProperty); }
-      set { this.SetValue(ChildWindowHeightProperty, value); }
-    }
+		public static readonly DependencyProperty ChildWindowWidthProperty
+			= DependencyProperty.Register("ChildWindowWidth", typeof(double), typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure),
+										  new ValidateValueCallback(IsWidthHeightValid));
 
-    public static readonly DependencyProperty ChildWindowImageProperty = DependencyProperty.Register("ChildWindowImage",
-                                                                                                     typeof(MessageBoxImage),
-                                                                                                     typeof(ChildWindow),
-                                                                                                     new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure));
+		public double ChildWindowWidth
+		{
+			get { return (double)this.GetValue(ChildWindowWidthProperty); }
+			set { this.SetValue(ChildWindowWidthProperty, value); }
+		}
 
-    public MessageBoxImage ChildWindowImage {
-      get { return (MessageBoxImage)this.GetValue(ChildWindowImageProperty); }
-      set { this.SetValue(ChildWindowImageProperty, value); }
-    }
+		public static readonly DependencyProperty ChildWindowHeightProperty
+			= DependencyProperty.Register("ChildWindowHeight", typeof(double), typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure),
+										  new ValidateValueCallback(IsWidthHeightValid));
 
-    static ChildWindow() {
-      DefaultStyleKeyProperty.OverrideMetadata(typeof(ChildWindow), new FrameworkPropertyMetadata(typeof(ChildWindow)));
-    }
+		private static bool IsWidthHeightValid(object value)
+		{
+			var v = (double)value;
+			return (double.IsNaN(v)) || (v >= 0.0d && !double.IsPositiveInfinity(v));
+		}
 
-    protected override void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e) {
-      if (e.Key == System.Windows.Input.Key.Escape) {
-        this.IsOpen = false;
-        e.Handled = true;
-      }
-      base.OnPreviewKeyUp(e);
-    }
-  }
+		public double ChildWindowHeight
+		{
+			get { return (double)this.GetValue(ChildWindowHeightProperty); }
+			set { this.SetValue(ChildWindowHeightProperty, value); }
+		}
+
+		public static readonly DependencyProperty ChildWindowImageProperty
+			= DependencyProperty.Register("ChildWindowImage", typeof(MessageBoxImage), typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(MessageBoxImage.None, FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+		public MessageBoxImage ChildWindowImage
+		{
+			get { return (MessageBoxImage)this.GetValue(ChildWindowImageProperty); }
+			set { this.SetValue(ChildWindowImageProperty, value); }
+		}
+
+		static ChildWindow()
+		{
+			DefaultStyleKeyProperty.OverrideMetadata(typeof(ChildWindow), new FrameworkPropertyMetadata(typeof(ChildWindow)));
+		}
+
+		protected override void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e)
+		{
+			if (e.Key == System.Windows.Input.Key.Escape)
+			{
+				this.IsOpen = false;
+				e.Handled = true;
+			}
+			base.OnPreviewKeyUp(e);
+		}
+	}
 }
