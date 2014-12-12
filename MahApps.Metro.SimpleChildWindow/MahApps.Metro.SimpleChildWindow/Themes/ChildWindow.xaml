@@ -69,8 +69,11 @@
 
 			<Grid x:Name="PART_Content"
 				  UseLayoutRounding="True"
-				  VerticalAlignment="Center"
-				  HorizontalAlignment="Center"
+				  Width="{TemplateBinding ChildWindowWidth}"
+				  Height="{TemplateBinding ChildWindowHeight}"
+				  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+				  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+				  Margin="{TemplateBinding Padding}"
 				  FocusVisualStyle="{x:Null}">
 
 				<Grid Background="{DynamicResource WindowBackgroundBrush}"
@@ -146,6 +149,10 @@
 	<Style TargetType="{x:Type simpleChildWindow:ChildWindow}">
 		<Setter Property="FocusVisualStyle"
 				Value="{x:Null}" />
+		<Setter Property="VerticalContentAlignment"
+				Value="Center" />
+		<Setter Property="HorizontalContentAlignment"
+				Value="Center" />
 		<Setter Property="Template"
 				Value="{StaticResource ChildWindowTemplate}" />
 	</Style>
