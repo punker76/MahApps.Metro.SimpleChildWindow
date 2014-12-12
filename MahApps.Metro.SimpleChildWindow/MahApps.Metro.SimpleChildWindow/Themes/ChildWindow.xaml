@@ -15,6 +15,7 @@
 	<ControlTemplate x:Key="ChildWindowTemplate"
 					 TargetType="{x:Type simpleChildWindow:ChildWindow}">
 		<Grid x:Name="PART_Overlay"
+			  Opacity="0"
 			  KeyboardNavigation.TabNavigation="None"
 			  FocusVisualStyle="{x:Null}"
 			  Visibility="Collapsed">
@@ -31,7 +32,7 @@
 						<Storyboard>
 							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
 														   Storyboard.TargetProperty="(UIElement.Opacity)"
-														   Storyboard.TargetName="PART_Content">
+														   Storyboard.TargetName="PART_Overlay">
 								<SplineDoubleKeyFrame KeyTime="00:00:00"
 													  Value="1" />
 								<SplineDoubleKeyFrame KeyTime="00:00:00.100"
@@ -55,7 +56,7 @@
 							</ObjectAnimationUsingKeyFrames>
 							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
 														   Storyboard.TargetProperty="(UIElement.Opacity)"
-														   Storyboard.TargetName="PART_Content">
+														   Storyboard.TargetName="PART_Overlay">
 								<SplineDoubleKeyFrame KeyTime="00:00:00"
 													  Value="0" />
 								<SplineDoubleKeyFrame KeyTime="00:00:00.200"
@@ -71,7 +72,7 @@
 				  VerticalAlignment="Center"
 				  HorizontalAlignment="Center"
 				  FocusVisualStyle="{x:Null}">
-				
+
 				<Grid Background="{DynamicResource WindowBackgroundBrush}"
 					  FocusVisualStyle="{x:Null}">
 					<Grid.Effect>
@@ -81,7 +82,7 @@
 										  options:Freeze="true" />
 					</Grid.Effect>
 				</Grid>
-				
+
 				<Border Background="{DynamicResource WindowBackgroundBrush}"
 						KeyboardNavigation.TabNavigation="None"
 						FocusVisualStyle="{x:Null}">
