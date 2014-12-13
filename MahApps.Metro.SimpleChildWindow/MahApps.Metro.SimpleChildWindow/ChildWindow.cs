@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,7 +7,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
@@ -50,6 +50,24 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(string),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(default(string)));
+
+		/// <summary>
+		/// DependencyProperty for <see cref="TitleFontSize" /> property.
+		/// </summary>
+		public static readonly DependencyProperty TitleFontSizeProperty
+			= DependencyProperty.Register("TitleFontSize",
+										  typeof(double),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(SystemFonts.CaptionFontSize, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
+
+		/// <summary>
+		/// DependencyProperty for <see cref="TitleFontFamily" /> property.
+		/// </summary>
+		public static readonly DependencyProperty TitleFontFamilyProperty
+			= DependencyProperty.Register("TitleFontFamily",
+										  typeof(FontFamily),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(SystemFonts.CaptionFontFamily, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
 
 		public static readonly DependencyProperty IsOpenProperty
 			= DependencyProperty.Register("IsOpen",
@@ -147,6 +165,26 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (string)this.GetValue(TitleProperty); }
 			set { this.SetValue(TitleProperty, value); }
+		}
+
+		/// <summary> 
+		/// The FontSize property specifies the size of the title.
+		/// </summary>
+		[TypeConverter(typeof(FontSizeConverter))]
+		public double TitleFontSize
+		{
+			get { return (double)this.GetValue(TitleFontSizeProperty); }
+			set { this.SetValue(TitleFontSizeProperty, value); }
+		}
+
+		/// <summary> 
+		/// The FontFamily property specifies the font family of the title.
+		/// </summary>
+		[Bindable(true)]
+		public FontFamily TitleFontFamily
+		{
+			get { return (FontFamily)this.GetValue(TitleFontFamilyProperty); }
+			set { this.SetValue(TitleFontFamilyProperty, value); }
 		}
 
 		public bool IsOpen

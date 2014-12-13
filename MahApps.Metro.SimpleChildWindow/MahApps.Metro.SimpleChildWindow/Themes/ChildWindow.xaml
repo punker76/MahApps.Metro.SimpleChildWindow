@@ -110,8 +110,8 @@
 									   TextTrimming="CharacterEllipsis"
 									   VerticalAlignment="Center"
 									   Padding="4"
-									   FontSize="{DynamicResource WindowTitleFontSize}"
-									   FontFamily="{DynamicResource HeaderFontFamily}"
+									   FontSize="{TemplateBinding TitleFontSize}"
+									   FontFamily="{TemplateBinding TitleFontFamily}"
 									   Foreground="{TemplateBinding TitleForeground}" />
 
 							<!-- Header Drag Thumb -->
@@ -139,7 +139,6 @@
 								</Rectangle.Fill>
 							</Rectangle>
 							<ContentPresenter Grid.Column="1"
-											  VerticalAlignment="Center"
 											  KeyboardNavigation.TabNavigation="Cycle"
 											  Margin="4,0,4,4" />
 						</Grid>
@@ -157,6 +156,10 @@
 				Value="{DynamicResource WindowTitleColorBrush}" />
 		<Setter Property="TitleForeground"
 				Value="{DynamicResource IdealForegroundColorBrush}" />
+		<Setter Property="TitleFontSize"
+				Value="{DynamicResource WindowTitleFontSize}" />
+		<Setter Property="TitleFontFamily"
+				Value="{DynamicResource HeaderFontFamily}" />
 		<Setter Property="FocusVisualStyle"
 				Value="{x:Null}" />
 		<Setter Property="VerticalContentAlignment"
