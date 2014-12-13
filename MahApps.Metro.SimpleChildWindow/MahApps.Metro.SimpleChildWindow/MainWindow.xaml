@@ -39,7 +39,7 @@
 									   VerticalContentAlignment="Stretch"
 									   Padding="15"
 									   ChildWindowImage="Error"
-									   Header="TestChild 1">
+									   Title="TestChild 1">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
@@ -67,7 +67,7 @@
 									   ChildWindowWidth="400"
 									   ChildWindowHeight="300"
 									   EnableDropShadow="False"
-									   Header="TestChild 2">
+									   Title="TestChild 2">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
@@ -92,7 +92,7 @@
 		</simpleChildWindow:ChildWindow>
 
 		<simpleChildWindow:CoolChildWindow x:Name="child03"
-										   Header="TestChild 3" />
+										   Title="TestChild 3" />
 
 	</Grid>
 </controls:MetroWindow>

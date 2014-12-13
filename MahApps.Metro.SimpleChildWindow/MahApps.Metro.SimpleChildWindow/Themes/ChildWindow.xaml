@@ -1,10 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow"
+					xmlns:scw="clr-namespace:MahApps.Metro.SimpleChildWindow"
+					xmlns:valueConverter="clr-namespace:MahApps.Metro.SimpleChildWindow.ValueConverter"
 					xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 					xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 					xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
-					xmlns:valueConverter="clr-namespace:MahApps.Metro.SimpleChildWindow.ValueConverter"
 					mc:Ignorable="d">
 
 	<valueConverter:EnumToVisibilityConverter x:Key="EnumToVisibilityCollapsedConverter"
@@ -13,7 +13,7 @@
 	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
 	<ControlTemplate x:Key="ChildWindowTemplate"
-					 TargetType="{x:Type simpleChildWindow:ChildWindow}">
+					 TargetType="{x:Type scw:ChildWindow}">
 		<Grid x:Name="PART_Overlay"
 			  Opacity="0"
 			  KeyboardNavigation.TabNavigation="None"
@@ -76,7 +76,7 @@
 				  Margin="{TemplateBinding Padding}"
 				  FocusVisualStyle="{x:Null}">
 
-				<Grid Background="{DynamicResource WindowBackgroundBrush}"
+				<Grid Background="{TemplateBinding Background}"
 					  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableDropShadow, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
 					  FocusVisualStyle="{x:Null}">
 					<Grid.Effect>
@@ -87,7 +87,7 @@
 					</Grid.Effect>
 				</Grid>
 
-				<Border Background="{DynamicResource WindowBackgroundBrush}"
+				<Border Background="{TemplateBinding Background}"
 						KeyboardNavigation.TabNavigation="None"
 						FocusVisualStyle="{x:Null}">
 
@@ -100,19 +100,19 @@
 						<Grid x:Name="PART_Header"
 							  Grid.Row="0"
 							  Focusable="False"
-							  Background="{DynamicResource WindowTitleColorBrush}"
-							  Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+							  Background="{TemplateBinding TitleBarBackground}"
+							  Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
 							  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-							<TextBlock Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-									   Text="{TemplateBinding Header}"
+							<TextBlock Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+									   Text="{TemplateBinding Title}"
 									   TextAlignment="Left"
 									   TextTrimming="CharacterEllipsis"
 									   VerticalAlignment="Center"
 									   Padding="4"
 									   FontSize="{DynamicResource WindowTitleFontSize}"
 									   FontFamily="{DynamicResource HeaderFontFamily}"
-									   Foreground="{DynamicResource IdealForegroundColorBrush}" />
+									   Foreground="{TemplateBinding TitleForeground}" />
 
 							<!-- Header Drag Thumb -->
 							<Thumb x:Name="PART_HeaderThumb"
@@ -150,7 +150,13 @@
 		</Grid>
 	</ControlTemplate>
 
-	<Style TargetType="{x:Type simpleChildWindow:ChildWindow}">
+	<Style TargetType="{x:Type scw:ChildWindow}">
+		<Setter Property="Background"
+				Value="{DynamicResource WhiteBrush}" />
+		<Setter Property="TitleBarBackground"
+				Value="{DynamicResource WindowTitleColorBrush}" />
+		<Setter Property="TitleForeground"
+				Value="{DynamicResource IdealForegroundColorBrush}" />
 		<Setter Property="FocusVisualStyle"
 				Value="{x:Null}" />
 		<Setter Property="VerticalContentAlignment"

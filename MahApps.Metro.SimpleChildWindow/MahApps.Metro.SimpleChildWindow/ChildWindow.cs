@@ -3,8 +3,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
@@ -25,14 +27,26 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(ChildWindow),
 										  new PropertyMetadata(true));
 
-		public static readonly DependencyProperty TitlebarHeightProperty
-			= DependencyProperty.Register("TitlebarHeight",
+		public static readonly DependencyProperty TitleBarHeightProperty
+			= DependencyProperty.Register("TitleBarHeight",
 										  typeof(int),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(30));
 
-		public static readonly DependencyProperty HeaderProperty
-			= DependencyProperty.Register("Header",
+		public static readonly DependencyProperty TitleBarBackgroundProperty
+			= DependencyProperty.Register("TitleBarBackground",
+										  typeof(Brush),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
+
+		public static readonly DependencyProperty TitleForegroundProperty
+			= DependencyProperty.Register("TitleForeground",
+										  typeof(Brush),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+
+		public static readonly DependencyProperty TitleProperty
+			= DependencyProperty.Register("Title",
 										  typeof(string),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(default(string)));
@@ -111,16 +125,28 @@ namespace MahApps.Metro.SimpleChildWindow
 		/// <summary>
 		/// Gets/sets the TitleBar's height.
 		/// </summary>
-		public int TitlebarHeight
+		public int TitleBarHeight
 		{
-			get { return (int)GetValue(TitlebarHeightProperty); }
-			set { SetValue(TitlebarHeightProperty, value); }
+			get { return (int)GetValue(TitleBarHeightProperty); }
+			set { SetValue(TitleBarHeightProperty, value); }
 		}
 
-		public string Header
+		public Brush TitleBarBackground
 		{
-			get { return (string)this.GetValue(HeaderProperty); }
-			set { this.SetValue(HeaderProperty, value); }
+			get { return (Brush)this.GetValue(TitleBarBackgroundProperty); }
+			set { this.SetValue(TitleBarBackgroundProperty, value); }
+		}
+
+		public Brush TitleForeground
+		{
+			get { return (Brush)this.GetValue(TitleForegroundProperty); }
+			set { this.SetValue(TitleForegroundProperty, value); }
+		}
+
+		public string Title
+		{
+			get { return (string)this.GetValue(TitleProperty); }
+			set { this.SetValue(TitleProperty, value); }
 		}
 
 		public bool IsOpen
