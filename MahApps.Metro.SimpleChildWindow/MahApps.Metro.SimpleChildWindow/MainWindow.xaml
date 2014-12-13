@@ -66,6 +66,7 @@
 		<simpleChildWindow:ChildWindow x:Name="child02"
 									   ChildWindowWidth="400"
 									   ChildWindowHeight="300"
+									   EnableDropShadow="False"
 									   Header="TestChild 2">
 			<Grid>
 				<Grid.RowDefinitions>

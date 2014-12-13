@@ -2,16 +2,23 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
-	/// <summary>
-	/// Interaction logic for ChildWindow.xaml
-	/// </summary>
-	public partial class ChildWindow : ContentControl
+	[TemplatePart(Name = PART_Overlay, Type = typeof(Grid))]
+	[TemplatePart(Name = PART_Window, Type = typeof(Grid))]
+	[TemplatePart(Name = PART_Header, Type = typeof(Grid))]
+	[TemplatePart(Name = PART_HeaderThumb, Type = typeof(Thumb))]
+	public class ChildWindow : ContentControl
 	{
+		private const string PART_Overlay = "PART_Overlay";
+		private const string PART_Window = "PART_Window";
+		private const string PART_Header = "PART_Header";
+		private const string PART_HeaderThumb = "PART_HeaderThumb";
+
 		public static readonly DependencyProperty ShowTitleBarProperty
 			= DependencyProperty.Register("ShowTitleBar",
 										  typeof(bool),
@@ -53,6 +60,12 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(MessageBoxImage),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(MessageBoxImage.None, FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+		public static readonly DependencyProperty EnableDropShadowProperty
+			= DependencyProperty.Register("EnableDropShadow",
+										  typeof(bool),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
 		private Storyboard hideStoryboard;
 
@@ -194,6 +207,12 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (MessageBoxImage)this.GetValue(ChildWindowImageProperty); }
 			set { this.SetValue(ChildWindowImageProperty, value); }
+		}
+
+		public bool EnableDropShadow
+		{
+			get { return (bool)this.GetValue(EnableDropShadowProperty); }
+			set { this.SetValue(EnableDropShadowProperty, value); }
 		}
 
 		static ChildWindow()

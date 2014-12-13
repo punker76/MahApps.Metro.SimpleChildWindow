@@ -67,7 +67,7 @@
 				</VisualStateGroup>
 			</VisualStateManager.VisualStateGroups>
 
-			<Grid x:Name="PART_Content"
+			<Grid x:Name="PART_Window"
 				  UseLayoutRounding="True"
 				  Width="{TemplateBinding ChildWindowWidth}"
 				  Height="{TemplateBinding ChildWindowHeight}"
@@ -77,11 +77,12 @@
 				  FocusVisualStyle="{x:Null}">
 
 				<Grid Background="{DynamicResource WindowBackgroundBrush}"
+					  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableDropShadow, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
 					  FocusVisualStyle="{x:Null}">
 					<Grid.Effect>
 						<DropShadowEffect ShadowDepth="0"
 										  Color="{DynamicResource BlackColor}"
-										  BlurRadius="20"
+										  BlurRadius="15"
 										  options:Freeze="true" />
 					</Grid.Effect>
 				</Grid>
@@ -96,25 +97,28 @@
 							<RowDefinition Height="*" />
 						</Grid.RowDefinitions>
 
-						<Rectangle x:Name="PART_TitleBackground"
-								   Grid.Row="0"
-								   Focusable="False"
-								   Fill="{DynamicResource WindowTitleColorBrush}"
-								   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-								   Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
-								   StrokeThickness="0" />
+						<Grid x:Name="PART_Header"
+							  Grid.Row="0"
+							  Focusable="False"
+							  Background="{DynamicResource WindowTitleColorBrush}"
+							  Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+							  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-						<TextBlock Grid.Row="0"
-								   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-								   Text="{TemplateBinding Header}"
-								   TextAlignment="Left"
-								   TextTrimming="CharacterEllipsis"
-								   VerticalAlignment="Center"
-								   Padding="4"
-								   FontSize="{DynamicResource WindowTitleFontSize}"
-								   FontFamily="{DynamicResource HeaderFontFamily}"
-								   Foreground="{DynamicResource IdealForegroundColorBrush}" />
+							<TextBlock Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+									   Text="{TemplateBinding Header}"
+									   TextAlignment="Left"
+									   TextTrimming="CharacterEllipsis"
+									   VerticalAlignment="Center"
+									   Padding="4"
+									   FontSize="{DynamicResource WindowTitleFontSize}"
+									   FontFamily="{DynamicResource HeaderFontFamily}"
+									   Foreground="{DynamicResource IdealForegroundColorBrush}" />
 
+							<!-- Header Drag Thumb -->
+							<Thumb x:Name="PART_HeaderThumb"
+								   Opacity="0"
+								   IsTabStop="False" />
+						</Grid>
 						<Grid Grid.Row="1">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto" />
