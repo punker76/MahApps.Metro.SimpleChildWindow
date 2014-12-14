@@ -104,7 +104,25 @@
 							  Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
 							  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-							<TextBlock Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+
+							<!-- icon -->
+							<ContentControl x:Name="PART_Icon"
+											Grid.Column="0"
+											Focusable="False"
+											Content="{TemplateBinding Icon}"
+											ContentTemplate="{TemplateBinding IconTemplate}"
+											HorizontalContentAlignment="Stretch"
+											VerticalContentAlignment="Stretch"
+											MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+											Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+
+							<TextBlock Grid.Column="1"
+									   Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
 									   Text="{TemplateBinding Title}"
 									   TextAlignment="Left"
 									   TextTrimming="CharacterEllipsis"
@@ -116,6 +134,8 @@
 
 							<!-- Header Drag Thumb -->
 							<Thumb x:Name="PART_HeaderThumb"
+								   Grid.Column="0"
+								   Grid.ColumnSpan="3"
 								   Opacity="0"
 								   IsTabStop="False" />
 						</Grid>
@@ -147,6 +167,19 @@
 				</Border>
 			</Grid>
 		</Grid>
+		<ControlTemplate.Triggers>
+			<MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Icon"
+                               Value="{x:Null}" />
+                    <Condition Property="IconTemplate"
+                               Value="{x:Null}" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_Icon"
+                        Property="Visibility"
+                        Value="Collapsed" />
+            </MultiTrigger>
+		</ControlTemplate.Triggers>
 	</ControlTemplate>
 
 	<Style TargetType="{x:Type scw:ChildWindow}">

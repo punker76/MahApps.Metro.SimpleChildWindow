@@ -14,12 +14,14 @@ namespace MahApps.Metro.SimpleChildWindow
 	[TemplatePart(Name = PART_Window, Type = typeof(Grid))]
 	[TemplatePart(Name = PART_Header, Type = typeof(Grid))]
 	[TemplatePart(Name = PART_HeaderThumb, Type = typeof(Thumb))]
+	[TemplatePart(Name = PART_Icon, Type = typeof(ContentControl))]
 	public class ChildWindow : ContentControl
 	{
 		private const string PART_Overlay = "PART_Overlay";
 		private const string PART_Window = "PART_Window";
 		private const string PART_Header = "PART_Header";
 		private const string PART_HeaderThumb = "PART_HeaderThumb";
+		private const string PART_Icon = "PART_Icon";
 
 		public static readonly DependencyProperty ShowTitleBarProperty
 			= DependencyProperty.Register("ShowTitleBar",
@@ -68,6 +70,18 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(FontFamily),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(SystemFonts.CaptionFontFamily, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
+
+		public static readonly DependencyProperty IconProperty
+			= DependencyProperty.Register("Icon",
+										  typeof(object),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+		public static readonly DependencyProperty IconTemplateProperty
+			= DependencyProperty.Register("IconTemplate",
+										  typeof(DataTemplate),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
 		public static readonly DependencyProperty IsOpenProperty
 			= DependencyProperty.Register("IsOpen",
@@ -185,6 +199,26 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (FontFamily)this.GetValue(TitleFontFamilyProperty); }
 			set { this.SetValue(TitleFontFamilyProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets/sets the icon content template to show a icon or something else.
+		/// </summary>
+		[Bindable(true)]
+		public object Icon
+		{
+			get { return (object)this.GetValue(IconProperty); }
+			set { this.SetValue(IconProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets/sets the icon content template to show a custom icon or something else.
+		/// </summary>
+		[Bindable(true)]
+		public DataTemplate IconTemplate
+		{
+			get { return (DataTemplate)this.GetValue(IconTemplateProperty); }
+			set { this.SetValue(IconTemplateProperty, value); }
 		}
 
 		public bool IsOpen
