@@ -1,7 +1,12 @@
-MahApps.Metro.SimpleChildWindow
-===============================
+# MahApps.Metro.SimpleChildWindow
 
-A simple child window for MahApps.Metro
+A simple child window for MahApps.Metro.
 
-![sample01](https://raw.github.com/punker76/MahApps.Metro.SimpleChildWindow/master/screenshots/001.png)  
-![sample02](https://raw.github.com/punker76/MahApps.Metro.SimpleChildWindow/master/screenshots/002.png)  
+![](./screenshots/2014-12-13_23h45_36.png)  
+
+![](./screenshots/2014-12-13_23h46_00.png)  
+
+![](./screenshots/2014-12-13_23h46_16.png)  
+
+![](./screenshots/2014-12-13_23h46_32.png)  
+
