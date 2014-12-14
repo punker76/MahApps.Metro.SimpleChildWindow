@@ -1,6 +1,6 @@
 # MahApps.Metro.SimpleChildWindow
 
-A simple child window for MahApps.Metro.
+A simple child window for [MahApps.Metro](https://github.com/MahApps/MahApps.Metro).
 
 ### Stretch with Margin
 
@@ -16,4 +16,4 @@ A simple child window for MahApps.Metro.
 
 ### With Icon or IconTemplate
 
-![](./screenshots/2014-12-14_15h03_09.png)  
+![](./screenshots/2014-12-14_21h20_55.png)  
