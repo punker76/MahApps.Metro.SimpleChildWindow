@@ -1,12 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using MahApps.Metro.SimpleChildWindow.Utils;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
@@ -15,13 +17,16 @@ namespace MahApps.Metro.SimpleChildWindow
 	[TemplatePart(Name = PART_Header, Type = typeof(Grid))]
 	[TemplatePart(Name = PART_HeaderThumb, Type = typeof(Thumb))]
 	[TemplatePart(Name = PART_Icon, Type = typeof(ContentControl))]
+	[TemplatePart(Name = PART_CloseButton, Type = typeof(Button))]
 	public class ChildWindow : ContentControl
 	{
 		private const string PART_Overlay = "PART_Overlay";
+		private const string HideStoryboard = "HideStoryboard";
 		private const string PART_Window = "PART_Window";
 		private const string PART_Header = "PART_Header";
 		private const string PART_HeaderThumb = "PART_HeaderThumb";
 		private const string PART_Icon = "PART_Icon";
+		private const string PART_CloseButton = "PART_CloseButton";
 
 		public static readonly DependencyProperty ShowTitleBarProperty
 			= DependencyProperty.Register("ShowTitleBar",
@@ -83,6 +88,18 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
+		public static readonly DependencyProperty ShowCloseButtonProperty
+			= DependencyProperty.Register("ShowCloseButton",
+										  typeof(bool),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+		public static readonly DependencyProperty CloseButtonStyleProperty
+			= DependencyProperty.Register("CloseButtonStyle",
+										  typeof(Style),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
 		public static readonly DependencyProperty IsOpenProperty
 			= DependencyProperty.Register("IsOpen",
 										  typeof(bool),
@@ -112,8 +129,6 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(bool),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
-
-		private Storyboard hideStoryboard;
 
 		/// <summary>
 		/// An event that is raised when IsOpen changes.
@@ -221,6 +236,22 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(IconTemplateProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets/sets if the close button is visible.
+		/// </summary>
+		public bool ShowCloseButton
+		{
+			get { return (bool)this.GetValue(ShowCloseButtonProperty); }
+			set { this.SetValue(ShowCloseButtonProperty, value); }
+		}
+
+		[Bindable(true)]
+		public Style CloseButtonStyle
+		{
+			get { return (Style)this.GetValue(CloseButtonStyleProperty); }
+			set { this.SetValue(CloseButtonStyleProperty, value); }
+		}
+
 		public bool IsOpen
 		{
 			get { return (bool)this.GetValue(IsOpenProperty); }
@@ -264,7 +295,7 @@ namespace MahApps.Metro.SimpleChildWindow
 
 					VisualStateManager.GoToState(childWindow, (bool)e.NewValue == false ? "Hide" : "Show", true);
 
-					childWindow.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
+					childWindow.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent, childWindow));
 				}
 			};
 
@@ -280,7 +311,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		private void Hide()
 		{
 			this.DataContext = null;
-			this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
+			this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent, this));
 		}
 
 		public double ChildWindowWidth
@@ -313,6 +344,23 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(EnableDropShadowProperty, value); }
 		}
 
+		private string closeText;
+		public string CloseButtonToolTip
+		{
+			get
+			{
+				if (string.IsNullOrEmpty(closeText))
+				{
+					closeText = GetCaption(905);
+				}
+				return closeText;
+			}
+		}
+
+		private Storyboard hideStoryboard;
+		private Thumb headerThumb;
+		private Button closeButton;
+
 		static ChildWindow()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(ChildWindow), new FrameworkPropertyMetadata(typeof(ChildWindow)));
@@ -322,17 +370,57 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			base.OnApplyTemplate();
 
-			this.hideStoryboard = (Storyboard)GetTemplateChild("HideStoryboard");
+			// really necessary?
+			if (this.Template == null)
+			{
+				return;
+			}
+
+			this.hideStoryboard = this.Template.FindName(HideStoryboard, this) as Storyboard;
+			this.headerThumb = this.Template.FindName(PART_HeaderThumb, this) as Thumb;
+
+			if (this.closeButton != null)
+			{
+				this.closeButton.Click -= new RoutedEventHandler(this.Close);
+			}
+			this.closeButton = this.Template.FindName(PART_CloseButton, this) as Button;
+			if (this.closeButton != null)
+			{
+				this.closeButton.Click += new RoutedEventHandler(this.Close);
+			}
+		}
+
+		private void Close(object sender, RoutedEventArgs e)
+		{
+			this.ExecuteClose();
+		}
+
+		private bool ExecuteClose()
+		{
+			this.IsOpen = false;
+
+			return true;
 		}
 
 		protected override void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e)
 		{
 			if (e.Key == System.Windows.Input.Key.Escape)
 			{
-				this.IsOpen = false;
-				e.Handled = true;
+				e.Handled = this.ExecuteClose();
 			}
 			base.OnPreviewKeyUp(e);
+		}
+
+		private SafeLibraryHandle user32 = null;
+
+		private string GetCaption(int id)
+		{
+			if (user32 == null)
+				user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
+
+			var sb = new StringBuilder(256);
+			UnsafeNativeMethods.LoadString(user32, (uint)id, sb, sb.Capacity);
+			return sb.ToString().Replace("&", "");
 		}
 	}
 }

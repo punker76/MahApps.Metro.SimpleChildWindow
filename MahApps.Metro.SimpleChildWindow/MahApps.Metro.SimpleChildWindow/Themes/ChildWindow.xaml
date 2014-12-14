@@ -121,6 +121,7 @@
 											MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
 											Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
+							<!-- title -->
 							<TextBlock Grid.Column="1"
 									   Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
 									   Text="{TemplateBinding Title}"
@@ -132,10 +133,23 @@
 									   FontFamily="{TemplateBinding TitleFontFamily}"
 									   Foreground="{TemplateBinding TitleForeground}" />
 
+							<!-- close button -->
+							<Button x:Name="PART_CloseButton"
+									Grid.Column="2"
+									Focusable="False"
+									Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+									Style="{TemplateBinding CloseButtonStyle}"
+									ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type scw:ChildWindow}}, Path=CloseButtonToolTip, Mode=OneWay}"
+									Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ShowCloseButton, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+								<Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+									  SnapsToDevicePixels="True"
+									  Fill="{TemplateBinding TitleForeground}" />
+							</Button>
+
 							<!-- Header Drag Thumb -->
 							<Thumb x:Name="PART_HeaderThumb"
 								   Grid.Column="0"
-								   Grid.ColumnSpan="3"
+								   Grid.ColumnSpan="2"
 								   Opacity="0"
 								   IsTabStop="False" />
 						</Grid>
@@ -169,16 +183,16 @@
 		</Grid>
 		<ControlTemplate.Triggers>
 			<MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="Icon"
-                               Value="{x:Null}" />
-                    <Condition Property="IconTemplate"
-                               Value="{x:Null}" />
-                </MultiTrigger.Conditions>
-                <Setter TargetName="PART_Icon"
-                        Property="Visibility"
-                        Value="Collapsed" />
-            </MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="Icon"
+							   Value="{x:Null}" />
+					<Condition Property="IconTemplate"
+							   Value="{x:Null}" />
+				</MultiTrigger.Conditions>
+				<Setter TargetName="PART_Icon"
+						Property="Visibility"
+						Value="Collapsed" />
+			</MultiTrigger>
 		</ControlTemplate.Triggers>
 	</ControlTemplate>
 
@@ -193,6 +207,8 @@
 				Value="{DynamicResource WindowTitleFontSize}" />
 		<Setter Property="TitleFontFamily"
 				Value="{DynamicResource HeaderFontFamily}" />
+		<Setter Property="CloseButtonStyle"
+				Value="{DynamicResource MetroWindowButtonStyle}" />
 		<Setter Property="FocusVisualStyle"
 				Value="{x:Null}" />
 		<Setter Property="VerticalContentAlignment"
