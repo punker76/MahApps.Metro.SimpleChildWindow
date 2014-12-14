@@ -5,9 +5,11 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow.Utils;
 
 namespace MahApps.Metro.SimpleChildWindow
@@ -99,6 +101,18 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(Style),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+		public static readonly DependencyProperty CloseButtonCommandProperty
+			= DependencyProperty.Register("CloseButtonCommand",
+										  typeof(ICommand),
+										  typeof(ChildWindow),
+										  new PropertyMetadata(default(ICommand)));
+
+		public static readonly DependencyProperty CloseButtonCommandParameterProperty
+			= DependencyProperty.Register("CloseButtonCommandParameter",
+										  typeof(object),
+										  typeof(ChildWindow),
+										  new PropertyMetadata(null));
 
 		public static readonly DependencyProperty IsOpenProperty
 			= DependencyProperty.Register("IsOpen",
@@ -252,6 +266,24 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(CloseButtonStyleProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets/sets the command that is executed when the Close Button is clicked.
+		/// </summary>
+		public ICommand CloseButtonCommand
+		{
+			get { return (ICommand)this.GetValue(CloseButtonCommandProperty); }
+			set { this.SetValue(CloseButtonCommandProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets/sets the command parameter that is used by the CloseButtonCommand when the Close Button is clicked.
+		/// </summary>
+		public object CloseButtonCommandParameter
+		{
+			get { return (object)this.GetValue(CloseButtonCommandParameterProperty); }
+			set { this.SetValue(CloseButtonCommandParameterProperty, value); }
+		}
+
 		public bool IsOpen
 		{
 			get { return (bool)this.GetValue(IsOpenProperty); }
@@ -392,11 +424,21 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private void Close(object sender, RoutedEventArgs e)
 		{
-			this.ExecuteClose();
+			this.Close();
 		}
 
-		private bool ExecuteClose()
+		/// <summary>
+		/// Closes this instance.
+		/// </summary>
+		public bool Close()
 		{
+			if (this.CloseButtonCommand != null)
+			{
+				this.CloseButtonCommand.Execute(this.CloseButtonCommandParameter);
+				this.CloseButtonCommand = null;
+				this.CloseButtonCommandParameter = null;
+			}
+
 			this.IsOpen = false;
 
 			return true;
@@ -406,7 +448,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			if (e.Key == System.Windows.Input.Key.Escape)
 			{
-				e.Handled = this.ExecuteClose();
+				e.Handled = this.Close();
 			}
 			base.OnPreviewKeyUp(e);
 		}
