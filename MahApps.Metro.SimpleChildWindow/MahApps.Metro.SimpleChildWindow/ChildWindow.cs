@@ -144,6 +144,12 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
+		public static readonly DependencyProperty FocusedElementProperty
+			= DependencyProperty.Register("FocusedElement",
+										  typeof(FrameworkElement),
+										  typeof(ChildWindow),
+										  new UIPropertyMetadata(null));
+
 		/// <summary>
 		/// An event that is raised when IsOpen changes.
 		/// </summary>
@@ -306,12 +312,9 @@ namespace MahApps.Metro.SimpleChildWindow
 							childWindow.hideStoryboard.Completed -= childWindow.HideStoryboard_Completed;
 						}
 
-						Canvas.SetZIndex(childWindow, 1);
-						var child = childWindow.FindChildren<UIElement>(true).FirstOrDefault(c => c.Focusable);
-						if (child != null)
-						{
-							child.IsVisibleChanged += (sender, args) => child.Focus();
-						}
+						Panel.SetZIndex(childWindow, 1);
+
+						childWindow.TryFocusElement();
 					}
 					else
 					{
@@ -332,6 +335,15 @@ namespace MahApps.Metro.SimpleChildWindow
 			};
 
 			childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Background, openedChangedAction);
+		}
+
+		private void TryFocusElement()
+		{
+			var elementToFocus = FocusedElement ?? this.FindChildren<UIElement>().FirstOrDefault(c => c.Focusable);
+			if (elementToFocus != null)
+			{
+				elementToFocus.IsVisibleChanged += (sender, args) => elementToFocus.Focus();
+			}
 		}
 
 		private void HideStoryboard_Completed(object sender, EventArgs e)
@@ -374,6 +386,12 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (bool)this.GetValue(EnableDropShadowProperty); }
 			set { this.SetValue(EnableDropShadowProperty, value); }
+		}
+
+		public FrameworkElement FocusedElement
+		{
+			get { return (FrameworkElement)this.GetValue(FocusedElementProperty); }
+			set { this.SetValue(FocusedElementProperty, value); }
 		}
 
 		private string closeText;
