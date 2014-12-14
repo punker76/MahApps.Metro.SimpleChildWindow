@@ -173,6 +173,10 @@
 								</Rectangle.Fill>
 							</Rectangle>
 							<ContentPresenter Grid.Column="1"
+											  Content="{TemplateBinding Content}"
+											  ContentTemplate="{TemplateBinding ContentTemplate}"
+											  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+											  ContentStringFormat="{TemplateBinding ContentStringFormat}"
 											  KeyboardNavigation.TabNavigation="Cycle"
 											  Margin="4,0,4,4" />
 						</Grid>

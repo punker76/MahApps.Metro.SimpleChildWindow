@@ -74,7 +74,6 @@
     <Compile Include="Utils\UnsafeNativeMethods.cs" />
     <Compile Include="ValueConverter\EnumToVisibilityConverter.cs" />
     <Compile Include="ValueConverter\MessageBoxImageToImageSourceConverter.cs" />
-    <Compile Include="VisualTreeExtensions.cs" />
     <Page Include="CoolChildWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

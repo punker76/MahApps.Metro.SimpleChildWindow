@@ -307,7 +307,7 @@ namespace MahApps.Metro.SimpleChildWindow
 						}
 
 						Canvas.SetZIndex(childWindow, 1);
-						var child = childWindow.FindVisualChilds<UIElement>(true).FirstOrDefault(c => c.Focusable);
+						var child = childWindow.FindChildren<UIElement>(true).FirstOrDefault(c => c.Focusable);
 						if (child != null)
 						{
 							child.IsVisibleChanged += (sender, args) => child.Focus();

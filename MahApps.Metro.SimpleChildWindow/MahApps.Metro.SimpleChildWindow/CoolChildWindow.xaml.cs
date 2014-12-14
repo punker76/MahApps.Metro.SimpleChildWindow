@@ -14,7 +14,7 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private void CloseSec_OnClick(object sender, RoutedEventArgs e)
 		{
-			this.IsOpen = false;
+			this.Close();
 		}
 	}
 }
