@@ -410,6 +410,8 @@ namespace MahApps.Metro.SimpleChildWindow
 		private Storyboard hideStoryboard;
 		private Thumb headerThumb;
 		private Button closeButton;
+		private TranslateTransform moveTransform = new TranslateTransform();
+		private Grid partWindow;
 
 		static ChildWindow()
 		{
@@ -427,7 +429,27 @@ namespace MahApps.Metro.SimpleChildWindow
 			}
 
 			this.hideStoryboard = this.Template.FindName(HideStoryboard, this) as Storyboard;
+
+			this.partWindow = this.Template.FindName(PART_Window, this) as Grid;
+			if (this.partWindow != null)
+			{
+				this.partWindow.RenderTransform = this.moveTransform;
+			}
+
+			if (this.headerThumb != null)
+			{
+				this.headerThumb.DragDelta -= new DragDeltaEventHandler(this.HeaderThumbDragDelta);
+			}
 			this.headerThumb = this.Template.FindName(PART_HeaderThumb, this) as Thumb;
+			if (this.headerThumb != null && this.partWindow != null)
+			{
+				var allowDragging = this.partWindow.HorizontalAlignment != HorizontalAlignment.Stretch
+									&& this.partWindow.VerticalAlignment != VerticalAlignment.Stretch;
+				if (allowDragging)
+				{
+					this.headerThumb.DragDelta += new DragDeltaEventHandler(this.HeaderThumbDragDelta);
+				}
+			}
 
 			if (this.closeButton != null)
 			{
@@ -438,6 +460,20 @@ namespace MahApps.Metro.SimpleChildWindow
 			{
 				this.closeButton.Click += new RoutedEventHandler(this.Close);
 			}
+		}
+
+		private void HeaderThumbDragDelta(object sender, DragDeltaEventArgs e)
+		{
+			var horizontalChange = this.FlowDirection == FlowDirection.RightToLeft ? -e.HorizontalChange : e.HorizontalChange;
+			ProcessMove(horizontalChange, e.VerticalChange);
+		}
+
+		private void ProcessMove(double x, double y)
+		{
+			this.moveTransform.X += x;
+			this.moveTransform.Y += y;
+
+			this.InvalidateArrange();
 		}
 
 		private void Close(object sender, RoutedEventArgs e)
