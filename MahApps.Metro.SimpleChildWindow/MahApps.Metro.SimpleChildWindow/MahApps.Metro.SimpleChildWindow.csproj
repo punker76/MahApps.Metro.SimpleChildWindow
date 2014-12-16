@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChildWindowManager.cs" />
     <Compile Include="Utils\SafeLibraryHandle.cs" />
     <Compile Include="Utils\SingletonBase.cs" />
     <Compile Include="Utils\UnsafeNativeMethods.cs" />

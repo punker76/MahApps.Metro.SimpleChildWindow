@@ -91,8 +91,5 @@
 			</Grid>
 		</simpleChildWindow:ChildWindow>
 
-		<simpleChildWindow:CoolChildWindow x:Name="child03"
-										   Title="TestChild 3" />
-
 	</Grid>
 </controls:MetroWindow>
