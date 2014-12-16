@@ -1,5 +1,7 @@
 # MahApps.Metro.SimpleChildWindow
 
+[![Build status](https://ci.appveyor.com/api/projects/status/qyv24na2ff822h21/branch/master?svg=true)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/master)
+
 A simple child window for [MahApps.Metro](https://github.com/MahApps/MahApps.Metro).
 
 ### Stretch with Margin
