@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MahApps.Metro.SimpleChildWindow
+namespace MahApps.Metro.SimpleChildWindow.Demo
 {
 	/// <summary>
 	/// Interaction logic for CoolChildWindow.xaml
