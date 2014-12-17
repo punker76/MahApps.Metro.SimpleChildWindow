@@ -1,9 +1,9 @@
-﻿<controls:MetroWindow x:Class="testproject.MainWindow"
+﻿<Controls:MetroWindow x:Class="MahApps.Metro.SimpleChildWindow.Demo.MainWindow"
 					  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-					  xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow"
-					  Title="MainWindow"
+					  xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+					  xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+					  Title="MahApps.Metro Simple ChildWindow Demo"
 					  Height="600"
 					  Width="800"
 					  GlowBrush="{DynamicResource AccentColorBrush}"
@@ -92,4 +92,5 @@
 		</simpleChildWindow:ChildWindow>
 
 	</Grid>
-</controls:MetroWindow>
+
+</Controls:MetroWindow>
