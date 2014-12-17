@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow;
 
 namespace testproject
 {
@@ -23,9 +24,9 @@ namespace testproject
 			this.child02.IsOpen = true;
 		}
 
-		private void ThirdTest_OnClick(object sender, RoutedEventArgs e)
+		private async void ThirdTest_OnClick(object sender, RoutedEventArgs e)
 		{
-			this.child03.IsOpen = true;
+			await this.ShowChildWindowAsync(new CoolChildWindow());
 		}
 
 		private void CloseFirst_OnClick(object sender, RoutedEventArgs e)

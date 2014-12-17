@@ -1,34 +1,118 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow.Utils;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
-	/// <summary>
-	/// Interaction logic for ChildWindow.xaml
-	/// </summary>
-	public partial class ChildWindow : ContentControl
+	[TemplatePart(Name = PART_Overlay, Type = typeof(Grid))]
+	[TemplatePart(Name = PART_Window, Type = typeof(Grid))]
+	[TemplatePart(Name = PART_Header, Type = typeof(Grid))]
+	[TemplatePart(Name = PART_HeaderThumb, Type = typeof(Thumb))]
+	[TemplatePart(Name = PART_Icon, Type = typeof(ContentControl))]
+	[TemplatePart(Name = PART_CloseButton, Type = typeof(Button))]
+	public class ChildWindow : ContentControl
 	{
+		private const string PART_Overlay = "PART_Overlay";
+		private const string HideStoryboard = "HideStoryboard";
+		private const string PART_Window = "PART_Window";
+		private const string PART_Header = "PART_Header";
+		private const string PART_HeaderThumb = "PART_HeaderThumb";
+		private const string PART_Icon = "PART_Icon";
+		private const string PART_CloseButton = "PART_CloseButton";
+
 		public static readonly DependencyProperty ShowTitleBarProperty
 			= DependencyProperty.Register("ShowTitleBar",
 										  typeof(bool),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(true));
 
-		public static readonly DependencyProperty TitlebarHeightProperty
-			= DependencyProperty.Register("TitlebarHeight",
+		public static readonly DependencyProperty TitleBarHeightProperty
+			= DependencyProperty.Register("TitleBarHeight",
 										  typeof(int),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(30));
 
-		public static readonly DependencyProperty HeaderProperty
-			= DependencyProperty.Register("Header",
+		public static readonly DependencyProperty TitleBarBackgroundProperty
+			= DependencyProperty.Register("TitleBarBackground",
+										  typeof(Brush),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
+
+		public static readonly DependencyProperty TitleForegroundProperty
+			= DependencyProperty.Register("TitleForeground",
+										  typeof(Brush),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+
+		public static readonly DependencyProperty TitleProperty
+			= DependencyProperty.Register("Title",
 										  typeof(string),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(default(string)));
+
+		/// <summary>
+		/// DependencyProperty for <see cref="TitleFontSize" /> property.
+		/// </summary>
+		public static readonly DependencyProperty TitleFontSizeProperty
+			= DependencyProperty.Register("TitleFontSize",
+										  typeof(double),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(SystemFonts.CaptionFontSize, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
+
+		/// <summary>
+		/// DependencyProperty for <see cref="TitleFontFamily" /> property.
+		/// </summary>
+		public static readonly DependencyProperty TitleFontFamilyProperty
+			= DependencyProperty.Register("TitleFontFamily",
+										  typeof(FontFamily),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(SystemFonts.CaptionFontFamily, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
+
+		public static readonly DependencyProperty IconProperty
+			= DependencyProperty.Register("Icon",
+										  typeof(object),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+		public static readonly DependencyProperty IconTemplateProperty
+			= DependencyProperty.Register("IconTemplate",
+										  typeof(DataTemplate),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+		public static readonly DependencyProperty ShowCloseButtonProperty
+			= DependencyProperty.Register("ShowCloseButton",
+										  typeof(bool),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+		public static readonly DependencyProperty CloseButtonStyleProperty
+			= DependencyProperty.Register("CloseButtonStyle",
+										  typeof(Style),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+		public static readonly DependencyProperty CloseButtonCommandProperty
+			= DependencyProperty.Register("CloseButtonCommand",
+										  typeof(ICommand),
+										  typeof(ChildWindow),
+										  new PropertyMetadata(default(ICommand)));
+
+		public static readonly DependencyProperty CloseButtonCommandParameterProperty
+			= DependencyProperty.Register("CloseButtonCommandParameter",
+										  typeof(object),
+										  typeof(ChildWindow),
+										  new PropertyMetadata(null));
 
 		public static readonly DependencyProperty IsOpenProperty
 			= DependencyProperty.Register("IsOpen",
@@ -54,7 +138,17 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(MessageBoxImage.None, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
-		private Storyboard hideStoryboard;
+		public static readonly DependencyProperty EnableDropShadowProperty
+			= DependencyProperty.Register("EnableDropShadow",
+										  typeof(bool),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
+
+		public static readonly DependencyProperty FocusedElementProperty
+			= DependencyProperty.Register("FocusedElement",
+										  typeof(FrameworkElement),
+										  typeof(ChildWindow),
+										  new UIPropertyMetadata(null));
 
 		/// <summary>
 		/// An event that is raised when IsOpen changes.
@@ -98,16 +192,102 @@ namespace MahApps.Metro.SimpleChildWindow
 		/// <summary>
 		/// Gets/sets the TitleBar's height.
 		/// </summary>
-		public int TitlebarHeight
+		public int TitleBarHeight
 		{
-			get { return (int)GetValue(TitlebarHeightProperty); }
-			set { SetValue(TitlebarHeightProperty, value); }
+			get { return (int)GetValue(TitleBarHeightProperty); }
+			set { SetValue(TitleBarHeightProperty, value); }
 		}
 
-		public string Header
+		public Brush TitleBarBackground
 		{
-			get { return (string)this.GetValue(HeaderProperty); }
-			set { this.SetValue(HeaderProperty, value); }
+			get { return (Brush)this.GetValue(TitleBarBackgroundProperty); }
+			set { this.SetValue(TitleBarBackgroundProperty, value); }
+		}
+
+		public Brush TitleForeground
+		{
+			get { return (Brush)this.GetValue(TitleForegroundProperty); }
+			set { this.SetValue(TitleForegroundProperty, value); }
+		}
+
+		public string Title
+		{
+			get { return (string)this.GetValue(TitleProperty); }
+			set { this.SetValue(TitleProperty, value); }
+		}
+
+		/// <summary> 
+		/// The FontSize property specifies the size of the title.
+		/// </summary>
+		[TypeConverter(typeof(FontSizeConverter))]
+		public double TitleFontSize
+		{
+			get { return (double)this.GetValue(TitleFontSizeProperty); }
+			set { this.SetValue(TitleFontSizeProperty, value); }
+		}
+
+		/// <summary> 
+		/// The FontFamily property specifies the font family of the title.
+		/// </summary>
+		[Bindable(true)]
+		public FontFamily TitleFontFamily
+		{
+			get { return (FontFamily)this.GetValue(TitleFontFamilyProperty); }
+			set { this.SetValue(TitleFontFamilyProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets/sets the icon content template to show a icon or something else.
+		/// </summary>
+		[Bindable(true)]
+		public object Icon
+		{
+			get { return (object)this.GetValue(IconProperty); }
+			set { this.SetValue(IconProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets/sets the icon content template to show a custom icon or something else.
+		/// </summary>
+		[Bindable(true)]
+		public DataTemplate IconTemplate
+		{
+			get { return (DataTemplate)this.GetValue(IconTemplateProperty); }
+			set { this.SetValue(IconTemplateProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets/sets if the close button is visible.
+		/// </summary>
+		public bool ShowCloseButton
+		{
+			get { return (bool)this.GetValue(ShowCloseButtonProperty); }
+			set { this.SetValue(ShowCloseButtonProperty, value); }
+		}
+
+		[Bindable(true)]
+		public Style CloseButtonStyle
+		{
+			get { return (Style)this.GetValue(CloseButtonStyleProperty); }
+			set { this.SetValue(CloseButtonStyleProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets/sets the command that is executed when the Close Button is clicked.
+		/// </summary>
+		public ICommand CloseButtonCommand
+		{
+			get { return (ICommand)this.GetValue(CloseButtonCommandProperty); }
+			set { this.SetValue(CloseButtonCommandProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets/sets the command parameter that is used by the CloseButtonCommand when the Close Button is clicked.
+		/// </summary>
+		public object CloseButtonCommandParameter
+		{
+			get { return (object)this.GetValue(CloseButtonCommandParameterProperty); }
+			set { this.SetValue(CloseButtonCommandParameterProperty, value); }
 		}
 
 		public bool IsOpen
@@ -132,12 +312,9 @@ namespace MahApps.Metro.SimpleChildWindow
 							childWindow.hideStoryboard.Completed -= childWindow.HideStoryboard_Completed;
 						}
 
-						Canvas.SetZIndex(childWindow, 1);
-						var child = childWindow.FindVisualChilds<UIElement>(true).FirstOrDefault(c => c.Focusable);
-						if (child != null)
-						{
-							child.IsVisibleChanged += (sender, args) => child.Focus();
-						}
+						Panel.SetZIndex(childWindow, 1);
+
+						childWindow.TryFocusElement();
 					}
 					else
 					{
@@ -153,11 +330,20 @@ namespace MahApps.Metro.SimpleChildWindow
 
 					VisualStateManager.GoToState(childWindow, (bool)e.NewValue == false ? "Hide" : "Show", true);
 
-					childWindow.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
+					childWindow.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent, childWindow));
 				}
 			};
 
 			childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Background, openedChangedAction);
+		}
+
+		private void TryFocusElement()
+		{
+			var elementToFocus = FocusedElement ?? this.FindChildren<UIElement>().FirstOrDefault(c => c.Focusable);
+			if (elementToFocus != null)
+			{
+				elementToFocus.IsVisibleChanged += (sender, args) => elementToFocus.Focus();
+			}
 		}
 
 		private void HideStoryboard_Completed(object sender, EventArgs e)
@@ -169,7 +355,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		private void Hide()
 		{
 			this.DataContext = null;
-			this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
+			this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent, this));
 		}
 
 		public double ChildWindowWidth
@@ -196,6 +382,37 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(ChildWindowImageProperty, value); }
 		}
 
+		public bool EnableDropShadow
+		{
+			get { return (bool)this.GetValue(EnableDropShadowProperty); }
+			set { this.SetValue(EnableDropShadowProperty, value); }
+		}
+
+		public FrameworkElement FocusedElement
+		{
+			get { return (FrameworkElement)this.GetValue(FocusedElementProperty); }
+			set { this.SetValue(FocusedElementProperty, value); }
+		}
+
+		private string closeText;
+		public string CloseButtonToolTip
+		{
+			get
+			{
+				if (string.IsNullOrEmpty(closeText))
+				{
+					closeText = GetCaption(905);
+				}
+				return closeText;
+			}
+		}
+
+		private Storyboard hideStoryboard;
+		private Thumb headerThumb;
+		private Button closeButton;
+		private TranslateTransform moveTransform = new TranslateTransform();
+		private Grid partWindow;
+
 		static ChildWindow()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(ChildWindow), new FrameworkPropertyMetadata(typeof(ChildWindow)));
@@ -205,17 +422,101 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			base.OnApplyTemplate();
 
-			this.hideStoryboard = (Storyboard)GetTemplateChild("HideStoryboard");
+			// really necessary?
+			if (this.Template == null)
+			{
+				return;
+			}
+
+			this.hideStoryboard = this.Template.FindName(HideStoryboard, this) as Storyboard;
+
+			this.partWindow = this.Template.FindName(PART_Window, this) as Grid;
+			if (this.partWindow != null)
+			{
+				this.partWindow.RenderTransform = this.moveTransform;
+			}
+
+			if (this.headerThumb != null)
+			{
+				this.headerThumb.DragDelta -= new DragDeltaEventHandler(this.HeaderThumbDragDelta);
+			}
+			this.headerThumb = this.Template.FindName(PART_HeaderThumb, this) as Thumb;
+			if (this.headerThumb != null && this.partWindow != null)
+			{
+				var allowDragging = this.partWindow.HorizontalAlignment != HorizontalAlignment.Stretch
+									&& this.partWindow.VerticalAlignment != VerticalAlignment.Stretch;
+				if (allowDragging)
+				{
+					this.headerThumb.DragDelta += new DragDeltaEventHandler(this.HeaderThumbDragDelta);
+				}
+			}
+
+			if (this.closeButton != null)
+			{
+				this.closeButton.Click -= new RoutedEventHandler(this.Close);
+			}
+			this.closeButton = this.Template.FindName(PART_CloseButton, this) as Button;
+			if (this.closeButton != null)
+			{
+				this.closeButton.Click += new RoutedEventHandler(this.Close);
+			}
+		}
+
+		private void HeaderThumbDragDelta(object sender, DragDeltaEventArgs e)
+		{
+			var horizontalChange = this.FlowDirection == FlowDirection.RightToLeft ? -e.HorizontalChange : e.HorizontalChange;
+			ProcessMove(horizontalChange, e.VerticalChange);
+		}
+
+		private void ProcessMove(double x, double y)
+		{
+			this.moveTransform.X += x;
+			this.moveTransform.Y += y;
+
+			this.InvalidateArrange();
+		}
+
+		private void Close(object sender, RoutedEventArgs e)
+		{
+			this.Close();
+		}
+
+		/// <summary>
+		/// Closes this instance.
+		/// </summary>
+		public bool Close()
+		{
+			if (this.CloseButtonCommand != null)
+			{
+				this.CloseButtonCommand.Execute(this.CloseButtonCommandParameter);
+				this.CloseButtonCommand = null;
+				this.CloseButtonCommandParameter = null;
+			}
+
+			this.IsOpen = false;
+
+			return true;
 		}
 
 		protected override void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e)
 		{
 			if (e.Key == System.Windows.Input.Key.Escape)
 			{
-				this.IsOpen = false;
-				e.Handled = true;
+				e.Handled = this.Close();
 			}
 			base.OnPreviewKeyUp(e);
+		}
+
+		private SafeLibraryHandle user32 = null;
+
+		private string GetCaption(int id)
+		{
+			if (user32 == null)
+				user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
+
+			var sb = new StringBuilder(256);
+			UnsafeNativeMethods.LoadString(user32, (uint)id, sb, sb.Capacity);
+			return sb.ToString().Replace("&", "");
 		}
 	}
 }

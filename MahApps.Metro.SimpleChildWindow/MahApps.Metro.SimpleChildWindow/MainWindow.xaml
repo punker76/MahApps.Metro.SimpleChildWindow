@@ -39,7 +39,7 @@
 									   VerticalContentAlignment="Stretch"
 									   Padding="15"
 									   ChildWindowImage="Error"
-									   Header="TestChild 1">
+									   Title="TestChild 1">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
@@ -66,7 +66,8 @@
 		<simpleChildWindow:ChildWindow x:Name="child02"
 									   ChildWindowWidth="400"
 									   ChildWindowHeight="300"
-									   Header="TestChild 2">
+									   EnableDropShadow="False"
+									   Title="TestChild 2">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
@@ -89,9 +90,6 @@
 						Click="CloseSec_OnClick" />
 			</Grid>
 		</simpleChildWindow:ChildWindow>
-
-		<simpleChildWindow:CoolChildWindow x:Name="child03"
-										   Header="TestChild 3" />
 
 	</Grid>
 </controls:MetroWindow>

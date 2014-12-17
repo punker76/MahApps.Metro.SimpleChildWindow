@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("MahApps.Metro.SimpleChildWindow")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("INFORM GmbH")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MahApps.Metro.SimpleChildWindow")]
-[assembly: AssemblyCopyright("Copyright © INFORM GmbH 2013")]
+[assembly: AssemblyCopyright("Copyright © Jan Karger")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -6,7 +6,20 @@
 							   xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow"
 							   mc:Ignorable="d"
 							   d:DesignHeight="300"
-							   d:DesignWidth="300">
+							   d:DesignWidth="300"
+							   ShowCloseButton="True">
+
+	<simpleChildWindow:ChildWindow.Icon>
+		<Rectangle Width="22"
+				   Height="22"
+				   Fill="{DynamicResource IdealForegroundColorBrush}">
+			<Rectangle.OpacityMask>
+				<VisualBrush Stretch="Uniform"
+							 Visual="{DynamicResource appbar_cog}" />
+			</Rectangle.OpacityMask>
+		</Rectangle>
+	</simpleChildWindow:ChildWindow.Icon>
+	
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -14,15 +27,16 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<TextBlock Grid.Row="0"
-				   Margin="20"
+				   Margin="5"
 				   FontSize="36"
 				   FontWeight="Thin"
-				   Text="cool, dat hier auch" />
-		<TextBox Grid.Row="1" />
+				   Text="Yepp, it works!" />
+		<TextBox Grid.Row="1"
+				 Margin="5" />
 		<Button Grid.Row="2"
-				Margin="20"
+				Margin="5"
 				IsDefault="True"
-				VerticalAlignment="Top"
+				VerticalAlignment="Bottom"
 				FontSize="20"
 				FontWeight="Thin"
 				Content="Close Me"
