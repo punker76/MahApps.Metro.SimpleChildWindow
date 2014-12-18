@@ -16,6 +16,7 @@
 					 TargetType="{x:Type scw:ChildWindow}">
 		<Grid x:Name="PART_Overlay"
 			  Opacity="0"
+			  ClipToBounds="True"
 			  KeyboardNavigation.TabNavigation="None"
 			  FocusVisualStyle="{x:Null}"
 			  Visibility="Collapsed">
