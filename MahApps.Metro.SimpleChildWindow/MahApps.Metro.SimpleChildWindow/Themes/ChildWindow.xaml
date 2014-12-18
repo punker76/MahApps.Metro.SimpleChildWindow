@@ -11,20 +11,20 @@
 											  TrueValue="Collapsed"
 											  FalseValue="Visible" />
 	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<SolidColorBrush x:Key="OverlayBrush"
+					 Color="{DynamicResource Gray2}"
+					 Opacity="0.8"
+					 options:Freeze="True" />
 
 	<ControlTemplate x:Key="ChildWindowTemplate"
 					 TargetType="{x:Type scw:ChildWindow}">
 		<Grid x:Name="PART_Overlay"
 			  Opacity="0"
 			  ClipToBounds="True"
+			  Background="{TemplateBinding OverlayBackground}"
 			  KeyboardNavigation.TabNavigation="None"
 			  FocusVisualStyle="{x:Null}"
 			  Visibility="Collapsed">
-
-			<Grid.Background>
-				<SolidColorBrush Color="{DynamicResource Gray2}"
-								 Opacity="0.8" />
-			</Grid.Background>
 
 			<VisualStateManager.VisualStateGroups>
 				<VisualStateGroup>
@@ -84,7 +84,7 @@
 						<DropShadowEffect ShadowDepth="0"
 										  Color="{DynamicResource BlackColor}"
 										  BlurRadius="15"
-										  options:Freeze="true" />
+										  options:Freeze="True" />
 					</Grid.Effect>
 				</Grid>
 
@@ -202,6 +202,8 @@
 	</ControlTemplate>
 
 	<Style TargetType="{x:Type scw:ChildWindow}">
+		<Setter Property="OverlayBackground"
+				Value="{StaticResource OverlayBrush}" />
 		<Setter Property="Background"
 				Value="{DynamicResource WhiteBrush}" />
 		<Setter Property="TitleBarBackground"

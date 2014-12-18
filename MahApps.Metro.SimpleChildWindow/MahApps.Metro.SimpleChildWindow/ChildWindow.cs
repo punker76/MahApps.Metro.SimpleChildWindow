@@ -30,6 +30,12 @@ namespace MahApps.Metro.SimpleChildWindow
 		private const string PART_Icon = "PART_Icon";
 		private const string PART_CloseButton = "PART_CloseButton";
 
+		public static readonly DependencyProperty OverlayBackgroundProperty
+			= DependencyProperty.Register("OverlayBackground",
+										  typeof(Brush),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
+
 		public static readonly DependencyProperty ShowTitleBarProperty
 			= DependencyProperty.Register("ShowTitleBar",
 										  typeof(bool),
@@ -178,6 +184,12 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			add { AddHandler(ClosingFinishedEvent, value); }
 			remove { RemoveHandler(ClosingFinishedEvent, value); }
+		}
+
+		public Brush OverlayBackground
+		{
+			get { return (Brush)this.GetValue(OverlayBackgroundProperty); }
+			set { this.SetValue(OverlayBackgroundProperty, value); }
 		}
 
 		/// <summary>
