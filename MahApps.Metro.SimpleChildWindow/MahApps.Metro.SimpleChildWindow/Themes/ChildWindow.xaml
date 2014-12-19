@@ -155,6 +155,7 @@
 
 							<!-- Header Drag Thumb -->
 							<Thumb x:Name="PART_HeaderThumb"
+								   Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AllowMove, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
 								   Grid.Column="0"
 								   Grid.ColumnSpan="2"
 								   Opacity="0"

@@ -32,6 +32,12 @@ namespace MahApps.Metro.SimpleChildWindow
 		private const string PART_CloseButton = "PART_CloseButton";
 		private const string PART_Border = "PART_Border";
 
+		public static readonly DependencyProperty AllowMoveProperty
+			= DependencyProperty.Register("AllowMove",
+										  typeof(bool),
+										  typeof(ChildWindow),
+										  new PropertyMetadata(default(bool)));
+
 		public static readonly DependencyProperty OverlayBackgroundProperty
 			= DependencyProperty.Register("OverlayBackground",
 										  typeof(Brush),
@@ -198,6 +204,12 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			add { AddHandler(ClosingFinishedEvent, value); }
 			remove { RemoveHandler(ClosingFinishedEvent, value); }
+		}
+
+		public bool AllowMove
+		{
+			get { return (bool)this.GetValue(AllowMoveProperty); }
+			set { this.SetValue(AllowMoveProperty, value); }
 		}
 
 		public Brush OverlayBackground
@@ -471,12 +483,12 @@ namespace MahApps.Metro.SimpleChildWindow
 
 			if (this.partOverlay != null)
 			{
-				this.partOverlay.MouseLeftButtonUp -= PartOverlayOnClose;
+				this.partOverlay.MouseLeftButtonDown -= PartOverlayOnClose;
 			}
 			this.partOverlay = this.Template.FindName(PART_Overlay, this) as Grid;
 			if (this.partOverlay != null)
 			{
-				this.partOverlay.MouseLeftButtonUp += PartOverlayOnClose;
+				this.partOverlay.MouseLeftButtonDown += PartOverlayOnClose;
 			}
 
 			this.partWindow = this.Template.FindName(PART_Window, this) as Grid;
@@ -513,7 +525,7 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		void PartOverlayOnClose(object sender, MouseButtonEventArgs e)
 		{
-			if (this.CloseOnOverlay)
+			if (Equals(e.OriginalSource, partOverlay) && this.CloseOnOverlay)
 			{
 				this.Close();
 			}
