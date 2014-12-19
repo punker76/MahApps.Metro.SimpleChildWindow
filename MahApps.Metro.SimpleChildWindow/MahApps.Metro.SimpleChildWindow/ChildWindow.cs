@@ -20,6 +20,7 @@ namespace MahApps.Metro.SimpleChildWindow
 	[TemplatePart(Name = PART_HeaderThumb, Type = typeof(Thumb))]
 	[TemplatePart(Name = PART_Icon, Type = typeof(ContentControl))]
 	[TemplatePart(Name = PART_CloseButton, Type = typeof(Button))]
+	[TemplatePart(Name = PART_Border, Type = typeof(Border))]
 	public class ChildWindow : ContentControl
 	{
 		private const string PART_Overlay = "PART_Overlay";
@@ -29,12 +30,19 @@ namespace MahApps.Metro.SimpleChildWindow
 		private const string PART_HeaderThumb = "PART_HeaderThumb";
 		private const string PART_Icon = "PART_Icon";
 		private const string PART_CloseButton = "PART_CloseButton";
+		private const string PART_Border = "PART_Border";
 
 		public static readonly DependencyProperty OverlayBackgroundProperty
 			= DependencyProperty.Register("OverlayBackground",
 										  typeof(Brush),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
+
+		public static readonly DependencyProperty CloseOnOverlayProperty
+			= DependencyProperty.Register("CloseOnOverlay",
+										  typeof(bool),
+										  typeof(ChildWindow),
+										  new PropertyMetadata(default(bool)));
 
 		public static readonly DependencyProperty ShowTitleBarProperty
 			= DependencyProperty.Register("ShowTitleBar",
@@ -196,6 +204,12 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (Brush)this.GetValue(OverlayBackgroundProperty); }
 			set { this.SetValue(OverlayBackgroundProperty, value); }
+		}
+
+		public bool CloseOnOverlay
+		{
+			get { return (bool)this.GetValue(CloseOnOverlayProperty); }
+			set { this.SetValue(CloseOnOverlayProperty, value); }
 		}
 
 		/// <summary>
@@ -436,6 +450,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		private Button closeButton;
 		private TranslateTransform moveTransform = new TranslateTransform();
 		private Grid partWindow;
+		private Grid partOverlay;
 
 		static ChildWindow()
 		{
@@ -453,6 +468,16 @@ namespace MahApps.Metro.SimpleChildWindow
 			}
 
 			this.hideStoryboard = this.Template.FindName(HideStoryboard, this) as Storyboard;
+
+			if (this.partOverlay != null)
+			{
+				this.partOverlay.MouseLeftButtonUp -= PartOverlayOnClose;
+			}
+			this.partOverlay = this.Template.FindName(PART_Overlay, this) as Grid;
+			if (this.partOverlay != null)
+			{
+				this.partOverlay.MouseLeftButtonUp += PartOverlayOnClose;
+			}
 
 			this.partWindow = this.Template.FindName(PART_Window, this) as Grid;
 			if (this.partWindow != null)
@@ -483,6 +508,14 @@ namespace MahApps.Metro.SimpleChildWindow
 			if (this.closeButton != null)
 			{
 				this.closeButton.Click += new RoutedEventHandler(this.Close);
+			}
+		}
+
+		void PartOverlayOnClose(object sender, MouseButtonEventArgs e)
+		{
+			if (this.CloseOnOverlay)
+			{
+				this.Close();
 			}
 		}
 
