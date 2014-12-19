@@ -8,6 +8,8 @@
 							   d:DesignHeight="300"
 							   d:DesignWidth="300"
 							   GlowBrush="{DynamicResource AccentColorBrush}"
+							   BorderBrush="{DynamicResource AccentColorBrush}"
+							   BorderThickness="1"
 							   ShowCloseButton="True">
 
 	<simpleChildWindow:ChildWindow.Icon>

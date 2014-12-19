@@ -89,17 +89,12 @@
 					  Background="{TemplateBinding Background}"
 					  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableDropShadow, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
 					  FocusVisualStyle="{x:Null}"
-					  Effect="{StaticResource GlowEffect}">
-					<!--					<Grid.Effect>-->
-					<!--						<DropShadowEffect Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type scw:ChildWindow}}, Path=(GlowBrush).Color, Mode=OneWay}"-->
-					<!--										  BlurRadius="10"-->
-					<!--										  Opacity="0.5"-->
-					<!--										  ShadowDepth="0" />-->
-					<!--					</Grid.Effect>-->
-				</Grid>
+					  Effect="{StaticResource GlowEffect}" />
 
 				<Border x:Name="PART_Border"
 						Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}"
 						KeyboardNavigation.TabNavigation="None"
 						FocusVisualStyle="{x:Null}">
 
