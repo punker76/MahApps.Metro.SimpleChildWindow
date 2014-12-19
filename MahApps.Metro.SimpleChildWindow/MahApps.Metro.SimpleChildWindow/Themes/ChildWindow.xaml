@@ -26,6 +26,14 @@
 			  FocusVisualStyle="{x:Null}"
 			  Visibility="Collapsed">
 
+			<Grid.Resources>
+				<DropShadowEffect x:Key="GlowEffect"
+								  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(GlowBrush).Color, Mode=OneWay}"
+								  BlurRadius="10"
+								  Opacity="0.8"
+								  ShadowDepth="0" />
+			</Grid.Resources>
+
 			<VisualStateManager.VisualStateGroups>
 				<VisualStateGroup>
 					<VisualState x:Name="Default" />
@@ -77,18 +85,21 @@
 				  Margin="{TemplateBinding Padding}"
 				  FocusVisualStyle="{x:Null}">
 
-				<Grid Background="{TemplateBinding Background}"
+				<Grid x:Name="PART_Glow"
+					  Background="{TemplateBinding Background}"
 					  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableDropShadow, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-					  FocusVisualStyle="{x:Null}">
-					<Grid.Effect>
-						<DropShadowEffect ShadowDepth="0"
-										  Color="{DynamicResource BlackColor}"
-										  BlurRadius="15"
-										  options:Freeze="True" />
-					</Grid.Effect>
+					  FocusVisualStyle="{x:Null}"
+					  Effect="{StaticResource GlowEffect}">
+					<!--					<Grid.Effect>-->
+					<!--						<DropShadowEffect Color="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type scw:ChildWindow}}, Path=(GlowBrush).Color, Mode=OneWay}"-->
+					<!--										  BlurRadius="10"-->
+					<!--										  Opacity="0.5"-->
+					<!--										  ShadowDepth="0" />-->
+					<!--					</Grid.Effect>-->
 				</Grid>
 
-				<Border Background="{TemplateBinding Background}"
+				<Border x:Name="PART_Border"
+						Background="{TemplateBinding Background}"
 						KeyboardNavigation.TabNavigation="None"
 						FocusVisualStyle="{x:Null}">
 

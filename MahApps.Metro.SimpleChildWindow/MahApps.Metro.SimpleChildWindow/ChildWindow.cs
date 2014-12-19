@@ -156,6 +156,12 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(ChildWindow),
 										  new UIPropertyMetadata(null));
 
+		public static readonly DependencyProperty GlowBrushProperty
+			= DependencyProperty.Register("GlowBrush",
+										  typeof(SolidColorBrush),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+
 		/// <summary>
 		/// An event that is raised when IsOpen changes.
 		/// </summary>
@@ -404,6 +410,12 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (FrameworkElement)this.GetValue(FocusedElementProperty); }
 			set { this.SetValue(FocusedElementProperty, value); }
+		}
+
+		public SolidColorBrush GlowBrush
+		{
+			get { return (SolidColorBrush)this.GetValue(GlowBrushProperty); }
+			set { this.SetValue(GlowBrushProperty, value); }
 		}
 
 		private string closeText;

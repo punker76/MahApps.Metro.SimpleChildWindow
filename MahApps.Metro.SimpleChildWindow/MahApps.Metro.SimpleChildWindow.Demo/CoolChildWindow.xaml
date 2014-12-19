@@ -7,6 +7,7 @@
 							   mc:Ignorable="d"
 							   d:DesignHeight="300"
 							   d:DesignWidth="300"
+							   GlowBrush="{DynamicResource AccentColorBrush}"
 							   ShowCloseButton="True">
 
 	<simpleChildWindow:ChildWindow.Icon>
