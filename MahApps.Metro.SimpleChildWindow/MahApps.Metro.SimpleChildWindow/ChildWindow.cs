@@ -212,24 +212,36 @@ namespace MahApps.Metro.SimpleChildWindow
 			remove { RemoveHandler(ClosingFinishedEvent, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the child window can be moved inside the overlay container.
+		/// </summary>
 		public bool AllowMove
 		{
 			get { return (bool)this.GetValue(AllowMoveProperty); }
 			set { this.SetValue(AllowMoveProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the child window is modal.
+		/// </summary>
 		public bool IsModal
 		{
 			get { return (bool)this.GetValue(IsModalProperty); }
 			set { this.SetValue(IsModalProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets the overlay brush.
+		/// </summary>
 		public Brush OverlayBrush
 		{
 			get { return (Brush)this.GetValue(OverlayBrushProperty); }
 			set { this.SetValue(OverlayBrushProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the child window can be closed by clicking the overlay container.
+		/// </summary>
 		public bool CloseOnOverlay
 		{
 			get { return (bool)this.GetValue(CloseOnOverlayProperty); }
@@ -237,7 +249,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
-		/// Gets/sets whether the TitleBar is visible or not.
+		/// Gets or sets whether the title bar is visible or not.
 		/// </summary>
 		public bool ShowTitleBar
 		{
@@ -246,7 +258,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
-		/// Gets/sets the TitleBar's height.
+		/// Gets or sets the height of the title bar.
 		/// </summary>
 		public int TitleBarHeight
 		{
@@ -254,18 +266,27 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { SetValue(TitleBarHeightProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets the title bar background.
+		/// </summary>
 		public Brush TitleBarBackground
 		{
 			get { return (Brush)this.GetValue(TitleBarBackgroundProperty); }
 			set { this.SetValue(TitleBarBackgroundProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets the title foreground.
+		/// </summary>
 		public Brush TitleForeground
 		{
 			get { return (Brush)this.GetValue(TitleForegroundProperty); }
 			set { this.SetValue(TitleForegroundProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets the title.
+		/// </summary>
 		public string Title
 		{
 			get { return (string)this.GetValue(TitleProperty); }
@@ -293,7 +314,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
-		/// Gets/sets the icon content template to show a icon or something else.
+		/// Gets or sets the icon content template to show a icon or something else.
 		/// </summary>
 		[Bindable(true)]
 		public object Icon
@@ -303,7 +324,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
-		/// Gets/sets the icon content template to show a custom icon or something else.
+		/// Gets or sets the icon content template to show a custom icon or something else.
 		/// </summary>
 		[Bindable(true)]
 		public DataTemplate IconTemplate
@@ -313,7 +334,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
-		/// Gets/sets if the close button is visible.
+		/// Gets or sets if the close button is visible.
 		/// </summary>
 		public bool ShowCloseButton
 		{
@@ -321,6 +342,9 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(ShowCloseButtonProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets the close button style.
+		/// </summary>
 		[Bindable(true)]
 		public Style CloseButtonStyle
 		{
@@ -329,7 +353,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
-		/// Gets/sets the command that is executed when the Close Button is clicked.
+		/// Gets or sets the command that is executed when the Close Button is clicked.
 		/// </summary>
 		public ICommand CloseButtonCommand
 		{
@@ -338,7 +362,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
-		/// Gets/sets the command parameter that is used by the CloseButtonCommand when the Close Button is clicked.
+		/// Gets or sets the command parameter that is used by the CloseButtonCommand when the Close Button is clicked.
 		/// </summary>
 		public object CloseButtonCommandParameter
 		{
@@ -346,6 +370,9 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(CloseButtonCommandParameterProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this instance is open or closed.
+		/// </summary>
 		public bool IsOpen
 		{
 			get { return (bool)this.GetValue(IsOpenProperty); }
@@ -414,6 +441,9 @@ namespace MahApps.Metro.SimpleChildWindow
 			this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent, this));
 		}
 
+		/// <summary>
+		/// Gets or sets the width of the child window.
+		/// </summary>
 		public double ChildWindowWidth
 		{
 			get { return (double)this.GetValue(ChildWindowWidthProperty); }
@@ -426,30 +456,45 @@ namespace MahApps.Metro.SimpleChildWindow
 			return (double.IsNaN(v)) || (v >= 0.0d && !double.IsPositiveInfinity(v));
 		}
 
+		/// <summary>
+		/// Gets or sets the height of the child window.
+		/// </summary>
 		public double ChildWindowHeight
 		{
 			get { return (double)this.GetValue(ChildWindowHeightProperty); }
 			set { this.SetValue(ChildWindowHeightProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets which image is shown on the left side of the window content.
+		/// </summary>
 		public MessageBoxImage ChildWindowImage
 		{
 			get { return (MessageBoxImage)this.GetValue(ChildWindowImageProperty); }
 			set { this.SetValue(ChildWindowImageProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the window has a drop shadow (glow brush).
+		/// </summary>
 		public bool EnableDropShadow
 		{
 			get { return (bool)this.GetValue(EnableDropShadowProperty); }
 			set { this.SetValue(EnableDropShadowProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets the focused element.
+		/// </summary>
 		public FrameworkElement FocusedElement
 		{
 			get { return (FrameworkElement)this.GetValue(FocusedElementProperty); }
 			set { this.SetValue(FocusedElementProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets the glow brush (drop shadow).
+		/// </summary>
 		public SolidColorBrush GlowBrush
 		{
 			get { return (SolidColorBrush)this.GetValue(GlowBrushProperty); }
@@ -457,6 +502,10 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		private string closeText;
+
+		/// <summary>
+		/// Gets the close button tool tip.
+		/// </summary>
 		public string CloseButtonToolTip
 		{
 			get
@@ -535,7 +584,7 @@ namespace MahApps.Metro.SimpleChildWindow
 			}
 		}
 
-		void PartOverlayOnClose(object sender, MouseButtonEventArgs e)
+		private void PartOverlayOnClose(object sender, MouseButtonEventArgs e)
 		{
 			if (Equals(e.OriginalSource, partOverlay) && this.CloseOnOverlay)
 			{
