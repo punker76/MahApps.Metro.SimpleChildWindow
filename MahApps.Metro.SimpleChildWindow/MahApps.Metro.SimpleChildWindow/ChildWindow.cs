@@ -38,6 +38,12 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(ChildWindow),
 										  new PropertyMetadata(default(bool)));
 
+		public static readonly DependencyProperty IsModalProperty
+			= DependencyProperty.Register("IsModal",
+										  typeof(bool),
+										  typeof(ChildWindow),
+										  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
+
 		public static readonly DependencyProperty OverlayBackgroundProperty
 			= DependencyProperty.Register("OverlayBackground",
 										  typeof(Brush),
@@ -210,6 +216,12 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (bool)this.GetValue(AllowMoveProperty); }
 			set { this.SetValue(AllowMoveProperty, value); }
+		}
+
+		public bool IsModal
+		{
+			get { return (bool)this.GetValue(IsModalProperty); }
+			set { this.SetValue(IsModalProperty, value); }
 		}
 
 		public Brush OverlayBackground

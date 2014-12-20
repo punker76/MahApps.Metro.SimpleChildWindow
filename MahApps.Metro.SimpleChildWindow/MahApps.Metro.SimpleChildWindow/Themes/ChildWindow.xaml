@@ -11,7 +11,7 @@
 											  TrueValue="Collapsed"
 											  FalseValue="Visible" />
 	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-	<SolidColorBrush x:Key="OverlayBrush"
+	<SolidColorBrush x:Key="DefaultOverlayBrush"
 					 Color="{DynamicResource Gray2}"
 					 Opacity="0.8"
 					 options:Freeze="True" />
@@ -194,6 +194,12 @@
 			</Grid>
 		</Grid>
 		<ControlTemplate.Triggers>
+			<Trigger Property="IsModal"
+					 Value="False">
+				<Setter TargetName="PART_Overlay"
+						Property="Background"
+						Value="{x:Null}" />
+			</Trigger>
 			<MultiTrigger>
 				<MultiTrigger.Conditions>
 					<Condition Property="Icon"
@@ -210,7 +216,7 @@
 
 	<Style TargetType="{x:Type scw:ChildWindow}">
 		<Setter Property="OverlayBackground"
-				Value="{StaticResource OverlayBrush}" />
+				Value="{StaticResource DefaultOverlayBrush}" />
 		<Setter Property="Background"
 				Value="{DynamicResource WhiteBrush}" />
 		<Setter Property="TitleBarBackground"
