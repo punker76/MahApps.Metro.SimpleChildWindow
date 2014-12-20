@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>MahApps.Metro.SimpleChildWindow</id>
+    <version>1.0.0.0</version>
+    <title>MahApps.Metro.SimpleChildWindow</title>
+    <authors>Jan Karger (punker76)</authors>
+    <owners>Jan Karger</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/mahapps.metro.logo2.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A simple child window for MahApps.Metro the "Metro" or "Modern" UI for WPF4+ apps.</description>
+    <summary>A simple child window for MahApps.Metro the "Metro" or "Modern" UI for WPF4+ apps.</summary>
+    <releaseNotes/>
+    <tags>WPF UI Metro ModernUI</tags>
+    <dependencies>
+      <dependency id="MahApps.Metro" version="1.0.0"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\NET4\MahApps.Metro.SimpleChildWindow.dll" target="lib\net40\MahApps.Metro.SimpleChildWindow.dll"/>
+    <file src="bin\Release\NET4\MahApps.Metro.SimpleChildWindow.XML" target="lib\net40\MahApps.Metro.SimpleChildWindow.XML"/>
+    <file src="bin\Release\MahApps.Metro.SimpleChildWindow.dll" target="lib\net45\MahApps.Metro.SimpleChildWindow.dll"/>
+    <file src="bin\Release\MahApps.Metro.SimpleChildWindow.XML" target="lib\net45\MahApps.Metro.SimpleChildWindow.XML"/>
+  </files>
+</package>

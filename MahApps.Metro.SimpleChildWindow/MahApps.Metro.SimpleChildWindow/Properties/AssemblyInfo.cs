@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MahApps.Metro.SimpleChildWindow")]
-[assembly: AssemblyCopyright("Copyright © Jan Karger")]
+[assembly: AssemblyCopyright("Copyright © Jan Karger 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
