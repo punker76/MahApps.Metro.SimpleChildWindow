@@ -7,6 +7,10 @@
 							   mc:Ignorable="d"
 							   d:DesignHeight="300"
 							   d:DesignWidth="300"
+							   CloseOnOverlay="True"
+							   GlowBrush="{DynamicResource AccentColorBrush}"
+							   BorderBrush="{DynamicResource AccentColorBrush}"
+							   BorderThickness="1"
 							   ShowCloseButton="True">
 
 	<simpleChildWindow:ChildWindow.Icon>

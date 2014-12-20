@@ -9,10 +9,26 @@ namespace MahApps.Metro.SimpleChildWindow
 	public static class ChildWindowManager
 	{
 		/// <summary>
+		/// An enumeration to control the fill behavior of the behavior
+		/// </summary>
+		public enum OverlayFillBehavior
+		{
+			/// <summary>
+			/// The overlay covers the full window
+			/// </summary>
+			FullWindow,
+			/// <summary>
+			/// The overlay covers only then window content, so the window taskbar is useable
+			/// </summary>
+			WindowContent
+		}
+
+		/// <summary>
 		/// Shows the given child window asynchronous.
 		/// </summary>
 		/// <param name="window">The owning window with a container of the child window.</param>
 		/// <param name="dialog">A child window instance.</param>
+		/// <param name="overlayFillBehavior">The overlay fill behavior.</param>
 		/// <returns>
 		/// A task representing the operation.
 		/// </returns>
@@ -21,7 +37,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		/// or
 		/// The provided child window is already visible in the specified window.
 		/// </exception>
-		public static Task ShowChildWindowAsync(this MetroWindow window, ChildWindow dialog)
+		public static Task ShowChildWindowAsync(this MetroWindow window, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
 		{
 			window.Dispatcher.VerifyAccess();
 			var metroDialogContainer = window.Template.FindName("PART_MetroDialogContainer", window) as Grid;
@@ -32,6 +48,12 @@ namespace MahApps.Metro.SimpleChildWindow
 			if (metroDialogContainer.Children.Contains(dialog))
 			{
 				throw new InvalidOperationException("The provided child window is already visible in the specified window.");
+			}
+
+			if (overlayFillBehavior == OverlayFillBehavior.WindowContent)
+			{
+				metroDialogContainer.SetValue(Grid.RowProperty, 1);
+				metroDialogContainer.SetValue(Grid.RowSpanProperty, 1);
 			}
 
 			return Task.Factory

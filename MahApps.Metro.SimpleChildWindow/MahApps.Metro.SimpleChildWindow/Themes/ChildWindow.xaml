@@ -11,19 +11,28 @@
 											  TrueValue="Collapsed"
 											  FalseValue="Visible" />
 	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<SolidColorBrush x:Key="DefaultOverlayBrush"
+					 Color="{DynamicResource Gray2}"
+					 Opacity="0.8"
+					 options:Freeze="True" />
 
 	<ControlTemplate x:Key="ChildWindowTemplate"
 					 TargetType="{x:Type scw:ChildWindow}">
 		<Grid x:Name="PART_Overlay"
 			  Opacity="0"
+			  ClipToBounds="True"
+			  Background="{TemplateBinding OverlayBrush}"
 			  KeyboardNavigation.TabNavigation="None"
 			  FocusVisualStyle="{x:Null}"
 			  Visibility="Collapsed">
 
-			<Grid.Background>
-				<SolidColorBrush Color="{DynamicResource Gray2}"
-								 Opacity="0.8" />
-			</Grid.Background>
+			<Grid.Resources>
+				<DropShadowEffect x:Key="GlowEffect"
+								  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(GlowBrush).Color, Mode=OneWay}"
+								  BlurRadius="10"
+								  Opacity="0.8"
+								  ShadowDepth="0" />
+			</Grid.Resources>
 
 			<VisualStateManager.VisualStateGroups>
 				<VisualStateGroup>
@@ -76,18 +85,16 @@
 				  Margin="{TemplateBinding Padding}"
 				  FocusVisualStyle="{x:Null}">
 
-				<Grid Background="{TemplateBinding Background}"
+				<Grid x:Name="PART_Glow"
+					  Background="{TemplateBinding Background}"
 					  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableDropShadow, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-					  FocusVisualStyle="{x:Null}">
-					<Grid.Effect>
-						<DropShadowEffect ShadowDepth="0"
-										  Color="{DynamicResource BlackColor}"
-										  BlurRadius="15"
-										  options:Freeze="true" />
-					</Grid.Effect>
-				</Grid>
+					  FocusVisualStyle="{x:Null}"
+					  Effect="{StaticResource GlowEffect}" />
 
-				<Border Background="{TemplateBinding Background}"
+				<Border x:Name="PART_Border"
+						Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}"
 						KeyboardNavigation.TabNavigation="None"
 						FocusVisualStyle="{x:Null}">
 
@@ -148,6 +155,7 @@
 
 							<!-- Header Drag Thumb -->
 							<Thumb x:Name="PART_HeaderThumb"
+								   Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AllowMove, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
 								   Grid.Column="0"
 								   Grid.ColumnSpan="2"
 								   Opacity="0"
@@ -186,6 +194,12 @@
 			</Grid>
 		</Grid>
 		<ControlTemplate.Triggers>
+			<Trigger Property="IsModal"
+					 Value="False">
+				<Setter TargetName="PART_Overlay"
+						Property="Background"
+						Value="{x:Null}" />
+			</Trigger>
 			<MultiTrigger>
 				<MultiTrigger.Conditions>
 					<Condition Property="Icon"
@@ -201,6 +215,8 @@
 	</ControlTemplate>
 
 	<Style TargetType="{x:Type scw:ChildWindow}">
+		<Setter Property="OverlayBrush"
+				Value="{StaticResource DefaultOverlayBrush}" />
 		<Setter Property="Background"
 				Value="{DynamicResource WhiteBrush}" />
 		<Setter Property="TitleBarBackground"
