@@ -170,6 +170,12 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
+		public static readonly DependencyProperty AllowFocusElementProperty
+			= DependencyProperty.Register("AllowFocusElement",
+										  typeof(bool),
+										  typeof(ChildWindow),
+										  new PropertyMetadata(true));
+
 		public static readonly DependencyProperty FocusedElementProperty
 			= DependencyProperty.Register("FocusedElement",
 										  typeof(FrameworkElement),
@@ -422,10 +428,13 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private void TryFocusElement()
 		{
-			var elementToFocus = FocusedElement ?? this.FindChildren<UIElement>().FirstOrDefault(c => c.Focusable);
-			if (elementToFocus != null)
+			if (this.AllowFocusElement)
 			{
-				elementToFocus.IsVisibleChanged += (sender, args) => elementToFocus.Focus();
+				var elementToFocus = FocusedElement ?? this.FindChildren<UIElement>().FirstOrDefault(c => c.Focusable);
+				if (elementToFocus != null)
+				{
+					elementToFocus.IsVisibleChanged += (sender, args) => elementToFocus.Focus();
+				}
 			}
 		}
 
@@ -481,6 +490,15 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (bool)this.GetValue(EnableDropShadowProperty); }
 			set { this.SetValue(EnableDropShadowProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the child window should try focus an element.
+		/// </summary>
+		public bool AllowFocusElement
+		{
+			get { return (bool)this.GetValue(AllowFocusElementProperty); }
+			set { this.SetValue(AllowFocusElementProperty, value); }
 		}
 
 		/// <summary>
