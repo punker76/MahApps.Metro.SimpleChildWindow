@@ -44,8 +44,8 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
-		public static readonly DependencyProperty OverlayBackgroundProperty
-			= DependencyProperty.Register("OverlayBackground",
+		public static readonly DependencyProperty OverlayBrushProperty
+			= DependencyProperty.Register("OverlayBrush",
 										  typeof(Brush),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
@@ -224,10 +224,10 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(IsModalProperty, value); }
 		}
 
-		public Brush OverlayBackground
+		public Brush OverlayBrush
 		{
-			get { return (Brush)this.GetValue(OverlayBackgroundProperty); }
-			set { this.SetValue(OverlayBackgroundProperty, value); }
+			get { return (Brush)this.GetValue(OverlayBrushProperty); }
+			set { this.SetValue(OverlayBrushProperty, value); }
 		}
 
 		public bool CloseOnOverlay

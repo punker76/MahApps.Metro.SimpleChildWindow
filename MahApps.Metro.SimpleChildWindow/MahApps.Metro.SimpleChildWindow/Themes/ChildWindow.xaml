@@ -21,7 +21,7 @@
 		<Grid x:Name="PART_Overlay"
 			  Opacity="0"
 			  ClipToBounds="True"
-			  Background="{TemplateBinding OverlayBackground}"
+			  Background="{TemplateBinding OverlayBrush}"
 			  KeyboardNavigation.TabNavigation="None"
 			  FocusVisualStyle="{x:Null}"
 			  Visibility="Collapsed">
@@ -215,7 +215,7 @@
 	</ControlTemplate>
 
 	<Style TargetType="{x:Type scw:ChildWindow}">
-		<Setter Property="OverlayBackground"
+		<Setter Property="OverlayBrush"
 				Value="{StaticResource DefaultOverlayBrush}" />
 		<Setter Property="Background"
 				Value="{DynamicResource WhiteBrush}" />
