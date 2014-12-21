@@ -1,5 +1,7 @@
 # ![icon](https://raw.github.com/punker76/MahApps.Metro.SimpleChildWindow/master/MahApps.Metro.SimpleChildWindow/MahApps.Metro.SimpleChildWindow48.png) MahApps.Metro.SimpleChildWindow
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build status](https://ci.appveyor.com/api/projects/status/qyv24na2ff822h21/branch/master?svg=true)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/master)
 
 A simple child window for [MahApps.Metro](https://github.com/MahApps/MahApps.Metro). Yes, this means you need `MahApps.Metro` to use this control.
