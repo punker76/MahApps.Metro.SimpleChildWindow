@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
-using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow.Utils;
 
 namespace MahApps.Metro.SimpleChildWindow
@@ -21,6 +20,7 @@ namespace MahApps.Metro.SimpleChildWindow
 	[TemplatePart(Name = PART_Icon, Type = typeof(ContentControl))]
 	[TemplatePart(Name = PART_CloseButton, Type = typeof(Button))]
 	[TemplatePart(Name = PART_Border, Type = typeof(Border))]
+	[TemplatePart(Name = PART_Content, Type = typeof(ContentPresenter))]
 	public class ChildWindow : ContentControl
 	{
 		private const string PART_Overlay = "PART_Overlay";
@@ -31,6 +31,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		private const string PART_Icon = "PART_Icon";
 		private const string PART_CloseButton = "PART_CloseButton";
 		private const string PART_Border = "PART_Border";
+		private const string PART_Content = "PART_Content";
 
 		public static readonly DependencyProperty AllowMoveProperty
 			= DependencyProperty.Register("AllowMove",
@@ -431,9 +432,19 @@ namespace MahApps.Metro.SimpleChildWindow
 			if (this.AllowFocusElement)
 			{
 				var elementToFocus = FocusedElement ?? this.FindChildren<UIElement>().FirstOrDefault(c => c.Focusable);
+				if (this.ShowCloseButton && this.closeButton != null && elementToFocus == null)
+				{
+					this.closeButton.Focusable = true;
+					elementToFocus = this.closeButton;
+				}
 				if (elementToFocus != null)
 				{
-					elementToFocus.IsVisibleChanged += (sender, args) => elementToFocus.Focus();
+					DependencyPropertyChangedEventHandler eh = null;
+					eh = (sender, args) => {
+						elementToFocus.IsVisibleChanged -= eh;
+						var focused = elementToFocus.Focus();
+					};
+					elementToFocus.IsVisibleChanged += eh;
 				}
 			}
 		}

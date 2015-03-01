@@ -16,6 +16,20 @@
 					 Opacity="0.8"
 					 options:Freeze="True" />
 
+	<Style x:Key="SimpleChildWindowFocusVisual">
+		<Setter Property="Control.Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Rectangle Margin="1"
+							   SnapsToDevicePixels="true"
+							   Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+							   StrokeThickness="1"
+							   StrokeDashArray="1 2" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
 	<ControlTemplate x:Key="ChildWindowTemplate"
 					 TargetType="{x:Type scw:ChildWindow}">
 		<Grid x:Name="PART_Overlay"
@@ -98,97 +112,103 @@
 						KeyboardNavigation.TabNavigation="None"
 						FocusVisualStyle="{x:Null}">
 
-					<Grid>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="*" />
-						</Grid.RowDefinitions>
+					<AdornerDecorator>
+						<Grid KeyboardNavigation.TabNavigation="Cycle"
+							  KeyboardNavigation.ControlTabNavigation="Cycle"
+							  KeyboardNavigation.DirectionalNavigation="Cycle">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
 
-						<Grid x:Name="PART_Header"
-							  Grid.Row="0"
-							  Focusable="False"
-							  Background="{TemplateBinding TitleBarBackground}"
-							  Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-							  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+							<Grid x:Name="PART_Header"
+								  Grid.Row="0"
+								  Focusable="False"
+								  Background="{TemplateBinding TitleBarBackground}"
+								  Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+								  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="Auto" />
-							</Grid.ColumnDefinitions>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
 
-							<!-- icon -->
-							<ContentControl x:Name="PART_Icon"
-											Grid.Column="0"
-											Focusable="False"
-											Content="{TemplateBinding Icon}"
-											ContentTemplate="{TemplateBinding IconTemplate}"
-											HorizontalContentAlignment="Stretch"
-											VerticalContentAlignment="Stretch"
-											MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-											Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+								<!-- icon -->
+								<ContentControl x:Name="PART_Icon"
+												Grid.Column="0"
+												Focusable="False"
+												Content="{TemplateBinding Icon}"
+												ContentTemplate="{TemplateBinding IconTemplate}"
+												HorizontalContentAlignment="Stretch"
+												VerticalContentAlignment="Stretch"
+												MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+												Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
-							<!-- title -->
-							<TextBlock Grid.Column="1"
-									   Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-									   Text="{TemplateBinding Title}"
-									   TextAlignment="Left"
-									   TextTrimming="CharacterEllipsis"
-									   VerticalAlignment="Center"
-									   Padding="4"
-									   FontSize="{TemplateBinding TitleFontSize}"
-									   FontFamily="{TemplateBinding TitleFontFamily}"
-									   Foreground="{TemplateBinding TitleForeground}" />
+								<!-- title -->
+								<TextBlock Grid.Column="1"
+										   Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+										   Text="{TemplateBinding Title}"
+										   TextAlignment="Left"
+										   TextTrimming="CharacterEllipsis"
+										   VerticalAlignment="Center"
+										   Padding="4"
+										   FontSize="{TemplateBinding TitleFontSize}"
+										   FontFamily="{TemplateBinding TitleFontFamily}"
+										   Foreground="{TemplateBinding TitleForeground}" />
 
-							<!-- close button -->
-							<Button x:Name="PART_CloseButton"
-									Grid.Column="2"
-									Focusable="False"
-									Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-									Style="{TemplateBinding CloseButtonStyle}"
-									ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type scw:ChildWindow}}, Path=CloseButtonToolTip, Mode=OneWay}"
-									Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ShowCloseButton, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-								<Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
-									  SnapsToDevicePixels="True"
-									  Fill="{TemplateBinding TitleForeground}" />
-							</Button>
+								<!-- close button -->
+								<Button x:Name="PART_CloseButton"
+										Grid.Column="2"
+										Focusable="False"
+										IsTabStop="True"
+										FocusVisualStyle="{StaticResource SimpleChildWindowFocusVisual}"
+										Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+										Style="{TemplateBinding CloseButtonStyle}"
+										ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type scw:ChildWindow}}, Path=CloseButtonToolTip, Mode=OneWay}"
+										Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ShowCloseButton, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+									<Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+										  SnapsToDevicePixels="True"
+										  Fill="{TemplateBinding TitleForeground}" />
+								</Button>
 
-							<!-- Header Drag Thumb -->
-							<Thumb x:Name="PART_HeaderThumb"
-								   Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AllowMove, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-								   Grid.Column="0"
-								   Grid.ColumnSpan="2"
-								   Opacity="0"
-								   IsTabStop="False" />
+								<!-- Header Drag Thumb -->
+								<Thumb x:Name="PART_HeaderThumb"
+									   Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AllowMove, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+									   Grid.Column="0"
+									   Grid.ColumnSpan="2"
+									   Opacity="0"
+									   IsTabStop="False" />
+							</Grid>
+							<Grid Grid.Row="1">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+
+								<Rectangle Grid.Column="0"
+										   Margin="4,0,0,4"
+										   Width="48"
+										   Height="48"
+										   VerticalAlignment="Center"
+										   Visibility="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={StaticResource EnumToVisibilityCollapsedConverter}, ConverterParameter={x:Static MessageBoxImage.None}}">
+									<Rectangle.Fill>
+										<VisualBrush x:Name="iconBrush"
+													 Stretch="Fill"
+													 Visual="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={x:Static valueConverter:MessageBoxImageToImageSourceConverter.Instance}}">
+										</VisualBrush>
+									</Rectangle.Fill>
+								</Rectangle>
+								<ContentPresenter x:Name="PART_Content"
+												  Grid.Column="1"
+												  Content="{TemplateBinding Content}"
+												  ContentTemplate="{TemplateBinding ContentTemplate}"
+												  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+												  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+												  Margin="4,0,4,4" />
+							</Grid>
 						</Grid>
-						<Grid Grid.Row="1">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="*" />
-							</Grid.ColumnDefinitions>
-
-							<Rectangle Grid.Column="0"
-									   Margin="4,0,0,4"
-									   Width="48"
-									   Height="48"
-									   VerticalAlignment="Center"
-									   Visibility="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={StaticResource EnumToVisibilityCollapsedConverter}, ConverterParameter={x:Static MessageBoxImage.None}}">
-								<Rectangle.Fill>
-									<VisualBrush x:Name="iconBrush"
-												 Stretch="Fill"
-												 Visual="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={x:Static valueConverter:MessageBoxImageToImageSourceConverter.Instance}}">
-									</VisualBrush>
-								</Rectangle.Fill>
-							</Rectangle>
-							<ContentPresenter Grid.Column="1"
-											  Content="{TemplateBinding Content}"
-											  ContentTemplate="{TemplateBinding ContentTemplate}"
-											  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-											  ContentStringFormat="{TemplateBinding ContentStringFormat}"
-											  KeyboardNavigation.TabNavigation="Cycle"
-											  Margin="4,0,4,4" />
-						</Grid>
-					</Grid>
+					</AdornerDecorator>
 
 				</Border>
 			</Grid>
