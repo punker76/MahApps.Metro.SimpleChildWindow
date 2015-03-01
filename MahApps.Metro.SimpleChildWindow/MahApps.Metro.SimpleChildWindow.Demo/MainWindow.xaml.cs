@@ -38,7 +38,7 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 
 		private async void ThirdTest_OnClick(object sender, RoutedEventArgs e)
 		{
-			await this.ShowChildWindowAsync(new CoolChildWindow() { IsModal = false });
+			await this.ShowChildWindowAsync(new CoolChildWindow() { IsModal = false }, RootGrid);
 		}
 
 		private void CloseFirst_OnClick(object sender, RoutedEventArgs e)

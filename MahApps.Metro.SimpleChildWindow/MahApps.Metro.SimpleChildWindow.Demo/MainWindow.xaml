@@ -9,7 +9,7 @@
 					  GlowBrush="{DynamicResource AccentColorBrush}"
 					  WindowStartupLocation="CenterScreen">
 
-	<Grid>
+	<Grid x:Name="RootGrid">
 
 		<StackPanel>
 			<Button Margin="20"
