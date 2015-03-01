@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>MahApps.Metro.SimpleChildWindow</id>
-    <version>1.0.0.0</version>
+    <version>1.1.0.0</version>
     <title>MahApps.Metro.SimpleChildWindow</title>
     <authors>Jan Karger (punker76)</authors>
     <owners>Jan Karger</owners>
@@ -10,12 +10,12 @@
     <projectUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow</projectUrl>
     <iconUrl>https://raw.github.com/punker76/MahApps.Metro.SimpleChildWindow/master/MahApps.Metro.SimpleChildWindow/MahApps.Metro.SimpleChildWindow.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A simple child window for MahApps.Metro the "Metro" or "Modern" UI for WPF4+ apps.</description>
-    <summary>A simple child window for MahApps.Metro the "Metro" or "Modern" UI for WPF4+ apps.</summary>
+    <description>A simple child window for MahApps.Metro the "Metro" or "Modern UI" for WPF4+ apps.</description>
+    <summary>A simple child window for MahApps.Metro the "Metro" or "Modern UI" for WPF4+ apps.</summary>
     <releaseNotes/>
-    <tags>WPF UI Metro ModernUI</tags>
+    <tags>WPF UI Metro ModernUI XAML Toolkit Library .NET</tags>
     <dependencies>
-      <dependency id="MahApps.Metro" version="1.0.0"/>
+      <dependency id="MahApps.Metro" version="1.1.1"/>
     </dependencies>
   </metadata>
   <files>
