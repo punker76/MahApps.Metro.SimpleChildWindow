@@ -32,6 +32,13 @@
 					FontWeight="Thin"
 					Content="this one is great!"
 					Click="ThirdTest_OnClick" />
+
+			<Button Margin="20"
+					VerticalAlignment="Top"
+					FontSize="36"
+					FontWeight="Thin"
+					Content="moving time"
+					Click="MovingTest_OnClick" />
 		</StackPanel>
 
 		<simpleChildWindow:ChildWindow x:Name="child01"

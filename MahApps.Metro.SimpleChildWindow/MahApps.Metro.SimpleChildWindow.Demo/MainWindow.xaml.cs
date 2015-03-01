@@ -50,5 +50,10 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 		{
 			this.child02.IsOpen = false;
 		}
+
+		private async void MovingTest_OnClick(object sender, RoutedEventArgs e)
+		{
+			await this.ShowChildWindowAsync(new CoolChildWindow() { IsModal = true, AllowMove = true }, RootGrid);
+		}
 	}
 }
