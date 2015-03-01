@@ -2,7 +2,11 @@
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/qyv24na2ff822h21/branch/master?svg=true)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/master)
+[![Build status](https://img.shields.io/appveyor/ci/punker76/mahapps-metro-simplechildwindow/master.svg?style=flat-square)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/master)
+[![Release](https://img.shields.io/github/release/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/releases/latest)
+[![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow/)
+[![Issues](https://img.shields.io/github/issues/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/issues)
+
 
 A simple child window for [MahApps.Metro](https://github.com/MahApps/MahApps.Metro). Yes, this means you need `MahApps.Metro` to use this control.
 
