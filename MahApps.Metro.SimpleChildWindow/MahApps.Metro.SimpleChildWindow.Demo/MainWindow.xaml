@@ -42,6 +42,7 @@
 		</StackPanel>
 
 		<simpleChildWindow:ChildWindow x:Name="child01"
+									   CloseByEscape="False"
 									   HorizontalContentAlignment="Stretch"
 									   VerticalContentAlignment="Stretch"
 									   Padding="15"
