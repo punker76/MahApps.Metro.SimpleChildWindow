@@ -444,7 +444,7 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private void TryFocusElement()
 		{
-			if (this.AllowFocusElement)
+			if (this.AllowFocusElement && !System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
 			{
 				var elementToFocus = FocusedElement ?? this.FindChildren<UIElement>().FirstOrDefault(c => c.Focusable);
 				if (this.ShowCloseButton && this.closeButton != null && elementToFocus == null)
