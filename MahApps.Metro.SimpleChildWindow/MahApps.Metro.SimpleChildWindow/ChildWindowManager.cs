@@ -40,6 +40,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			window.Dispatcher.VerifyAccess();
 			var metroDialogContainer = window.Template.FindName("PART_MetroDialogContainer", window) as Grid;
+			metroDialogContainer = metroDialogContainer ?? window.Template.FindName("PART_MetroActiveDialogContainer", window) as Grid;
 			if (metroDialogContainer == null)
 			{
 				throw new InvalidOperationException("The provided child window can not add, there is no container defined.");

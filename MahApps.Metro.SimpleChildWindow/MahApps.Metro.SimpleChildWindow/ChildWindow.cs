@@ -57,6 +57,12 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(ChildWindow),
 										  new PropertyMetadata(default(bool)));
 
+		public static readonly DependencyProperty CloseByEscapeProperty
+			= DependencyProperty.Register("CloseByEscape",
+										  typeof(bool),
+										  typeof(ChildWindow),
+										  new PropertyMetadata(true));
+
 		public static readonly DependencyProperty ShowTitleBarProperty
 			= DependencyProperty.Register("ShowTitleBar",
 										  typeof(bool),
@@ -256,6 +262,15 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
+		/// Gets or sets a value indicating whether the child window can be closed by the Escape key.
+		/// </summary>
+		public bool CloseByEscape
+		{
+			get { return (bool)this.GetValue(CloseByEscapeProperty); }
+			set { this.SetValue(CloseByEscapeProperty, value); }
+		}
+
+		/// <summary>
 		/// Gets or sets whether the title bar is visible or not.
 		/// </summary>
 		public bool ShowTitleBar
@@ -429,7 +444,7 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private void TryFocusElement()
 		{
-			if (this.AllowFocusElement)
+			if (this.AllowFocusElement && !System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
 			{
 				var elementToFocus = FocusedElement ?? this.FindChildren<UIElement>().FirstOrDefault(c => c.Focusable);
 				if (this.ShowCloseButton && this.closeButton != null && elementToFocus == null)
@@ -659,7 +674,7 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		protected override void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e)
 		{
-			if (e.Key == System.Windows.Input.Key.Escape)
+			if (this.CloseByEscape && e.Key == System.Windows.Input.Key.Escape)
 			{
 				e.Handled = this.Close();
 			}
