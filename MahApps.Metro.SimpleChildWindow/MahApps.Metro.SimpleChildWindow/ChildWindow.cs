@@ -403,40 +403,43 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
 		{
+			if (Equals(e.OldValue, e.NewValue))
+			{
+				return;
+			}
+
 			var childWindow = (ChildWindow)dependencyObject;
 
 			Action openedChangedAction = () => {
-				if (e.NewValue != e.OldValue)
+				if ((bool)e.NewValue)
 				{
-					if ((bool)e.NewValue)
+					if (childWindow.hideStoryboard != null)
 					{
-						if (childWindow.hideStoryboard != null)
-						{
-							// don't let the storyboard end it's completed event
-							// otherwise it could be hidden on start
-							childWindow.hideStoryboard.Completed -= childWindow.HideStoryboard_Completed;
-						}
+						// don't let the storyboard end it's completed event
+						// otherwise it could be hidden on start
+						childWindow.hideStoryboard.Completed -= childWindow.HideStoryboard_Completed;
+					}
 
-						Panel.SetZIndex(childWindow, 1);
+					var parent = childWindow.Parent as Panel;
+					Panel.SetZIndex(childWindow, parent != null ? parent.Children.Count + 1 : 99);
 
-						childWindow.TryFocusElement();
+					childWindow.TryFocusElement();
+				}
+				else
+				{
+					if (childWindow.hideStoryboard != null)
+					{
+						childWindow.hideStoryboard.Completed += childWindow.HideStoryboard_Completed;
 					}
 					else
 					{
-						if (childWindow.hideStoryboard != null)
-						{
-							childWindow.hideStoryboard.Completed += childWindow.HideStoryboard_Completed;
-						}
-						else
-						{
-							childWindow.Hide();
-						}
+						childWindow.Hide();
 					}
-
-					VisualStateManager.GoToState(childWindow, (bool)e.NewValue == false ? "Hide" : "Show", true);
-
-					childWindow.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent, childWindow));
 				}
+
+				VisualStateManager.GoToState(childWindow, (bool)e.NewValue == false ? "Hide" : "Show", true);
+
+				childWindow.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent, childWindow));
 			};
 
 			childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Background, openedChangedAction);
@@ -472,7 +475,6 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private void Hide()
 		{
-			this.DataContext = null;
 			this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent, this));
 		}
 
