@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>MahApps.Metro.SimpleChildWindow</id>
-    <version>1.3.0</version>
+    <version>1.3.0-ALPHA001</version>
     <title>MahApps.Metro.SimpleChildWindow</title>
     <authors>Jan Karger (punker76)</authors>
     <owners>Jan Karger</owners>
@@ -19,11 +19,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\NET4\MahApps.Metro.SimpleChildWindow.dll" target="lib\net40\MahApps.Metro.SimpleChildWindow.dll"/>
-    <file src="bin\Release\NET4\MahApps.Metro.SimpleChildWindow.pdb" target="lib\net40\MahApps.Metro.SimpleChildWindow.pdb"/>
-    <file src="bin\Release\NET4\MahApps.Metro.SimpleChildWindow.XML" target="lib\net40\MahApps.Metro.SimpleChildWindow.XML"/>
-    <file src="bin\Release\MahApps.Metro.SimpleChildWindow.dll" target="lib\net45\MahApps.Metro.SimpleChildWindow.dll"/>
-    <file src="bin\Release\MahApps.Metro.SimpleChildWindow.pdb" target="lib\net45\MahApps.Metro.SimpleChildWindow.pdb"/>
-    <file src="bin\Release\MahApps.Metro.SimpleChildWindow.XML" target="lib\net45\MahApps.Metro.SimpleChildWindow.XML"/>
+    <file src="bin\Debug\NET4\MahApps.Metro.SimpleChildWindow.dll" target="lib\net40\MahApps.Metro.SimpleChildWindow.dll"/>
+    <file src="bin\Debug\NET4\MahApps.Metro.SimpleChildWindow.pdb" target="lib\net40\MahApps.Metro.SimpleChildWindow.pdb"/>
+    <file src="bin\Debug\NET4\MahApps.Metro.SimpleChildWindow.XML" target="lib\net40\MahApps.Metro.SimpleChildWindow.XML"/>
+    <file src="bin\Debug\MahApps.Metro.SimpleChildWindow.dll" target="lib\net45\MahApps.Metro.SimpleChildWindow.dll"/>
+    <file src="bin\Debug\MahApps.Metro.SimpleChildWindow.pdb" target="lib\net45\MahApps.Metro.SimpleChildWindow.pdb"/>
+    <file src="bin\Debug\MahApps.Metro.SimpleChildWindow.XML" target="lib\net45\MahApps.Metro.SimpleChildWindow.XML"/>
   </files>
 </package>

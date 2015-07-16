@@ -1,6 +1,4 @@
 ﻿using System.Reflection;
-using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -9,12 +7,8 @@ using System.Windows;
 // associated with an assembly.
 [assembly: AssemblyTitle("MahApps.Metro.SimpleChildWindow")]
 [assembly: AssemblyDescription("A simple child window for MahApps.Metro")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MahApps.Metro.SimpleChildWindow")]
+[assembly: AssemblyCompany("MahApps")]
 [assembly: AssemblyCopyright("Copyright © Jan Karger 2014-2015")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -51,5 +45,6 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyVersion("1.3.0.0")]
+[assembly: AssemblyFileVersion("1.3.0.0")]
+[assembly: AssemblyProduct("MahApps.Metro.SimpleChildWindow 1.3.0-ALPHA001")]
