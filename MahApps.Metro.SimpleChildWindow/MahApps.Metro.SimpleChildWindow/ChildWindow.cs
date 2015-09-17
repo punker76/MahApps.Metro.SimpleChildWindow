@@ -211,6 +211,11 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
+		/// An event that is raised when the ChildWindow is closing.
+		/// </summary>
+		public event EventHandler<CancelEventArgs> Closing;
+
+		/// <summary>
 		/// An event that is raised when the closing animation has finished.
 		/// </summary>
 		public static readonly RoutedEvent ClosingFinishedEvent
@@ -657,26 +662,45 @@ namespace MahApps.Metro.SimpleChildWindow
 			this.Close();
 		}
 
+		protected virtual void OnClosing(CancelEventArgs e)
+		{
+			var handler = this.Closing;
+			if (handler != null)
+			{
+				handler(this, e);
+			}
+		}
+
 		/// <summary>
 		/// Closes this instance.
 		/// </summary>
 		public bool Close()
 		{
-			if (this.CloseButtonCommand != null)
+			// check if we really want close the dialog
+			var e = new CancelEventArgs();
+			this.OnClosing(e);
+			if (!e.Cancel)
 			{
-				var parameter = this.CloseButtonCommandParameter ?? this;
-				if (!this.CloseButtonCommand.CanExecute(parameter))
+				// now handle the command
+				if (this.CloseButtonCommand != null)
 				{
-					return false;
+					var parameter = this.CloseButtonCommandParameter ?? this;
+					if (!this.CloseButtonCommand.CanExecute(parameter))
+					{
+						return false;
+					}
+					this.CloseButtonCommand.Execute(parameter);
+					this.CloseButtonCommand = null;
+					this.CloseButtonCommandParameter = null;
 				}
-				this.CloseButtonCommand.Execute(parameter);
-				this.CloseButtonCommand = null;
-				this.CloseButtonCommandParameter = null;
+
+				this.IsOpen = false;
+				return true;
 			}
-
-			this.IsOpen = false;
-
-			return true;
+			else
+			{
+				return false;
+			}
 		}
 
 		protected override void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e)

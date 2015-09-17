@@ -43,6 +43,7 @@
 
 		<simpleChildWindow:ChildWindow x:Name="child01"
 									   CloseByEscape="False"
+									   Closing="Child01_OnClosing"
 									   HorizontalContentAlignment="Stretch"
 									   VerticalContentAlignment="Stretch"
 									   Padding="15"

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,7 +44,12 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 
 		private void CloseFirst_OnClick(object sender, RoutedEventArgs e)
 		{
-			this.child01.IsOpen = false;
+			this.child01.Close();
+		}
+
+		private void Child01_OnClosing(object sender, CancelEventArgs e)
+		{
+			e.Cancel = true; // don't close
 		}
 
 		private void CloseSec_OnClick(object sender, RoutedEventArgs e)
