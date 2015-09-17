@@ -664,7 +664,12 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			if (this.CloseButtonCommand != null)
 			{
-				this.CloseButtonCommand.Execute(this.CloseButtonCommandParameter);
+				var parameter = this.CloseButtonCommandParameter ?? this;
+				if (!this.CloseButtonCommand.CanExecute(parameter))
+				{
+					return false;
+				}
+				this.CloseButtonCommand.Execute(parameter);
 				this.CloseButtonCommand = null;
 				this.CloseButtonCommandParameter = null;
 			}
