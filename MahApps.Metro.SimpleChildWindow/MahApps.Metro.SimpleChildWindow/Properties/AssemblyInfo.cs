@@ -47,4 +47,4 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.3.0.0")]
 [assembly: AssemblyFileVersion("1.3.0.0")]
-[assembly: AssemblyProduct("MahApps.Metro.SimpleChildWindow 1.3.0-ALPHA001")]
+[assembly: AssemblyProduct("MahApps.Metro.SimpleChildWindow 1.3.0-ALPHA002")]
