@@ -15,6 +15,10 @@ The dll contains the `ChildWindow` and a helper class `ChildWindowManager`.
 
 **MahApps.Metro.SimpleChildWindow** can be installed via [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow).
 
+## Want to say thanks?
+ * Hit the :star: Star :star: button
+ * <a href='https://pledgie.com/campaigns/31038'><img alt='Click here to lend your support to: MahApps.Metro and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/31038.png?skin_name=chrome' border='0' ></a>
+
 ### ChildWindow Properties
 
 | Property | Description |
