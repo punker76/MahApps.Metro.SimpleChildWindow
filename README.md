@@ -17,9 +17,7 @@ The dll contains the `ChildWindow` and a helper class `ChildWindowManager`.
 
 ## Want to say thanks?
  * Hit the :star: Star :star: button
- * If you feel like you’d like to make some kind of contribution it would be gratefully received.  
- <a href='https://pledgie.com/campaigns/31030'><img alt='Click here to lend your support to: GongSolutions.WPF.DragDrop and MahApps.Metro and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/31030.png?skin_name=chrome' border='0' ></a>
-
+ 
 ### ChildWindow Properties
 
 | Property | Description |
