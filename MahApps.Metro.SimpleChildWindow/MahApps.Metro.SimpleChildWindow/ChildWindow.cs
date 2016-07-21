@@ -651,10 +651,31 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private void ProcessMove(double x, double y)
 		{
-			this.moveTransform.X += x;
-			this.moveTransform.Y += y;
-
-			this.InvalidateArrange();
+			var width = this.partOverlay.RenderSize.Width;
+			var height = this.partOverlay.RenderSize.Height;
+		
+			var widthOffset = width / 2 - this.partWindow.RenderSize.Width / 2;
+			var heightOffset = height / 2 - this.partWindow.RenderSize.Height / 2;
+		
+			var realX = this.moveTransform.X + x + widthOffset;
+			var realY = this.moveTransform.Y + y + heightOffset;
+		
+			var changeX = !((realX < (0 + 5)) || (realX > (width - 25)));
+			var changeY = !((realY < (0 + 5)) || (realY > (height - 25)));
+		
+			if (changeX)
+			{
+				this.moveTransform.X += x;
+			}
+			if (changeY)
+			{
+				this.moveTransform.Y += y;
+			}
+		
+			if (changeX || changeY)
+			{
+				this.InvalidateArrange();
+			}
 		}
 
 		private void Close(object sender, RoutedEventArgs e)
