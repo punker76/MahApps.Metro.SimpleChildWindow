@@ -204,8 +204,7 @@
 												  Content="{TemplateBinding Content}"
 												  ContentTemplate="{TemplateBinding ContentTemplate}"
 												  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-												  ContentStringFormat="{TemplateBinding ContentStringFormat}"
-												  Margin="4,0,4,4" />
+												  ContentStringFormat="{TemplateBinding ContentStringFormat}" />
 							</Grid>
 						</Grid>
 					</AdornerDecorator>
