@@ -1,0 +1,7 @@
+source https://nuget.org/api/v2
+framework >= net40
+
+nuget JetBrains.Annotations
+nuget MahApps.Metro
+nuget MahApps.Metro.Resources
+nuget Costura.Fody
