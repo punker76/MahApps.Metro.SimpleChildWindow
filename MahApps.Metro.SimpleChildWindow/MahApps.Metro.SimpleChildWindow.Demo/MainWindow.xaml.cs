@@ -49,7 +49,7 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 
 		private void Child01_OnClosing(object sender, CancelEventArgs e)
 		{
-			e.Cancel = true; // don't close
+			//e.Cancel = true; // don't close
 		}
 
 		private void CloseSec_OnClick(object sender, RoutedEventArgs e)
