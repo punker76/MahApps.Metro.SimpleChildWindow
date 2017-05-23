@@ -93,10 +93,17 @@ namespace MahApps.Metro.SimpleChildWindow
 										  typeof(ChildWindow),
 										  new PropertyMetadata(default(string)));
 
-		/// <summary>
-		/// DependencyProperty for <see cref="TitleFontSize" /> property.
-		/// </summary>
-		public static readonly DependencyProperty TitleFontSizeProperty
+        public static readonly DependencyProperty TitleTextAlignmentProperty
+            = DependencyProperty.Register("TitleTextAlignment",
+                                          typeof(TextAlignment),
+                                          typeof(ChildWindow),
+                                          new PropertyMetadata(TextAlignment.Left));
+
+
+        /// <summary>
+        /// DependencyProperty for <see cref="TitleFontSize" /> property.
+        /// </summary>
+        public static readonly DependencyProperty TitleFontSizeProperty
 			= DependencyProperty.Register("TitleFontSize",
 										  typeof(double),
 										  typeof(ChildWindow),
@@ -320,10 +327,19 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(TitleProperty, value); }
 		}
 
-		/// <summary> 
-		/// The FontSize property specifies the size of the title.
-		/// </summary>
-		[TypeConverter(typeof(FontSizeConverter))]
+        /// <summary>
+        /// Gets or sets the title text alignment
+        /// </summary>
+        public TextAlignment TitleTextAlignment
+        {
+            get { return (TextAlignment)this.GetValue(TitleTextAlignmentProperty); }
+            set { this.SetValue(TitleTextAlignmentProperty, value); }
+        }
+
+        /// <summary> 
+        /// The FontSize property specifies the size of the title.
+        /// </summary>
+        [TypeConverter(typeof(FontSizeConverter))]
 		public double TitleFontSize
 		{
 			get { return (double)this.GetValue(TitleFontSizeProperty); }
