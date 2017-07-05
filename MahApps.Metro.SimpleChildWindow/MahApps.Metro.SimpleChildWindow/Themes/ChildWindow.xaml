@@ -144,7 +144,7 @@
 								<TextBlock Grid.Column="1"
 										   Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
 										   Text="{TemplateBinding Title}"
-										   TextAlignment="Left"
+										   TextAlignment="{TemplateBinding TitleTextAlignment}"
 										   TextTrimming="CharacterEllipsis"
 										   VerticalAlignment="Center"
 										   Padding="4"

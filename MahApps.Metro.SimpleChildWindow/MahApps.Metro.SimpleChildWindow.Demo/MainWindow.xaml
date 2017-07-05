@@ -48,6 +48,7 @@
 									   VerticalContentAlignment="Stretch"
 									   Padding="15"
 									   ChildWindowImage="Error"
+                                       TitleTextAlignment="Center"
 									   Title="TestChild 1">
 			<Grid>
 				<Grid.RowDefinitions>
