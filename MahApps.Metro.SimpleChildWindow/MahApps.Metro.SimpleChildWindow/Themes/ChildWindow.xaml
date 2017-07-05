@@ -4,17 +4,12 @@
 					xmlns:valueConverter="clr-namespace:MahApps.Metro.SimpleChildWindow.ValueConverter"
 					xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 					xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-					xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
 					mc:Ignorable="d">
 
 	<valueConverter:EnumToVisibilityConverter x:Key="EnumToVisibilityCollapsedConverter"
 											  TrueValue="Collapsed"
 											  FalseValue="Visible" />
 	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-	<SolidColorBrush x:Key="DefaultOverlayBrush"
-					 Color="{DynamicResource Gray2}"
-					 Opacity="0.8"
-					 options:Freeze="True" />
 
 	<Style x:Key="SimpleChildWindowFocusVisual">
 		<Setter Property="Control.Template">
@@ -235,7 +230,7 @@
 
 	<Style TargetType="{x:Type scw:ChildWindow}">
 		<Setter Property="OverlayBrush"
-				Value="{StaticResource DefaultOverlayBrush}" />
+				Value="{DynamicResource GrayBrush2}" />
 		<Setter Property="Background"
 				Value="{DynamicResource WhiteBrush}" />
 		<Setter Property="TitleBarBackground"
