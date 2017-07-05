@@ -5,7 +5,7 @@ using System.Windows;
 [assembly: AssemblyTitle("MahApps.Metro.SimpleChildWindow")]
 [assembly: AssemblyDescription("A simple child window for MahApps.Metro")]
 [assembly: AssemblyCompany("MahApps")]
-[assembly: AssemblyCopyright("Copyright © Jan Karger 2014-2016")]
+[assembly: AssemblyCopyright("Copyright © Jan Karger 2014-2017")]
 
 [assembly: ComVisible(false)]
 
@@ -19,7 +19,7 @@ using System.Windows;
 
 [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
 
-[assembly: AssemblyVersion("1.3.0.0")]
-[assembly: AssemblyFileVersion("1.3.0.0")]
-[assembly: AssemblyInformationalVersion("1.3.0.0")]
-[assembly: AssemblyProduct("MahApps.Metro.SimpleChildWindow 1.3.0")]
+[assembly: AssemblyVersion("1.3.1.0")]
+[assembly: AssemblyFileVersion("1.3.1.0")]
+[assembly: AssemblyInformationalVersion("1.3.1.0")]
+[assembly: AssemblyProduct("MahApps.Metro.SimpleChildWindow 1.3.1")]
