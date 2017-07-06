@@ -39,7 +39,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		public static Task ShowChildWindowAsync(this Window window, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
 		{
 			window.Dispatcher.VerifyAccess();
-			var metroDialogContainer = window.Template.FindName("PART_MetroDialogContainer", window) as Grid;
+			var metroDialogContainer = window.Template.FindName("PART_MetroActiveDialogContainer", window) as Grid;
 			metroDialogContainer = metroDialogContainer ?? window.Template.FindName("PART_MetroInactiveDialogsContainer", window) as Grid;
 			if (metroDialogContainer == null)
 			{
