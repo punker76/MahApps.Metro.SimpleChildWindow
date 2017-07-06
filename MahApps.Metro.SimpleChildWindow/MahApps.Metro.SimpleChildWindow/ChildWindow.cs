@@ -724,7 +724,7 @@ namespace MahApps.Metro.SimpleChildWindow
 			}
 		}
 
-		protected override void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e)
+		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (this.CloseByEscape && e.Key == System.Windows.Input.Key.Escape)
 			{
