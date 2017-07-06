@@ -1,7 +1,7 @@
+framework: auto-detect
 source https://nuget.org/api/v2
-framework >= net40
 
+nuget Costura.Fody
 nuget JetBrains.Annotations
 nuget MahApps.Metro
-nuget MahApps.Metro.Resources
-nuget Costura.Fody
+nuget MahApps.Metro.IconPacks

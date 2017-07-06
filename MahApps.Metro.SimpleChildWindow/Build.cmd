@@ -1,10 +1,13 @@
+@echo off
+
+IF NOT "%VS140COMNTOOLS%" == "" (call "%VS140COMNTOOLS%vsvars32.bat")
+
 @echo on
-REM call "%VS120COMNTOOLS%vsvars32.bat"
 
-REM msbuild.exe /ToolsVersion:4.0 "MahApps.Metro.SimpleChildWindow.sln" /p:configuration=Release /t:Clean,Rebuild
-.nuget\NuGet.exe pack %~dp0MahApps.Metro.SimpleChildWindow.nuspec -OutputDirectory %~dp0
+.paket\paket.bootstrapper.exe
+.paket\paket.exe restore
 
-REM msbuild.exe /ToolsVersion:4.0 "MahApps.Metro.SimpleChildWindow.sln" /p:configuration=Debug /t:Clean,Rebuild
-REM .nuget\NuGet.exe pack %~dp0MahApps.Metro.SimpleChildWindow.ALPHA.nuspec -OutputDirectory %~dp0
+msbuild.exe /ToolsVersion:14.0 "..\MahApps.Metro.SimpleChildWindow\MahApps.Metro.SimpleChildWindow.sln" /p:configuration=Debug /p:platform="Any CPU" /m /t:Clean,Rebuild
+msbuild.exe /ToolsVersion:14.0 "..\MahApps.Metro.SimpleChildWindow\MahApps.Metro.SimpleChildWindow.sln" /p:configuration=Release /p:platform="Any CPU" /m /t:Clean,Rebuild
 
-pause
+..\BuildTools\NuGet.exe pack MahApps.Metro.SimpleChildWindow.ALPHA.nuspec -OutputDirectory %~dp0
