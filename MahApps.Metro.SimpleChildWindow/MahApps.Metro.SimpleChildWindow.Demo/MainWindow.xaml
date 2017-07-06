@@ -72,34 +72,6 @@
 			</Grid>
 		</simpleChildWindow:ChildWindow>
 
-		<simpleChildWindow:ChildWindow x:Name="child02"
-		                               Title="TestChild 2"
-		                               ChildWindowHeight="300"
-		                               ChildWindowWidth="400"
-		                               EnableDropShadow="False">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<TextBlock Grid.Row="0"
-				           Margin="20"
-				           FontSize="36"
-				           FontWeight="Thin"
-				           Text="das hier auch" />
-				<TextBox Grid.Row="1" />
-				<Button Grid.Row="2"
-				        Margin="20"
-				        VerticalAlignment="Top"
-				        Click="CloseSec_OnClick"
-				        Content="Close Me"
-				        FontSize="20"
-				        FontWeight="Thin"
-				        IsDefault="True" />
-			</Grid>
-		</simpleChildWindow:ChildWindow>
-
 	</Grid>
 
 </Controls:MetroWindow>

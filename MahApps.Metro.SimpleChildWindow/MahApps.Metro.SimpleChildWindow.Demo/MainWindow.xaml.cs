@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.SimpleChildWindow.Demo
@@ -32,14 +19,14 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 			this.child01.IsOpen = true;
 		}
 
-		private void SecTest_OnClick(object sender, RoutedEventArgs e)
+		private async void SecTest_OnClick(object sender, RoutedEventArgs e)
 		{
-			this.child02.IsOpen = true;
+			await this.ShowChildWindowAsync(new TestChildWindow(), this.RootGrid);
 		}
 
 		private async void ThirdTest_OnClick(object sender, RoutedEventArgs e)
 		{
-			await this.ShowChildWindowAsync(new CoolChildWindow() { IsModal = false }, RootGrid);
+			await this.ShowChildWindowAsync(new CoolChildWindow() {IsModal = false}, RootGrid);
 		}
 
 		private void CloseFirst_OnClick(object sender, RoutedEventArgs e)
@@ -52,14 +39,9 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 			//e.Cancel = true; // don't close
 		}
 
-		private void CloseSec_OnClick(object sender, RoutedEventArgs e)
-		{
-			this.child02.IsOpen = false;
-		}
-
 		private async void MovingTest_OnClick(object sender, RoutedEventArgs e)
 		{
-			await this.ShowChildWindowAsync(new CoolChildWindow() { IsModal = true, AllowMove = true }, RootGrid);
+			await this.ShowChildWindowAsync(new CoolChildWindow() {IsModal = true, AllowMove = true}, RootGrid);
 		}
 	}
 }
