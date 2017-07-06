@@ -6,5 +6,4 @@ NUGET
     Fody (2.1)
     JetBrains.Annotations (10.4)
     MahApps.Metro (1.5)
-    MahApps.Metro.Resources (0.6.1)
-      MahApps.Metro (>= 1.2.4)
+    MahApps.Metro.IconPacks (1.9)
