@@ -122,8 +122,7 @@
 
 								<!--  Header Drag Thumb  -->
 								<Thumb x:Name="PART_HeaderThumb"
-								       Grid.Column="0"
-								       Grid.ColumnSpan="2"
+								       Grid.Column="1"
 								       IsTabStop="False"
 								       Opacity="0"
 								       Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AllowMove, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
