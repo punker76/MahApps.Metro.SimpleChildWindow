@@ -13,6 +13,9 @@ using MahApps.Metro.SimpleChildWindow.Utils;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
+	/// <summary>
+	/// A simple child window for MahApps.Metro.
+	/// </summary>
 	[TemplatePart(Name = PART_Overlay, Type = typeof(Grid))]
 	[TemplatePart(Name = PART_Window, Type = typeof(Grid))]
 	[TemplatePart(Name = PART_Header, Type = typeof(Grid))]
@@ -33,177 +36,252 @@ namespace MahApps.Metro.SimpleChildWindow
 		private const string PART_Border = "PART_Border";
 		private const string PART_Content = "PART_Content";
 
+		/// <summary>
+		/// Identifies the <see cref="AllowMove"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty AllowMoveProperty
-			= DependencyProperty.Register("AllowMove",
+			= DependencyProperty.Register(nameof(AllowMove),
 										  typeof(bool),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(default(bool)));
 
+		/// <summary>
+		/// Identifies the <see cref="IsModal"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty IsModalProperty
-			= DependencyProperty.Register("IsModal",
+			= DependencyProperty.Register(nameof(IsModal),
 										  typeof(bool),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
+		/// <summary>
+		/// Identifies the <see cref="OverlayBrush"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty OverlayBrushProperty
-			= DependencyProperty.Register("OverlayBrush",
+			= DependencyProperty.Register(nameof(OverlayBrush),
 										  typeof(Brush),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
 
+		/// <summary>
+		/// Identifies the <see cref="CloseOnOverlay"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty CloseOnOverlayProperty
-			= DependencyProperty.Register("CloseOnOverlay",
+			= DependencyProperty.Register(nameof(CloseOnOverlay),
 										  typeof(bool),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(default(bool)));
 
+		/// <summary>
+		/// Identifies the <see cref="CloseByEscape"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty CloseByEscapeProperty
-			= DependencyProperty.Register("CloseByEscape",
+			= DependencyProperty.Register(nameof(CloseByEscape),
 										  typeof(bool),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(true));
 
+		/// <summary>
+		/// Identifies the <see cref="ShowTitleBar"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty ShowTitleBarProperty
-			= DependencyProperty.Register("ShowTitleBar",
+			= DependencyProperty.Register(nameof(ShowTitleBar),
 										  typeof(bool),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(true));
 
+		/// <summary>
+		/// Identifies the <see cref="TitleBarHeight"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty TitleBarHeightProperty
-			= DependencyProperty.Register("TitleBarHeight",
+			= DependencyProperty.Register(nameof(TitleBarHeight),
 										  typeof(int),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(30));
 
+		/// <summary>
+		/// Identifies the <see cref="TitleBarBackground"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty TitleBarBackgroundProperty
-			= DependencyProperty.Register("TitleBarBackground",
+			= DependencyProperty.Register(nameof(TitleBarBackground),
 										  typeof(Brush),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
 
+		/// <summary>
+		/// Identifies the <see cref="TitleForeground"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty TitleForegroundProperty
-			= DependencyProperty.Register("TitleForeground",
+			= DependencyProperty.Register(nameof(TitleForeground),
 										  typeof(Brush),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
 
+		/// <summary>
+		/// Identifies the <see cref="Title"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty TitleProperty
-			= DependencyProperty.Register("Title",
+			= DependencyProperty.Register(nameof(Title),
 										  typeof(string),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(default(string)));
 
 		/// <summary>
-		/// DependencyProperty for <see cref="TitleFontSize" /> property.
+		/// Identifies the <see cref="TitleFontSize"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty TitleFontSizeProperty
-			= DependencyProperty.Register("TitleFontSize",
+			= DependencyProperty.Register(nameof(TitleFontSize),
 										  typeof(double),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(SystemFonts.CaptionFontSize, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
-		/// DependencyProperty for <see cref="TitleFontFamily" /> property.
+		/// Identifies the <see cref="TitleFontFamily"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty TitleFontFamilyProperty
-			= DependencyProperty.Register("TitleFontFamily",
+			= DependencyProperty.Register(nameof(TitleFontFamily),
 										  typeof(FontFamily),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(SystemFonts.CaptionFontFamily, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
 
+		/// <summary>
+		/// Identifies the <see cref="Icon"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty IconProperty
-			= DependencyProperty.Register("Icon",
+			= DependencyProperty.Register(nameof(Icon),
 										  typeof(object),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
+		/// <summary>
+		/// Identifies the <see cref="IconTemplate"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty IconTemplateProperty
-			= DependencyProperty.Register("IconTemplate",
+			= DependencyProperty.Register(nameof(IconTemplate),
 										  typeof(DataTemplate),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
+		/// <summary>
+		/// Identifies the <see cref="ShowCloseButton"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty ShowCloseButtonProperty
-			= DependencyProperty.Register("ShowCloseButton",
+			= DependencyProperty.Register(nameof(ShowCloseButton),
 										  typeof(bool),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
+		/// <summary>
+		/// Identifies the <see cref="CloseButtonStyle"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty CloseButtonStyleProperty
-			= DependencyProperty.Register("CloseButtonStyle",
+			= DependencyProperty.Register(nameof(CloseButtonStyle),
 										  typeof(Style),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
+		/// <summary>
+		/// Identifies the <see cref="CloseButtonCommand"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty CloseButtonCommandProperty
-			= DependencyProperty.Register("CloseButtonCommand",
+			= DependencyProperty.Register(nameof(CloseButtonCommand),
 										  typeof(ICommand),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(default(ICommand)));
 
+		/// <summary>
+		/// Identifies the <see cref="CloseButtonCommandParameter"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty CloseButtonCommandParameterProperty
-			= DependencyProperty.Register("CloseButtonCommandParameter",
+			= DependencyProperty.Register(nameof(CloseButtonCommandParameter),
 										  typeof(object),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(null));
 
+		/// <summary>
+		/// Identifies the <see cref="IsOpen"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty IsOpenProperty
-			= DependencyProperty.Register("IsOpen",
+			= DependencyProperty.Register(nameof(IsOpen),
 										  typeof(bool),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
 
+		/// <summary>
+		/// Identifies the <see cref="ChildWindowWidth"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty ChildWindowWidthProperty
-			= DependencyProperty.Register("ChildWindowWidth",
+			= DependencyProperty.Register(nameof(ChildWindowWidth),
 										  typeof(double),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
 
+		/// <summary>
+		/// Identifies the <see cref="ChildWindowHeight"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty ChildWindowHeightProperty
-			= DependencyProperty.Register("ChildWindowHeight",
+			= DependencyProperty.Register(nameof(ChildWindowHeight),
 										  typeof(double),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
 
+		/// <summary>
+		/// Identifies the <see cref="ChildWindowImage"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty ChildWindowImageProperty
-			= DependencyProperty.Register("ChildWindowImage",
+			= DependencyProperty.Register(nameof(ChildWindowImage),
 										  typeof(MessageBoxImage),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(MessageBoxImage.None, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
+		/// <summary>
+		/// Identifies the <see cref="EnableDropShadow"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty EnableDropShadowProperty
-			= DependencyProperty.Register("EnableDropShadow",
+			= DependencyProperty.Register(nameof(EnableDropShadow),
 										  typeof(bool),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
+		/// <summary>
+		/// Identifies the <see cref="AllowFocusElement"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty AllowFocusElementProperty
-			= DependencyProperty.Register("AllowFocusElement",
+			= DependencyProperty.Register(nameof(AllowFocusElement),
 										  typeof(bool),
 										  typeof(ChildWindow),
 										  new PropertyMetadata(true));
 
+		/// <summary>
+		/// Identifies the <see cref="FocusedElement"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty FocusedElementProperty
-			= DependencyProperty.Register("FocusedElement",
+			= DependencyProperty.Register(nameof(FocusedElement),
 										  typeof(FrameworkElement),
 										  typeof(ChildWindow),
 										  new UIPropertyMetadata(null));
 
+		/// <summary>
+		/// Identifies the <see cref="GlowBrush"/> dependency property.
+		/// </summary>
 		public static readonly DependencyProperty GlowBrushProperty
-			= DependencyProperty.Register("GlowBrush",
+			= DependencyProperty.Register(nameof(GlowBrush),
 										  typeof(SolidColorBrush),
 										  typeof(ChildWindow),
 										  new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
-		/// An event that is raised when IsOpen changes.
+		/// An event that will be raised when <see cref="IsOpen"/> dependency property changes.
 		/// </summary>
 		public static readonly RoutedEvent IsOpenChangedEvent
-			= EventManager.RegisterRoutedEvent("IsOpenChanged",
+			= EventManager.RegisterRoutedEvent(nameof(IsOpenChanged),
 											   RoutingStrategy.Bubble,
 											   typeof(RoutedEventHandler),
 											   typeof(ChildWindow));
 
+		/// <summary>
+		/// An event that will be raised when <see cref="IsOpen"/> dependency property changes.
+		/// </summary>
 		public event RoutedEventHandler IsOpenChanged
 		{
 			add { AddHandler(IsOpenChangedEvent, value); }
@@ -211,19 +289,22 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
-		/// An event that is raised when the ChildWindow is closing.
+		/// An event that will be raised when the ChildWindow is closing.
 		/// </summary>
 		public event EventHandler<CancelEventArgs> Closing;
 
 		/// <summary>
-		/// An event that is raised when the closing animation has finished.
+		/// An event that will be raised when the closing animation has finished.
 		/// </summary>
 		public static readonly RoutedEvent ClosingFinishedEvent
-			= EventManager.RegisterRoutedEvent("ClosingFinished",
+			= EventManager.RegisterRoutedEvent(nameof(ClosingFinished),
 											   RoutingStrategy.Bubble,
 											   typeof(RoutedEventHandler),
 											   typeof(ChildWindow));
 
+		/// <summary>
+		/// An event that will be raised when the closing animation has finished.
+		/// </summary>
 		public event RoutedEventHandler ClosingFinished
 		{
 			add { AddHandler(ClosingFinishedEvent, value); }
@@ -581,6 +662,7 @@ namespace MahApps.Metro.SimpleChildWindow
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(ChildWindow), new FrameworkPropertyMetadata(typeof(ChildWindow)));
 		}
 
+		/// <inheritdoc />
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
@@ -626,12 +708,12 @@ namespace MahApps.Metro.SimpleChildWindow
 
 			if (this.closeButton != null)
 			{
-				this.closeButton.Click -= new RoutedEventHandler(this.Close);
+				this.closeButton.Click -= new RoutedEventHandler(this.OnCloseButtonClick);
 			}
 			this.closeButton = this.Template.FindName(PART_CloseButton, this) as Button;
 			if (this.closeButton != null)
 			{
-				this.closeButton.Click += new RoutedEventHandler(this.Close);
+				this.closeButton.Click += new RoutedEventHandler(this.OnCloseButtonClick);
 			}
 		}
 
@@ -678,18 +760,18 @@ namespace MahApps.Metro.SimpleChildWindow
 			}
 		}
 
-		private void Close(object sender, RoutedEventArgs e)
+		private void OnCloseButtonClick(object sender, RoutedEventArgs e)
 		{
 			this.Close();
 		}
 
+		/// <summary>
+		/// This method fires the <see cref="Closing"/> event.
+		/// </summary>
+		/// <param name="e">The EventArgs for the closing step.</param>
 		protected virtual void OnClosing(CancelEventArgs e)
 		{
-			var handler = this.Closing;
-			if (handler != null)
-			{
-				handler(this, e);
-			}
+			this.Closing?.Invoke(this, e);
 		}
 
 		/// <summary>
@@ -724,6 +806,7 @@ namespace MahApps.Metro.SimpleChildWindow
 			}
 		}
 
+		/// <inheritdoc />
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (this.CloseByEscape && e.Key == System.Windows.Input.Key.Escape)
