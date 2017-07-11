@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
+	/// <summary>
+	/// A static class to show ChildWindow's
+	/// </summary>
 	public static class ChildWindowManager
 	{
 		/// <summary>
@@ -16,6 +21,7 @@ namespace MahApps.Metro.SimpleChildWindow
 			/// The overlay covers the full window
 			/// </summary>
 			FullWindow,
+
 			/// <summary>
 			/// The overlay covers only then window content, so the window taskbar is useable
 			/// </summary>
@@ -86,19 +92,35 @@ namespace MahApps.Metro.SimpleChildWindow
 		private static Task ShowChildWindowInternalAsync(ChildWindow dialog, Panel container)
 		{
 			return Task.Factory
-					   .StartNew(() => dialog.Dispatcher.Invoke(new Action(() => container.Children.Add(dialog))))
-					   .ContinueWith(_ => dialog.Dispatcher.Invoke(new Func<Task>(() => {
-						   var tcs = new TaskCompletionSource<object>();
-						   RoutedEventHandler handler = null;
-						   handler = (sender, args) => {
-							   dialog.ClosingFinished -= handler;
-							   container.Children.Remove(dialog);
-							   tcs.TrySetResult(null);
-						   };
-						   dialog.ClosingFinished += handler;
-						   dialog.IsOpen = true;
-						   return tcs.Task;
-					   })));
+			           .StartNew(() => dialog.Dispatcher.Invoke(new Action(() => container.Children.Add(dialog))))
+			           .ContinueWith(_ => dialog.Dispatcher.Invoke(new Func<Task>(() => {
+				           var tcs = new TaskCompletionSource<object>();
+
+				           MouseButtonEventHandler dialogOnMouseUp = null;
+				           dialogOnMouseUp = (sender, args) => {
+					           var elementOnTop = container.Children.OfType<UIElement>().OrderBy(c => c.GetValue(Panel.ZIndexProperty)).LastOrDefault();
+					           if (elementOnTop != null && !Equals(elementOnTop, dialog))
+					           {
+						           var zIndex = (int)elementOnTop.GetValue(Panel.ZIndexProperty);
+						           elementOnTop.SetCurrentValue(Panel.ZIndexProperty, zIndex - 1);
+						           dialog.SetCurrentValue(Panel.ZIndexProperty, zIndex);
+					           }
+				           };
+				           dialog.PreviewMouseDown += dialogOnMouseUp;
+
+				           RoutedEventHandler handler = null;
+				           handler = (sender, args) => {
+					           dialog.ClosingFinished -= handler;
+					           dialog.PreviewMouseDown -= dialogOnMouseUp;
+					           container.Children.Remove(dialog);
+					           tcs.TrySetResult(null);
+				           };
+				           dialog.ClosingFinished += handler;
+
+				           dialog.IsOpen = true;
+
+				           return tcs.Task;
+			           })));
 		}
 	}
 }
