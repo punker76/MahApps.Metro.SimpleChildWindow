@@ -309,6 +309,24 @@ namespace MahApps.Metro.SimpleChildWindow
 			                              new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
+		/// Identifies the <see cref="IsAutoCloseEnabled"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty IsAutoCloseEnabledProperty
+			= DependencyProperty.Register(nameof(IsAutoCloseEnabled),
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(false, IsAutoCloseEnabledChanged));
+
+		/// <summary>
+		/// Identifies the <see cref="AutoCloseInterval"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty AutoCloseIntervalProperty
+			= DependencyProperty.Register(nameof(AutoCloseInterval),
+			                              typeof(long),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(5000L, AutoCloseIntervalChanged));
+
+		/// <summary>
 		/// An event that will be raised when <see cref="IsOpen"/> dependency property changes.
 		/// </summary>
 		public static readonly RoutedEvent IsOpenChangedEvent
@@ -584,9 +602,16 @@ namespace MahApps.Metro.SimpleChildWindow
 					Panel.SetZIndex(childWindow, parent != null ? parent.Children.Count + 1 : 99);
 
 					childWindow.TryFocusElement();
+
+					if (childWindow.IsAutoCloseEnabled)
+					{
+						childWindow.StartAutoCloseTimer();
+					}
 				}
 				else
 				{
+					childWindow.StopAutoCloseTimer();
+
 					if (childWindow.hideStoryboard != null)
 					{
 						childWindow.hideStoryboard.Completed += childWindow.HideStoryboard_Completed;
@@ -707,6 +732,106 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(GlowBrushProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the ChildWindow should auto close after AutoCloseInterval has passed.
+		/// </summary>
+		public bool IsAutoCloseEnabled
+		{
+			get { return (bool)this.GetValue(IsAutoCloseEnabledProperty); }
+			set { this.SetValue(IsAutoCloseEnabledProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the time in milliseconds when the ChildWindow should auto close.
+		/// </summary>
+		public long AutoCloseInterval
+		{
+			get { return (long)this.GetValue(AutoCloseIntervalProperty); }
+			set { this.SetValue(AutoCloseIntervalProperty, value); }
+		}
+
+		DispatcherTimer autoCloseTimer;
+
+		private static void IsAutoCloseEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+		{
+			var childWindow = (ChildWindow)dependencyObject;
+
+			Action autoCloseEnabledChangedAction = () => {
+				if (e.NewValue != e.OldValue)
+				{
+					if ((bool)e.NewValue)
+					{
+						if (childWindow.IsOpen)
+						{
+							childWindow.StartAutoCloseTimer();
+						}
+					}
+					else
+					{
+						childWindow.StopAutoCloseTimer();
+					}
+				}
+			};
+
+			childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseEnabledChangedAction);
+		}
+
+		private static void AutoCloseIntervalChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+		{
+			var childWindow = (ChildWindow)dependencyObject;
+
+			Action autoCloseIntervalChangedAction = () => {
+				if (e.NewValue != e.OldValue)
+				{
+					childWindow.InitializeAutoCloseTimer();
+					if (childWindow.IsAutoCloseEnabled && childWindow.IsOpen)
+					{
+						childWindow.StartAutoCloseTimer();
+					}
+				}
+			};
+
+			childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseIntervalChangedAction);
+		}
+
+		private void InitializeAutoCloseTimer()
+		{
+			this.StopAutoCloseTimer();
+
+			this.autoCloseTimer = new DispatcherTimer();
+			this.autoCloseTimer.Tick += this.AutoCloseTimerCallback;
+			this.autoCloseTimer.Interval = TimeSpan.FromMilliseconds(this.AutoCloseInterval);
+		}
+
+		private void AutoCloseTimerCallback(object sender, EventArgs e)
+		{
+			this.StopAutoCloseTimer();
+
+			// if the ChildWindow is open and autoclose is still enabled then close the ChildWindow
+			if (this.IsOpen && this.IsAutoCloseEnabled)
+			{
+				this.Close();
+			}
+		}
+
+		private void StartAutoCloseTimer()
+		{
+			// in case it is already running
+			this.StopAutoCloseTimer();
+			if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+			{
+				this.autoCloseTimer.Start();
+			}
+		}
+
+		private void StopAutoCloseTimer()
+		{
+			if ((this.autoCloseTimer != null) && (this.autoCloseTimer.IsEnabled))
+			{
+				this.autoCloseTimer.Stop();
+			}
+		}
+
 		private string closeText;
 
 		/// <summary>
@@ -735,6 +860,11 @@ namespace MahApps.Metro.SimpleChildWindow
 		static ChildWindow()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(ChildWindow), new FrameworkPropertyMetadata(typeof(ChildWindow)));
+		}
+
+		public ChildWindow()
+		{
+			this.InitializeAutoCloseTimer();
 		}
 
 		/// <inheritdoc />

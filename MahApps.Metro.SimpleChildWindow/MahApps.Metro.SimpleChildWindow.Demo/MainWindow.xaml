@@ -48,11 +48,13 @@
 		                               VerticalContentAlignment="Stretch"
 		                               ChildWindowImage="Error"
 		                               CloseByEscape="False"
-		                               Closing="Child01_OnClosing">
+		                               Closing="Child01_OnClosing"
+		                               IsAutoCloseEnabled="True">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 				<TextBlock Grid.Row="0"
@@ -60,8 +62,10 @@
 				           FontSize="36"
 				           FontWeight="Thin"
 				           Text="awesome!" />
-				<TextBox Grid.Row="1" Margin="20" />
-				<Button Grid.Row="2"
+				<TextBox Grid.Row="1"
+				         Margin="20"
+				         Text="Note: it's an auto closing window..." />
+				<Button Grid.Row="3"
 				        Margin="20"
 				        VerticalAlignment="Top"
 				        Click="CloseFirst_OnClick"
