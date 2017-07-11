@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow.Utils;
 
 namespace MahApps.Metro.SimpleChildWindow
@@ -19,7 +20,7 @@ namespace MahApps.Metro.SimpleChildWindow
 	[TemplatePart(Name = PART_Overlay, Type = typeof(Grid))]
 	[TemplatePart(Name = PART_Window, Type = typeof(Grid))]
 	[TemplatePart(Name = PART_Header, Type = typeof(Grid))]
-	[TemplatePart(Name = PART_HeaderThumb, Type = typeof(Thumb))]
+	[TemplatePart(Name = PART_HeaderThumb, Type = typeof(UIElement))]
 	[TemplatePart(Name = PART_Icon, Type = typeof(ContentControl))]
 	[TemplatePart(Name = PART_CloseButton, Type = typeof(Button))]
 	[TemplatePart(Name = PART_Border, Type = typeof(Border))]
@@ -125,6 +126,43 @@ namespace MahApps.Metro.SimpleChildWindow
 			                              typeof(string),
 			                              typeof(ChildWindow),
 			                              new PropertyMetadata(default(string)));
+
+		/// <summary>
+		/// Identifies the <see cref="TitleCharacterCasing"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty TitleCharacterCasingProperty
+			= DependencyProperty.Register(nameof(TitleCharacterCasing),
+			                              typeof(CharacterCasing),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure),
+			                              value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
+
+		/// <summary>
+		/// Identifies the <see cref="TitleHorizontalAlignment"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty TitleHorizontalAlignmentProperty
+			= DependencyProperty.Register(nameof(TitleHorizontalAlignment),
+			                              typeof(HorizontalAlignment),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(HorizontalAlignment.Stretch));
+
+		/// <summary>
+		/// Identifies the <see cref="TitleVerticalAlignment"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty TitleVerticalAlignmentProperty
+			= DependencyProperty.Register(nameof(TitleVerticalAlignment),
+			                              typeof(VerticalAlignment),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(VerticalAlignment.Center));
+
+		/// <summary>
+		/// Identifies the <see cref="TitleTemplate"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty TitleTemplateProperty
+			= DependencyProperty.Register(nameof(TitleTemplate),
+			                              typeof(DataTemplate),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(null));
 
 		/// <summary>
 		/// Identifies the <see cref="TitleFontSize"/> dependency property.
@@ -284,8 +322,8 @@ namespace MahApps.Metro.SimpleChildWindow
 		/// </summary>
 		public event RoutedEventHandler IsOpenChanged
 		{
-			add { AddHandler(IsOpenChangedEvent, value); }
-			remove { RemoveHandler(IsOpenChangedEvent, value); }
+			add { this.AddHandler(IsOpenChangedEvent, value); }
+			remove { this.RemoveHandler(IsOpenChangedEvent, value); }
 		}
 
 		/// <summary>
@@ -307,8 +345,8 @@ namespace MahApps.Metro.SimpleChildWindow
 		/// </summary>
 		public event RoutedEventHandler ClosingFinished
 		{
-			add { AddHandler(ClosingFinishedEvent, value); }
-			remove { RemoveHandler(ClosingFinishedEvent, value); }
+			add { this.AddHandler(ClosingFinishedEvent, value); }
+			remove { this.RemoveHandler(ClosingFinishedEvent, value); }
 		}
 
 		/// <summary>
@@ -361,8 +399,8 @@ namespace MahApps.Metro.SimpleChildWindow
 		/// </summary>
 		public bool ShowTitleBar
 		{
-			get { return (bool)GetValue(ShowTitleBarProperty); }
-			set { SetValue(ShowTitleBarProperty, value); }
+			get { return (bool)this.GetValue(ShowTitleBarProperty); }
+			set { this.SetValue(ShowTitleBarProperty, value); }
 		}
 
 		/// <summary>
@@ -370,8 +408,8 @@ namespace MahApps.Metro.SimpleChildWindow
 		/// </summary>
 		public int TitleBarHeight
 		{
-			get { return (int)GetValue(TitleBarHeightProperty); }
-			set { SetValue(TitleBarHeightProperty, value); }
+			get { return (int)this.GetValue(TitleBarHeightProperty); }
+			set { this.SetValue(TitleBarHeightProperty, value); }
 		}
 
 		/// <summary>
@@ -399,6 +437,42 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (string)this.GetValue(TitleProperty); }
 			set { this.SetValue(TitleProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the character casing of the title.
+		/// </summary>
+		public CharacterCasing TitleCharacterCasing
+		{
+			get { return (CharacterCasing)this.GetValue(TitleCharacterCasingProperty); }
+			set { this.SetValue(TitleCharacterCasingProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the title horizontal alignment.
+		/// </summary>
+		public HorizontalAlignment TitleHorizontalAlignment
+		{
+			get { return (HorizontalAlignment)this.GetValue(TitleHorizontalAlignmentProperty); }
+			set { this.SetValue(TitleHorizontalAlignmentProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the title vertical alignment.
+		/// </summary>
+		public VerticalAlignment TitleVerticalAlignment
+		{
+			get { return (VerticalAlignment)this.GetValue(TitleVerticalAlignmentProperty); }
+			set { this.SetValue(TitleVerticalAlignmentProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the title content template to show a custom title.
+		/// </summary>
+		public DataTemplate TitleTemplate
+		{
+			get { return (DataTemplate)this.GetValue(TitleTemplateProperty); }
+			set { this.SetValue(TitleTemplateProperty, value); }
 		}
 
 		/// <summary> 
@@ -533,9 +607,9 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private void TryFocusElement()
 		{
-			if (this.AllowFocusElement && !System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+			if (this.AllowFocusElement && !DesignerProperties.GetIsInDesignMode(this))
 			{
-				var elementToFocus = FocusedElement ?? this.FindChildren<UIElement>().FirstOrDefault(c => c.Focusable);
+				var elementToFocus = this.FocusedElement ?? MahApps.Metro.SimpleChildWindow.Utils.TreeHelper.FindChildren<UIElement>(this).FirstOrDefault(c => c.Focusable);
 				if (this.ShowCloseButton && this.closeButton != null && elementToFocus == null)
 				{
 					this.closeButton.Focusable = true;
@@ -642,16 +716,16 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get
 			{
-				if (string.IsNullOrEmpty(closeText))
+				if (string.IsNullOrEmpty(this.closeText))
 				{
-					closeText = GetCaption(905);
+					this.closeText = this.GetCaption(905);
 				}
-				return closeText;
+				return this.closeText;
 			}
 		}
 
 		private Storyboard hideStoryboard;
-		private Thumb headerThumb;
+		private IMetroThumb headerThumb;
 		private Button closeButton;
 		private TranslateTransform moveTransform = new TranslateTransform();
 		private Grid partWindow;
@@ -677,12 +751,12 @@ namespace MahApps.Metro.SimpleChildWindow
 
 			if (this.partOverlay != null)
 			{
-				this.partOverlay.MouseLeftButtonDown -= PartOverlayOnClose;
+				this.partOverlay.MouseLeftButtonDown -= this.PartOverlayOnClose;
 			}
 			this.partOverlay = this.Template.FindName(PART_Overlay, this) as Grid;
 			if (this.partOverlay != null)
 			{
-				this.partOverlay.MouseLeftButtonDown += PartOverlayOnClose;
+				this.partOverlay.MouseLeftButtonDown += this.PartOverlayOnClose;
 			}
 
 			this.partWindow = this.Template.FindName(PART_Window, this) as Grid;
@@ -693,33 +767,28 @@ namespace MahApps.Metro.SimpleChildWindow
 
 			if (this.headerThumb != null)
 			{
-				this.headerThumb.DragDelta -= new DragDeltaEventHandler(this.HeaderThumbDragDelta);
+				this.headerThumb.DragDelta -= this.HeaderThumbDragDelta;
 			}
-			this.headerThumb = this.Template.FindName(PART_HeaderThumb, this) as Thumb;
+			this.headerThumb = this.Template.FindName(PART_HeaderThumb, this) as IMetroThumb;
 			if (this.headerThumb != null && this.partWindow != null)
 			{
-				var allowDragging = this.partWindow.HorizontalAlignment != HorizontalAlignment.Stretch
-				                    && this.partWindow.VerticalAlignment != VerticalAlignment.Stretch;
-				if (allowDragging)
-				{
-					this.headerThumb.DragDelta += new DragDeltaEventHandler(this.HeaderThumbDragDelta);
-				}
+				this.headerThumb.DragDelta += this.HeaderThumbDragDelta;
 			}
 
 			if (this.closeButton != null)
 			{
-				this.closeButton.Click -= new RoutedEventHandler(this.OnCloseButtonClick);
+				this.closeButton.Click -= this.OnCloseButtonClick;
 			}
 			this.closeButton = this.Template.FindName(PART_CloseButton, this) as Button;
 			if (this.closeButton != null)
 			{
-				this.closeButton.Click += new RoutedEventHandler(this.OnCloseButtonClick);
+				this.closeButton.Click += this.OnCloseButtonClick;
 			}
 		}
 
 		private void PartOverlayOnClose(object sender, MouseButtonEventArgs e)
 		{
-			if (Equals(e.OriginalSource, partOverlay) && this.CloseOnOverlay)
+			if (Equals(e.OriginalSource, this.partOverlay) && this.CloseOnOverlay)
 			{
 				this.Close();
 			}
@@ -727,8 +796,13 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private void HeaderThumbDragDelta(object sender, DragDeltaEventArgs e)
 		{
-			var horizontalChange = this.FlowDirection == FlowDirection.RightToLeft ? -e.HorizontalChange : e.HorizontalChange;
-			ProcessMove(horizontalChange, e.VerticalChange);
+			var allowDragging = this.AllowMove && this.partWindow.HorizontalAlignment != HorizontalAlignment.Stretch && this.partWindow.VerticalAlignment != VerticalAlignment.Stretch;
+			// drag only if IsWindowDraggable is set to true
+			if (allowDragging && (Math.Abs(e.HorizontalChange) > 2 || Math.Abs(e.VerticalChange) > 2))
+			{
+				var horizontalChange = this.FlowDirection == FlowDirection.RightToLeft ? -e.HorizontalChange : e.HorizontalChange;
+				this.ProcessMove(horizontalChange, e.VerticalChange);
+			}
 		}
 
 		private void ProcessMove(double x, double y)
@@ -742,8 +816,8 @@ namespace MahApps.Metro.SimpleChildWindow
 			var realX = this.moveTransform.X + x + widthOffset;
 			var realY = this.moveTransform.Y + y + heightOffset;
 
-			var changeX = !((realX < (0 + 5)) || (realX > (width - 25)));
-			var changeY = !((realY < (0 + 5)) || (realY > (height - 25)));
+			var changeX = !(realX < (0 + 5) || realX > (width - this.TitleBarHeight + 5));
+			var changeY = !(realY < (0 + 5) || realY > (height - this.TitleBarHeight + 5));
 
 			if (changeX)
 			{
@@ -809,22 +883,22 @@ namespace MahApps.Metro.SimpleChildWindow
 		/// <inheritdoc />
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (this.CloseByEscape && e.Key == System.Windows.Input.Key.Escape)
+			if (this.CloseByEscape && e.Key == Key.Escape)
 			{
 				e.Handled = this.Close();
 			}
-			base.OnPreviewKeyUp(e);
+			this.OnPreviewKeyUp(e);
 		}
 
 		private SafeLibraryHandle user32 = null;
 
 		private string GetCaption(int id)
 		{
-			if (user32 == null)
-				user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
+			if (this.user32 == null)
+				this.user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
 
 			var sb = new StringBuilder(256);
-			UnsafeNativeMethods.LoadString(user32, (uint)id, sb, sb.Capacity);
+			UnsafeNativeMethods.LoadString(this.user32, (uint)id, sb, sb.Capacity);
 			return sb.ToString().Replace("&", "");
 		}
 	}

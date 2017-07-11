@@ -1,5 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mahControls="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:mahConverters="http://metro.mahapps.com/winfx/xaml/shared"
                     xmlns:scw="clr-namespace:MahApps.Metro.SimpleChildWindow"
                     xmlns:valueConverter="clr-namespace:MahApps.Metro.SimpleChildWindow.ValueConverter">
 
@@ -94,16 +96,30 @@
 								                Focusable="False" />
 
 								<!--  title  -->
-								<TextBlock Grid.Column="1"
-								           Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-								           Padding="4"
-								           VerticalAlignment="Center"
-								           FontFamily="{TemplateBinding TitleFontFamily}"
-								           FontSize="{TemplateBinding TitleFontSize}"
-								           Foreground="{TemplateBinding TitleForeground}"
-								           Text="{TemplateBinding Title}"
-								           TextAlignment="Left"
-								           TextTrimming="CharacterEllipsis" />
+								<mahControls:MetroThumbContentControl x:Name="PART_HeaderThumb"
+								                                      Grid.Column="1"
+								                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+								                                      HorizontalAlignment="Stretch"
+								                                      VerticalAlignment="Stretch"
+								                                      HorizontalContentAlignment="{TemplateBinding TitleHorizontalAlignment}"
+								                                      VerticalContentAlignment="{TemplateBinding TitleVerticalAlignment}"
+								                                      Content="{TemplateBinding Title}"
+								                                      ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
+								                                      ContentTemplate="{TemplateBinding TitleTemplate}"
+								                                      Focusable="False"
+								                                      FontFamily="{TemplateBinding TitleFontFamily}"
+								                                      FontSize="{TemplateBinding TitleFontSize}">
+									<ContentControl.Foreground>
+										<MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
+											<Binding Mode="OneWay"
+											         Path="TitleBarBackground"
+											         RelativeSource="{RelativeSource TemplatedParent}" />
+											<Binding Mode="OneWay"
+											         Path="TitleForeground"
+											         RelativeSource="{RelativeSource TemplatedParent}" />
+										</MultiBinding>
+									</ContentControl.Foreground>
+								</mahControls:MetroThumbContentControl>
 
 								<!--  close button  -->
 								<Button x:Name="PART_CloseButton"
@@ -119,13 +135,6 @@
 									      Fill="{TemplateBinding TitleForeground}"
 									      SnapsToDevicePixels="True" />
 								</Button>
-
-								<!--  Header Drag Thumb  -->
-								<Thumb x:Name="PART_HeaderThumb"
-								       Grid.Column="1"
-								       IsTabStop="False"
-								       Opacity="0"
-								       Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=AllowMove, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 							</Grid>
 							<Grid Grid.Row="1">
 								<Grid.ColumnDefinitions>
@@ -219,7 +228,17 @@
 		<Setter Property="TitleFontFamily" Value="{DynamicResource HeaderFontFamily}" />
 		<Setter Property="TitleFontSize" Value="{DynamicResource WindowTitleFontSize}" />
 		<Setter Property="TitleForeground" Value="{DynamicResource IdealForegroundColorBrush}" />
+		<Setter Property="TitleTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<TextBlock Margin="4"
+					           Text="{TemplateBinding Content}"
+					           TextTrimming="CharacterEllipsis" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
 		<Setter Property="VerticalContentAlignment" Value="Center" />
 	</Style>
 
 </ResourceDictionary>
+
