@@ -60,7 +60,8 @@
 				        BorderBrush="{TemplateBinding BorderBrush}"
 				        BorderThickness="{TemplateBinding BorderThickness}"
 				        FocusVisualStyle="{x:Null}"
-				        KeyboardNavigation.TabNavigation="None">
+				        KeyboardNavigation.TabNavigation="None"
+				        UseLayoutRounding="False">
 
 					<AdornerDecorator>
 						<Grid KeyboardNavigation.ControlTabNavigation="Cycle"
