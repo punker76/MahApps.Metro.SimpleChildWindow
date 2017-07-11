@@ -41,243 +41,243 @@ namespace MahApps.Metro.SimpleChildWindow
 		/// </summary>
 		public static readonly DependencyProperty AllowMoveProperty
 			= DependencyProperty.Register(nameof(AllowMove),
-										  typeof(bool),
-										  typeof(ChildWindow),
-										  new PropertyMetadata(default(bool)));
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(default(bool)));
 
 		/// <summary>
 		/// Identifies the <see cref="IsModal"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty IsModalProperty
 			= DependencyProperty.Register(nameof(IsModal),
-										  typeof(bool),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
 		/// Identifies the <see cref="OverlayBrush"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty OverlayBrushProperty
 			= DependencyProperty.Register(nameof(OverlayBrush),
-										  typeof(Brush),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
+			                              typeof(Brush),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
 		/// Identifies the <see cref="CloseOnOverlay"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty CloseOnOverlayProperty
 			= DependencyProperty.Register(nameof(CloseOnOverlay),
-										  typeof(bool),
-										  typeof(ChildWindow),
-										  new PropertyMetadata(default(bool)));
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(default(bool)));
 
 		/// <summary>
 		/// Identifies the <see cref="CloseByEscape"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty CloseByEscapeProperty
 			= DependencyProperty.Register(nameof(CloseByEscape),
-										  typeof(bool),
-										  typeof(ChildWindow),
-										  new PropertyMetadata(true));
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(true));
 
 		/// <summary>
 		/// Identifies the <see cref="ShowTitleBar"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty ShowTitleBarProperty
 			= DependencyProperty.Register(nameof(ShowTitleBar),
-										  typeof(bool),
-										  typeof(ChildWindow),
-										  new PropertyMetadata(true));
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(true));
 
 		/// <summary>
 		/// Identifies the <see cref="TitleBarHeight"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty TitleBarHeightProperty
 			= DependencyProperty.Register(nameof(TitleBarHeight),
-										  typeof(int),
-										  typeof(ChildWindow),
-										  new PropertyMetadata(30));
+			                              typeof(int),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(30));
 
 		/// <summary>
 		/// Identifies the <see cref="TitleBarBackground"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty TitleBarBackgroundProperty
 			= DependencyProperty.Register(nameof(TitleBarBackground),
-										  typeof(Brush),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
+			                              typeof(Brush),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
 		/// Identifies the <see cref="TitleForeground"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty TitleForegroundProperty
 			= DependencyProperty.Register(nameof(TitleForeground),
-										  typeof(Brush),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+			                              typeof(Brush),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
 		/// Identifies the <see cref="Title"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty TitleProperty
 			= DependencyProperty.Register(nameof(Title),
-										  typeof(string),
-										  typeof(ChildWindow),
-										  new PropertyMetadata(default(string)));
+			                              typeof(string),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(default(string)));
 
 		/// <summary>
 		/// Identifies the <see cref="TitleFontSize"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty TitleFontSizeProperty
 			= DependencyProperty.Register(nameof(TitleFontSize),
-										  typeof(double),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(SystemFonts.CaptionFontSize, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
+			                              typeof(double),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(SystemFonts.CaptionFontSize, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
 		/// Identifies the <see cref="TitleFontFamily"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty TitleFontFamilyProperty
 			= DependencyProperty.Register(nameof(TitleFontFamily),
-										  typeof(FontFamily),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(SystemFonts.CaptionFontFamily, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
+			                              typeof(FontFamily),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(SystemFonts.CaptionFontFamily, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
 		/// Identifies the <see cref="Icon"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty IconProperty
 			= DependencyProperty.Register(nameof(Icon),
-										  typeof(object),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+			                              typeof(object),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
 		/// <summary>
 		/// Identifies the <see cref="IconTemplate"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty IconTemplateProperty
 			= DependencyProperty.Register(nameof(IconTemplate),
-										  typeof(DataTemplate),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+			                              typeof(DataTemplate),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
 		/// <summary>
 		/// Identifies the <see cref="ShowCloseButton"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty ShowCloseButtonProperty
 			= DependencyProperty.Register(nameof(ShowCloseButton),
-										  typeof(bool),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
 		/// <summary>
 		/// Identifies the <see cref="CloseButtonStyle"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty CloseButtonStyleProperty
 			= DependencyProperty.Register(nameof(CloseButtonStyle),
-										  typeof(Style),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+			                              typeof(Style),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
 		/// <summary>
 		/// Identifies the <see cref="CloseButtonCommand"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty CloseButtonCommandProperty
 			= DependencyProperty.Register(nameof(CloseButtonCommand),
-										  typeof(ICommand),
-										  typeof(ChildWindow),
-										  new PropertyMetadata(default(ICommand)));
+			                              typeof(ICommand),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(default(ICommand)));
 
 		/// <summary>
 		/// Identifies the <see cref="CloseButtonCommandParameter"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty CloseButtonCommandParameterProperty
 			= DependencyProperty.Register(nameof(CloseButtonCommandParameter),
-										  typeof(object),
-										  typeof(ChildWindow),
-										  new PropertyMetadata(null));
+			                              typeof(object),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(null));
 
 		/// <summary>
 		/// Identifies the <see cref="IsOpen"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty IsOpenProperty
 			= DependencyProperty.Register(nameof(IsOpen),
-										  typeof(bool),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
 
 		/// <summary>
 		/// Identifies the <see cref="ChildWindowWidth"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty ChildWindowWidthProperty
 			= DependencyProperty.Register(nameof(ChildWindowWidth),
-										  typeof(double),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
+			                              typeof(double),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
 
 		/// <summary>
 		/// Identifies the <see cref="ChildWindowHeight"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty ChildWindowHeightProperty
 			= DependencyProperty.Register(nameof(ChildWindowHeight),
-										  typeof(double),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
+			                              typeof(double),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
 
 		/// <summary>
 		/// Identifies the <see cref="ChildWindowImage"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty ChildWindowImageProperty
 			= DependencyProperty.Register(nameof(ChildWindowImage),
-										  typeof(MessageBoxImage),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(MessageBoxImage.None, FrameworkPropertyMetadataOptions.AffectsMeasure));
+			                              typeof(MessageBoxImage),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(MessageBoxImage.None, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
 		/// <summary>
 		/// Identifies the <see cref="EnableDropShadow"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty EnableDropShadowProperty
 			= DependencyProperty.Register(nameof(EnableDropShadow),
-										  typeof(bool),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
 		/// Identifies the <see cref="AllowFocusElement"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty AllowFocusElementProperty
 			= DependencyProperty.Register(nameof(AllowFocusElement),
-										  typeof(bool),
-										  typeof(ChildWindow),
-										  new PropertyMetadata(true));
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(true));
 
 		/// <summary>
 		/// Identifies the <see cref="FocusedElement"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty FocusedElementProperty
 			= DependencyProperty.Register(nameof(FocusedElement),
-										  typeof(FrameworkElement),
-										  typeof(ChildWindow),
-										  new UIPropertyMetadata(null));
+			                              typeof(FrameworkElement),
+			                              typeof(ChildWindow),
+			                              new UIPropertyMetadata(null));
 
 		/// <summary>
 		/// Identifies the <see cref="GlowBrush"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty GlowBrushProperty
 			= DependencyProperty.Register(nameof(GlowBrush),
-										  typeof(SolidColorBrush),
-										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+			                              typeof(SolidColorBrush),
+			                              typeof(ChildWindow),
+			                              new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
 		/// An event that will be raised when <see cref="IsOpen"/> dependency property changes.
 		/// </summary>
 		public static readonly RoutedEvent IsOpenChangedEvent
 			= EventManager.RegisterRoutedEvent(nameof(IsOpenChanged),
-											   RoutingStrategy.Bubble,
-											   typeof(RoutedEventHandler),
-											   typeof(ChildWindow));
+			                                   RoutingStrategy.Bubble,
+			                                   typeof(RoutedEventHandler),
+			                                   typeof(ChildWindow));
 
 		/// <summary>
 		/// An event that will be raised when <see cref="IsOpen"/> dependency property changes.
@@ -298,9 +298,9 @@ namespace MahApps.Metro.SimpleChildWindow
 		/// </summary>
 		public static readonly RoutedEvent ClosingFinishedEvent
 			= EventManager.RegisterRoutedEvent(nameof(ClosingFinished),
-											   RoutingStrategy.Bubble,
-											   typeof(RoutedEventHandler),
-											   typeof(ChildWindow));
+			                                   RoutingStrategy.Bubble,
+			                                   typeof(RoutedEventHandler),
+			                                   typeof(ChildWindow));
 
 		/// <summary>
 		/// An event that will be raised when the closing animation has finished.
@@ -699,7 +699,7 @@ namespace MahApps.Metro.SimpleChildWindow
 			if (this.headerThumb != null && this.partWindow != null)
 			{
 				var allowDragging = this.partWindow.HorizontalAlignment != HorizontalAlignment.Stretch
-									&& this.partWindow.VerticalAlignment != VerticalAlignment.Stretch;
+				                    && this.partWindow.VerticalAlignment != VerticalAlignment.Stretch;
 				if (allowDragging)
 				{
 					this.headerThumb.DragDelta += new DragDeltaEventHandler(this.HeaderThumbDragDelta);
@@ -735,16 +735,16 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			var width = this.partOverlay.RenderSize.Width;
 			var height = this.partOverlay.RenderSize.Height;
-		
+
 			var widthOffset = width / 2 - this.partWindow.RenderSize.Width / 2;
 			var heightOffset = height / 2 - this.partWindow.RenderSize.Height / 2;
-		
+
 			var realX = this.moveTransform.X + x + widthOffset;
 			var realY = this.moveTransform.Y + y + heightOffset;
-		
+
 			var changeX = !((realX < (0 + 5)) || (realX > (width - 25)));
 			var changeY = !((realY < (0 + 5)) || (realY > (height - 25)));
-		
+
 			if (changeX)
 			{
 				this.moveTransform.X += x;
@@ -753,7 +753,7 @@ namespace MahApps.Metro.SimpleChildWindow
 			{
 				this.moveTransform.Y += y;
 			}
-		
+
 			if (changeX || changeY)
 			{
 				this.InvalidateArrange();
