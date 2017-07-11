@@ -609,7 +609,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			if (this.AllowFocusElement && !DesignerProperties.GetIsInDesignMode(this))
 			{
-				var elementToFocus = this.FocusedElement ?? MahApps.Metro.SimpleChildWindow.Utils.TreeHelper.FindChildren<UIElement>(this).FirstOrDefault(c => c.Focusable);
+				var elementToFocus = this.FocusedElement ?? Utils.TreeHelper.FindChildren<UIElement>(this).FirstOrDefault(c => c.Focusable);
 				if (this.ShowCloseButton && this.closeButton != null && elementToFocus == null)
 				{
 					this.closeButton.Focusable = true;
@@ -730,6 +730,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		private TranslateTransform moveTransform = new TranslateTransform();
 		private Grid partWindow;
 		private Grid partOverlay;
+		private ContentControl icon;
 
 		static ChildWindow()
 		{
@@ -764,6 +765,8 @@ namespace MahApps.Metro.SimpleChildWindow
 			{
 				this.partWindow.RenderTransform = this.moveTransform;
 			}
+
+			this.icon = this.Template.FindName(PART_Icon, this) as ContentControl;
 
 			if (this.headerThumb != null)
 			{
@@ -816,20 +819,42 @@ namespace MahApps.Metro.SimpleChildWindow
 			var realX = this.moveTransform.X + x + widthOffset;
 			var realY = this.moveTransform.Y + y + heightOffset;
 
-			var changeX = !(realX < (0 + 5) || realX > (width - this.TitleBarHeight + 5));
-			var changeY = !(realY < (0 + 5) || realY > (height - this.TitleBarHeight + 5));
+			const int extraGap = 5;
+			var widthGap = Math.Max(this.icon?.ActualWidth + 5 ?? 30, 30);
+			var heightGap = Math.Max(this.TitleBarHeight, 30);
+			var changeX = this.moveTransform.X;
+			var changeY = this.moveTransform.Y;
 
-			if (changeX)
+			if (realX < (0 + extraGap))
 			{
-				this.moveTransform.X += x;
+				changeX = -widthOffset + extraGap;
 			}
-			if (changeY)
+			else if (realX > (width - widthGap - extraGap))
 			{
-				this.moveTransform.Y += y;
+				changeX = width - widthOffset - widthGap - extraGap;
+			}
+			else
+			{
+				changeX += x;
 			}
 
-			if (changeX || changeY)
+			if (realY < (0 + extraGap))
 			{
+				changeY = -heightOffset + extraGap;
+			}
+			else if (realY > (height - heightGap - extraGap))
+			{
+				changeY = height - heightOffset - heightGap - extraGap;
+			}
+			else
+			{
+				changeY += y;
+			}
+
+			if (!Equals(changeX, this.moveTransform.X) || !Equals(changeY, this.moveTransform.Y))
+			{
+				this.moveTransform.X = changeX;
+				this.moveTransform.Y = changeY;
 				this.InvalidateArrange();
 			}
 		}
