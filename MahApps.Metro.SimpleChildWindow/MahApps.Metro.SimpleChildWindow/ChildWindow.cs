@@ -368,6 +368,16 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
+		/// An event that will be raised when the parent window will be activated.
+		/// </summary>
+		public event EventHandler<OnActiveChangedEventArgs> Activated;
+
+		/// <summary>
+		/// An event that will be raised when the parent window will be deactivated.
+		/// </summary>
+		public event EventHandler<OnActiveChangedEventArgs> Deactivated;
+
+		/// <summary>
 		/// Gets or sets a value indicating whether the child window can be moved inside the overlay container.
 		/// </summary>
 		public bool AllowMove
@@ -1056,5 +1066,69 @@ namespace MahApps.Metro.SimpleChildWindow
 			UnsafeNativeMethods.LoadString(this.user32, (uint)id, sb, sb.Capacity);
 			return sb.ToString().Replace("&", "");
 		}
+
+		private static readonly DependencyPropertyKey IsActivePropertyKey
+			= DependencyProperty.RegisterReadOnly(nameof(IsActive),
+			                                      typeof(bool),
+			                                      typeof(ChildWindow),
+			                                      new FrameworkPropertyMetadata(false));
+
+		/// <summary>
+		/// Identifies the <see cref="P:MahApps.Metro.SimpleChildWindow.IsActive" /> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty IsActiveProperty = ChildWindow.IsActivePropertyKey.DependencyProperty;
+
+		/// <summary>
+		/// Gets a value that indicates whether the ChildWindow is active.
+		/// </summary>
+		public bool IsActive
+		{
+			get
+			{
+				this.VerifyAccess();
+				return (bool)this.GetValue(ChildWindow.IsActiveProperty);
+			}
+		}
+
+		private void Activate(object sender)
+		{
+			this.VerifyAccess();
+			this.Activated?.Invoke(this, new OnActiveChangedEventArgs(this, sender));
+		}
+
+		private void Deactivate(object sender)
+		{
+			this.VerifyAccess();
+			this.Deactivated?.Invoke(this, new OnActiveChangedEventArgs(this, sender));
+		}
+
+		internal void HandleActivate(object sender, bool windowActivated)
+		{
+			if (windowActivated && !this.IsActive)
+			{
+				this.SetValue(ChildWindow.IsActivePropertyKey, true);
+				this.Activate(sender);
+			}
+			else
+			{
+				if (!windowActivated && this.IsActive)
+				{
+					this.SetValue(ChildWindow.IsActivePropertyKey, false);
+					this.Deactivate(sender);
+				}
+			}
+		}
+	}
+
+	public class OnActiveChangedEventArgs : EventArgs
+	{
+		public OnActiveChangedEventArgs(object source, object originalSource) : base()
+		{
+			Source = source;
+			OriginalSource = originalSource;
+		}
+
+		public object Source { get; }
+		public object OriginalSource { get; }
 	}
 }
