@@ -1,13 +1,14 @@
 # ![icon](https://raw.github.com/punker76/MahApps.Metro.SimpleChildWindow/master/MahApps.Metro.SimpleChildWindow/MahApps.Metro.SimpleChildWindow48.png) MahApps.Metro.SimpleChildWindow
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow](https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square)](https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build status](https://img.shields.io/appveyor/ci/punker76/mahapps-metro-simplechildwindow/master.svg?style=flat-square)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/master)
+[![Master build status](https://img.shields.io/appveyor/ci/punker76/mahapps-metro-simplechildwindow/master.svg?label=build-master&style=flat-square)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/master)
+[![Dev build status](https://img.shields.io/appveyor/ci/punker76/mahapps-metro-simplechildwindow/dev.svg?label=build-dev&style=flat-square)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/dev)
+[![Issues](https://img.shields.io/github/issues/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/issues)
 [![Release](https://img.shields.io/github/release/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/releases/latest)
 [![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow/)
-[![Issues](https://img.shields.io/github/issues/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/issues)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/blob/master/License.txt)
 [![Twitter](https://img.shields.io/badge/twitter-%40punker76-55acee.svg?style=flat-square)](https://twitter.com/punker76)
-
 
 A simple child window for [MahApps.Metro](https://github.com/MahApps/MahApps.Metro). Yes, this means you need `MahApps.Metro` to use this control.
 
