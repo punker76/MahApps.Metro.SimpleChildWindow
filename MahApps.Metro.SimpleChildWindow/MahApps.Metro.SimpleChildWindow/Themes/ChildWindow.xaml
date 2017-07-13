@@ -215,6 +215,10 @@
 				</MultiTrigger.Conditions>
 				<Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
 			</MultiTrigger>
+			<Trigger Property="IsWindowHostActive" Value="False">
+				<Setter TargetName="PART_Header" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TitleBarNonActiveBackground, Mode=OneWay}" />
+				<Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NonActiveBorderBrush, Mode=OneWay}" />
+			</Trigger>
 		</ControlTemplate.Triggers>
 	</ControlTemplate>
 
@@ -223,9 +227,11 @@
 		<Setter Property="CloseButtonStyle" Value="{DynamicResource MetroWindowButtonStyle}" />
 		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
 		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="OverlayBrush" Value="{DynamicResource GrayBrush2}" />
+		<Setter Property="OverlayBrush" Value="{DynamicResource GrayBrush3}" />
 		<Setter Property="Template" Value="{StaticResource ChildWindowTemplate}" />
 		<Setter Property="TitleBarBackground" Value="{DynamicResource WindowTitleColorBrush}" />
+		<Setter Property="TitleBarNonActiveBackground" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
+		<Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
 		<Setter Property="TitleFontFamily" Value="{DynamicResource HeaderFontFamily}" />
 		<Setter Property="TitleFontSize" Value="{DynamicResource WindowTitleFontSize}" />
 		<Setter Property="TitleForeground" Value="{DynamicResource IdealForegroundColorBrush}" />

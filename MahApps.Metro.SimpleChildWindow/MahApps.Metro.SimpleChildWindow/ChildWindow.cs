@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -108,6 +109,24 @@ namespace MahApps.Metro.SimpleChildWindow
 			                              typeof(Brush),
 			                              typeof(ChildWindow),
 			                              new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
+
+		/// <summary>
+		/// Identifies the <see cref="TitleBarNonActiveBackground"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty TitleBarNonActiveBackgroundProperty
+			= DependencyProperty.Register(nameof(TitleBarNonActiveBackground),
+			                              typeof(Brush),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(Brushes.Gray));
+
+		/// <summary>
+		/// Identifies the <see cref="NonActiveBorderBrush"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty NonActiveBorderBrushProperty
+			= DependencyProperty.Register(nameof(NonActiveBorderBrush),
+			                              typeof(Brush),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(Brushes.Gray));
 
 		/// <summary>
 		/// Identifies the <see cref="TitleForeground"/> dependency property.
@@ -327,6 +346,15 @@ namespace MahApps.Metro.SimpleChildWindow
 			                              new FrameworkPropertyMetadata(5000L, AutoCloseIntervalChanged));
 
 		/// <summary>
+		/// Identifies the <see cref="IsWindowHostActive"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty IsWindowHostActiveProperty
+			= DependencyProperty.Register(nameof(IsWindowHostActive),
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(true));
+
+		/// <summary>
 		/// An event that will be raised when <see cref="IsOpen"/> dependency property changes.
 		/// </summary>
 		public static readonly RoutedEvent IsOpenChangedEvent
@@ -437,6 +465,24 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (Brush)this.GetValue(TitleBarBackgroundProperty); }
 			set { this.SetValue(TitleBarBackgroundProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the title bar background for non-active status.
+		/// </summary>
+		public Brush TitleBarNonActiveBackground
+		{
+			get { return (Brush)this.GetValue(TitleBarNonActiveBackgroundProperty); }
+			set { this.SetValue(TitleBarNonActiveBackgroundProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the border brush for non-active status.
+		/// </summary>
+		public Brush NonActiveBorderBrush
+		{
+			get { return (Brush)this.GetValue(NonActiveBorderBrushProperty); }
+			set { this.SetValue(NonActiveBorderBrushProperty, value); }
 		}
 
 		/// <summary>
@@ -750,6 +796,15 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(AutoCloseIntervalProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the host Window is active or not.
+		/// </summary>
+		public bool IsWindowHostActive
+		{
+			get { return (bool)this.GetValue(IsWindowHostActiveProperty); }
+			set { this.SetValue(IsWindowHostActiveProperty, value); }
+		}
+
 		DispatcherTimer autoCloseTimer;
 
 		private static void IsAutoCloseEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -876,6 +931,22 @@ namespace MahApps.Metro.SimpleChildWindow
 			if (this.Template == null)
 			{
 				return;
+			}
+
+			var isActiveBindingAction = new Action(() => {
+				var window = Window.GetWindow(this);
+				if (window != null)
+				{
+					this.SetBinding(ChildWindow.IsWindowHostActiveProperty, new Binding(nameof(Window.IsActive)) {Source = window, Mode = BindingMode.OneWay});
+				}
+			});
+			if (!this.IsLoaded)
+			{
+				this.BeginInvoke(isActiveBindingAction, DispatcherPriority.Loaded);
+			}
+			else
+			{
+				isActiveBindingAction();
 			}
 
 			this.hideStoryboard = this.Template.FindName(HideStoryboard, this) as Storyboard;

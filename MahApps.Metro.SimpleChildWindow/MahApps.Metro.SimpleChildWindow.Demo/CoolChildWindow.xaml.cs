@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.SimpleChildWindow.Demo
 {
