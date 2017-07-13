@@ -108,27 +108,10 @@ namespace MahApps.Metro.SimpleChildWindow
 				           };
 				           dialog.PreviewMouseDown += dialogOnMouseUp;
 
-				           EventHandler windowOnActivated = null;
-				           EventHandler windowOnDeActivated = null;
-				           var window = Window.GetWindow(container);
-				           if (window != null)
-				           {
-					           windowOnActivated = (s, e) => dialog.HandleActivate(s, true);
-					           windowOnDeActivated = (s, e) => dialog.HandleActivate(s, false);
-					           window.Activated += windowOnActivated;
-					           window.Deactivated += windowOnDeActivated;
-					           dialog.HandleActivate(window, true);
-				           }
-
 				           RoutedEventHandler handler = null;
 				           handler = (sender, args) => {
 					           dialog.ClosingFinished -= handler;
 					           dialog.PreviewMouseDown -= dialogOnMouseUp;
-					           if (window != null)
-					           {
-						           window.Activated -= windowOnActivated;
-						           window.Deactivated -= windowOnDeActivated;
-					           }
 					           container.Children.Remove(dialog);
 					           tcs.TrySetResult(null);
 				           };

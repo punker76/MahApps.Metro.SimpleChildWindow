@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -108,6 +109,24 @@ namespace MahApps.Metro.SimpleChildWindow
 			                              typeof(Brush),
 			                              typeof(ChildWindow),
 			                              new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
+
+		/// <summary>
+		/// Identifies the <see cref="TitleBarNonActiveBackground"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty TitleBarNonActiveBackgroundProperty
+			= DependencyProperty.Register(nameof(TitleBarNonActiveBackground),
+			                              typeof(Brush),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(Brushes.Gray));
+
+		/// <summary>
+		/// Identifies the <see cref="NonActiveBorderBrush"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty NonActiveBorderBrushProperty
+			= DependencyProperty.Register(nameof(NonActiveBorderBrush),
+			                              typeof(Brush),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(Brushes.Gray));
 
 		/// <summary>
 		/// Identifies the <see cref="TitleForeground"/> dependency property.
@@ -327,6 +346,15 @@ namespace MahApps.Metro.SimpleChildWindow
 			                              new FrameworkPropertyMetadata(5000L, AutoCloseIntervalChanged));
 
 		/// <summary>
+		/// Identifies the <see cref="IsWindowHostActive"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty IsWindowHostActiveProperty
+			= DependencyProperty.Register(nameof(IsWindowHostActive),
+			                              typeof(bool),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(true));
+
+		/// <summary>
 		/// An event that will be raised when <see cref="IsOpen"/> dependency property changes.
 		/// </summary>
 		public static readonly RoutedEvent IsOpenChangedEvent
@@ -366,16 +394,6 @@ namespace MahApps.Metro.SimpleChildWindow
 			add { this.AddHandler(ClosingFinishedEvent, value); }
 			remove { this.RemoveHandler(ClosingFinishedEvent, value); }
 		}
-
-		/// <summary>
-		/// An event that will be raised when the parent window will be activated.
-		/// </summary>
-		public event EventHandler<OnActiveChangedEventArgs> Activated;
-
-		/// <summary>
-		/// An event that will be raised when the parent window will be deactivated.
-		/// </summary>
-		public event EventHandler<OnActiveChangedEventArgs> Deactivated;
 
 		/// <summary>
 		/// Gets or sets a value indicating whether the child window can be moved inside the overlay container.
@@ -447,6 +465,24 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (Brush)this.GetValue(TitleBarBackgroundProperty); }
 			set { this.SetValue(TitleBarBackgroundProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the title bar background for non-active status.
+		/// </summary>
+		public Brush TitleBarNonActiveBackground
+		{
+			get { return (Brush)this.GetValue(TitleBarNonActiveBackgroundProperty); }
+			set { this.SetValue(TitleBarNonActiveBackgroundProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the border brush for non-active status.
+		/// </summary>
+		public Brush NonActiveBorderBrush
+		{
+			get { return (Brush)this.GetValue(NonActiveBorderBrushProperty); }
+			set { this.SetValue(NonActiveBorderBrushProperty, value); }
 		}
 
 		/// <summary>
@@ -760,6 +796,15 @@ namespace MahApps.Metro.SimpleChildWindow
 			set { this.SetValue(AutoCloseIntervalProperty, value); }
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether the host Window is active or not.
+		/// </summary>
+		public bool IsWindowHostActive
+		{
+			get { return (bool)this.GetValue(IsWindowHostActiveProperty); }
+			set { this.SetValue(IsWindowHostActiveProperty, value); }
+		}
+
 		DispatcherTimer autoCloseTimer;
 
 		private static void IsAutoCloseEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -886,6 +931,22 @@ namespace MahApps.Metro.SimpleChildWindow
 			if (this.Template == null)
 			{
 				return;
+			}
+
+			var isActiveBindingAction = new Action(() => {
+				var window = Window.GetWindow(this);
+				if (window != null)
+				{
+					this.SetBinding(ChildWindow.IsWindowHostActiveProperty, new Binding(nameof(Window.IsActive)) {Source = window, Mode = BindingMode.OneWay});
+				}
+			});
+			if (!this.IsLoaded)
+			{
+				this.BeginInvoke(isActiveBindingAction, DispatcherPriority.Loaded);
+			}
+			else
+			{
+				isActiveBindingAction();
 			}
 
 			this.hideStoryboard = this.Template.FindName(HideStoryboard, this) as Storyboard;
@@ -1066,69 +1127,5 @@ namespace MahApps.Metro.SimpleChildWindow
 			UnsafeNativeMethods.LoadString(this.user32, (uint)id, sb, sb.Capacity);
 			return sb.ToString().Replace("&", "");
 		}
-
-		private static readonly DependencyPropertyKey IsActivePropertyKey
-			= DependencyProperty.RegisterReadOnly(nameof(IsActive),
-			                                      typeof(bool),
-			                                      typeof(ChildWindow),
-			                                      new FrameworkPropertyMetadata(false));
-
-		/// <summary>
-		/// Identifies the <see cref="P:MahApps.Metro.SimpleChildWindow.IsActive" /> dependency property.
-		/// </summary>
-		public static readonly DependencyProperty IsActiveProperty = ChildWindow.IsActivePropertyKey.DependencyProperty;
-
-		/// <summary>
-		/// Gets a value that indicates whether the ChildWindow is active.
-		/// </summary>
-		public bool IsActive
-		{
-			get
-			{
-				this.VerifyAccess();
-				return (bool)this.GetValue(ChildWindow.IsActiveProperty);
-			}
-		}
-
-		private void Activate(object sender)
-		{
-			this.VerifyAccess();
-			this.Activated?.Invoke(this, new OnActiveChangedEventArgs(this, sender));
-		}
-
-		private void Deactivate(object sender)
-		{
-			this.VerifyAccess();
-			this.Deactivated?.Invoke(this, new OnActiveChangedEventArgs(this, sender));
-		}
-
-		internal void HandleActivate(object sender, bool windowActivated)
-		{
-			if (windowActivated && !this.IsActive)
-			{
-				this.SetValue(ChildWindow.IsActivePropertyKey, true);
-				this.Activate(sender);
-			}
-			else
-			{
-				if (!windowActivated && this.IsActive)
-				{
-					this.SetValue(ChildWindow.IsActivePropertyKey, false);
-					this.Deactivate(sender);
-				}
-			}
-		}
-	}
-
-	public class OnActiveChangedEventArgs : EventArgs
-	{
-		public OnActiveChangedEventArgs(object source, object originalSource) : base()
-		{
-			Source = source;
-			OriginalSource = originalSource;
-		}
-
-		public object Source { get; }
-		public object OriginalSource { get; }
 	}
 }
