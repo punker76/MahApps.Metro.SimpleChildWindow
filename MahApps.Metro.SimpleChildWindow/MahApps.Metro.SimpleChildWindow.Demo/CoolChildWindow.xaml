@@ -29,6 +29,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<TextBlock Grid.Row="0"
@@ -37,13 +38,21 @@
 		           FontWeight="Thin"
 		           Text="Yepp, it works!" />
 		<TextBox Grid.Row="1" Margin="5" />
-		<Button Grid.Row="2"
-		        Margin="5"
-		        VerticalAlignment="Bottom"
-		        Click="CloseSec_OnClick"
-		        Content="Close Me"
-		        FontSize="20"
-		        FontWeight="Thin"
-		        IsDefault="True" />
+		<UniformGrid Grid.Row="3"
+		             Margin="5"
+		             Columns="2">
+			<Button Margin="5"
+			        Click="OkButtonOnClick"
+			        Content="Ok"
+			        FontSize="20"
+			        FontWeight="Thin"
+			        IsDefault="True" />
+			<Button Margin="5"
+					Click="CloseSec_OnClick"
+			        Content="Cancel"
+			        FontSize="20"
+			        FontWeight="Thin"
+			        IsDefault="True" />
+		</UniformGrid>
 	</Grid>
 </simpleChildWindow:ChildWindow>

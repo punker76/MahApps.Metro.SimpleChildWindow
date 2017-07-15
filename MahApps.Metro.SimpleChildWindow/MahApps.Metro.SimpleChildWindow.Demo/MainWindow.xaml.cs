@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace MahApps.Metro.SimpleChildWindow.Demo
 {
@@ -26,7 +27,15 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 
 		private async void ThirdTest_OnClick(object sender, RoutedEventArgs e)
 		{
-			await this.ShowChildWindowAsync(new CoolChildWindow() {IsModal = false, AllowMove = true});
+			var result = await this.ShowChildWindowAsync<bool>(new CoolChildWindow() {IsModal = false, AllowMove = true});
+			if (result)
+			{
+				await this.ShowMessageAsync("ChildWindow Result", "He, you just clicked the 'Ok' button.");
+			}
+			else
+			{
+				await this.ShowMessageAsync("ChildWindow Result", "The dialog was canceled.");
+			}
 		}
 
 		private void CloseFirst_OnClick(object sender, RoutedEventArgs e)

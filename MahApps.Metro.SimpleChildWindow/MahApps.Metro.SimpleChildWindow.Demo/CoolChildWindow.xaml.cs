@@ -13,9 +13,14 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 			this.InitializeComponent();
 		}
 
+		private void OkButtonOnClick(object sender, RoutedEventArgs e)
+		{
+			this.Close(true);
+		}
+
 		private void CloseSec_OnClick(object sender, RoutedEventArgs e)
 		{
-			this.Close();
+			this.Close(false);
 		}
 	}
 }
