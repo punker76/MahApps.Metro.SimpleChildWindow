@@ -664,7 +664,7 @@ namespace MahApps.Metro.SimpleChildWindow
 					}
 					else
 					{
-						childWindow.Hide();
+						childWindow.OnClosingFinished();
 					}
 				}
 
@@ -701,10 +701,10 @@ namespace MahApps.Metro.SimpleChildWindow
 		private void HideStoryboard_Completed(object sender, EventArgs e)
 		{
 			this.hideStoryboard.Completed -= this.HideStoryboard_Completed;
-			this.Hide();
+			this.OnClosingFinished();
 		}
 
-		private void Hide()
+		private void OnClosingFinished()
 		{
 			this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent, this));
 		}
@@ -804,6 +804,11 @@ namespace MahApps.Metro.SimpleChildWindow
 			get { return (bool)this.GetValue(IsWindowHostActiveProperty); }
 			set { this.SetValue(IsWindowHostActiveProperty, value); }
 		}
+
+		/// <summary>
+		/// Gets the child window result when the dialog will be closed.
+		/// </summary>
+		public object ChildWindowResult { get; protected set; }
 
 		DispatcherTimer autoCloseTimer;
 
@@ -1077,7 +1082,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		/// <summary>
 		/// Closes this instance.
 		/// </summary>
-		public bool Close()
+		public bool Close(object childWindowResult = null)
 		{
 			// check if we really want close the dialog
 			var e = new CancelEventArgs();
@@ -1097,6 +1102,7 @@ namespace MahApps.Metro.SimpleChildWindow
 					this.CloseButtonCommandParameter = null;
 				}
 
+				this.ChildWindowResult = childWindowResult;
 				this.IsOpen = false;
 				return true;
 			}
