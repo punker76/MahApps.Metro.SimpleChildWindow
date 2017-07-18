@@ -16,7 +16,7 @@ The dll contains the `ChildWindow` and a helper class `ChildWindowManager`.
 
 **MahApps.Metro.SimpleChildWindow** can be installed via [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow).
 
-## Getting started
+## [Getting started][wiki]
 
 * [Samples][samples]
 * [Properties][properties]
@@ -27,7 +27,7 @@ The dll contains the `ChildWindow` and a helper class `ChildWindowManager`.
 ## Want to say thanks?
  * Hit the :star: Star :star: button
 
-### Samples
+## Samples
 
 #### Stretch with Margin
 
@@ -69,6 +69,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+[wiki]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki
 [properties]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/Properties
 [methods]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/Methods
 [events]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/Events
