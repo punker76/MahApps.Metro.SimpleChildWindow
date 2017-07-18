@@ -18,20 +18,38 @@ The dll contains the `ChildWindow` and a helper class `ChildWindowManager`.
 
 ## Getting started
 
+* [Samples][samples]
 * [Properties][properties]
 * [Methods][methods]
 * [Events][events]
 * [ChildWindowManager][childwindowmanager]
-* [Samples][samples]
 
 ## Want to say thanks?
  * Hit the :star: Star :star: button
+
+### Samples
+
+#### Stretch with Margin
+
+![2014-12-13_23h46_00](https://user-images.githubusercontent.com/658431/28338627-de8c2890-6c09-11e7-99c3-c424e2c588a2.png)
+
+#### Without Shadow
+
+![2014-12-13_23h46_16](https://user-images.githubusercontent.com/658431/28338628-dea5f8e2-6c09-11e7-8349-8bce5cf7a1c8.png)
+
+#### AutoSize
+
+![2014-12-13_23h46_32](https://user-images.githubusercontent.com/658431/28338629-dea8afba-6c09-11e7-8b7d-cf7e2db2fa82.png)
+
+#### With Icon or IconTemplate
+
+![2014-12-14_21h20_55](https://user-images.githubusercontent.com/658431/28338630-deacb9ca-6c09-11e7-8bdf-054fb008afd6.png)
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2014-2015 Jan Karger
+Copyright (c) 2014-2017 Jan Karger
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
