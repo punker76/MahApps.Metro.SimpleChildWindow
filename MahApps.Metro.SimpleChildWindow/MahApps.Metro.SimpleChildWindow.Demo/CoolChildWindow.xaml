@@ -8,7 +8,7 @@
                                Title="Cool Window with long title"
                                d:DesignHeight="300"
                                d:DesignWidth="300"
-                               BorderBrush="{DynamicResource AccentColorBrush}"
+                               BorderBrush="{DynamicResource AccentBaseColorBrush}"
                                BorderThickness="1"
                                ChildWindowWidth="300"
                                CloseOnOverlay="True"
