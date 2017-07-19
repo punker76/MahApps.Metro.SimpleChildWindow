@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>MahApps.Metro.SimpleChildWindow</id>
-    <version>1.3.2-alpha001</version>
+    <version>1.4.0-alpha001</version>
     <title>MahApps.Metro.SimpleChildWindow</title>
     <authors>Jan Karger</authors>
     <owners>punker76</owners>
