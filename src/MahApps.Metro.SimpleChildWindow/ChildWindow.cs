@@ -328,6 +328,15 @@ namespace MahApps.Metro.SimpleChildWindow
 			                              new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
 
 		/// <summary>
+		/// Identifies the <see cref="NonActiveGlowBrush"/> dependency property.
+		/// </summary>
+		public static readonly DependencyProperty NonActiveGlowBrushProperty
+			= DependencyProperty.Register(nameof(NonActiveGlowBrush),
+			                              typeof(SolidColorBrush),
+			                              typeof(ChildWindow),
+			                              new PropertyMetadata(Brushes.Gray));
+
+		/// <summary>
 		/// Identifies the <see cref="IsAutoCloseEnabled"/> dependency property.
 		/// </summary>
 		public static readonly DependencyProperty IsAutoCloseEnabledProperty
@@ -776,6 +785,15 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			get { return (SolidColorBrush)this.GetValue(GlowBrushProperty); }
 			set { this.SetValue(GlowBrushProperty, value); }
+		}
+
+		/// <summary>
+		/// Gets or sets the glow brush (drop shadow) for non-active status.
+		/// </summary>
+		public SolidColorBrush NonActiveGlowBrush
+		{
+			get { return (SolidColorBrush)this.GetValue(NonActiveGlowBrushProperty); }
+			set { this.SetValue(NonActiveGlowBrushProperty, value); }
 		}
 
 		/// <summary>

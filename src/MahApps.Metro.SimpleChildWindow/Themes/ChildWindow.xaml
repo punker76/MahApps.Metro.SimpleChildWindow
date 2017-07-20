@@ -33,11 +33,16 @@
 		      Opacity="0"
 		      Visibility="Collapsed">
 			<Grid.Resources>
-				<DropShadowEffect x:Key="GlowEffect"
+				<DropShadowEffect x:Key="GlowBrushEffect"
 				                  BlurRadius="10"
 				                  Opacity="0.8"
 				                  ShadowDepth="0"
 				                  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(GlowBrush).Color, Mode=OneWay}" />
+				<DropShadowEffect x:Key="NonActiveGlowBrushEffect"
+				                  BlurRadius="10"
+				                  Opacity="0.8"
+				                  ShadowDepth="0"
+				                  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(NonActiveGlowBrush).Color, Mode=OneWay}" />
 			</Grid.Resources>
 
 			<Grid x:Name="PART_Window"
@@ -53,10 +58,11 @@
 					<AdornerDecorator.CacheMode>
 						<BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 					</AdornerDecorator.CacheMode>
-					<Border Background="{TemplateBinding Background}"
+					<Border x:Name="PART_GlowEffect"
+					        Background="{TemplateBinding Background}"
 					        BorderBrush="Transparent"
 					        BorderThickness="{TemplateBinding BorderThickness}"
-					        Effect="{StaticResource GlowEffect}"
+					        Effect="{DynamicResource GlowBrushEffect}"
 					        FocusVisualStyle="{x:Null}"
 					        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 				</AdornerDecorator>
@@ -222,10 +228,15 @@
 				</MultiTrigger.Conditions>
 				<Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
 			</MultiTrigger>
-			<Trigger Property="IsWindowHostActive" Value="False">
+			<MultiTrigger>
+				<MultiTrigger.Conditions>
+					<Condition Property="IsVisible" Value="True" />
+					<Condition Property="IsWindowHostActive" Value="False" />
+				</MultiTrigger.Conditions>
 				<Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NonActiveBorderBrush, Mode=OneWay}" />
+				<Setter TargetName="PART_GlowEffect" Property="Effect" Value="{DynamicResource NonActiveGlowBrushEffect}" />
 				<Setter TargetName="PART_Header" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TitleBarNonActiveBackground, Mode=OneWay}" />
-			</Trigger>
+			</MultiTrigger>
 		</ControlTemplate.Triggers>
 	</ControlTemplate>
 
@@ -235,6 +246,7 @@
 		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
 		<Setter Property="HorizontalContentAlignment" Value="Center" />
 		<Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
+		<Setter Property="NonActiveGlowBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
 		<Setter Property="OverlayBrush" Value="{DynamicResource GrayBrush3}" />
 		<Setter Property="SnapsToDevicePixels" Value="True" />
 		<Setter Property="Template" Value="{StaticResource ChildWindowTemplate}" />
@@ -256,4 +268,3 @@
 	</Style>
 
 </ResourceDictionary>
-
