@@ -560,7 +560,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
-		/// Gets or sets the icon content template to show a icon or something else.
+		/// Gets or sets a icon for the title bar.
 		/// </summary>
 		[Bindable(true)]
 		public object Icon
@@ -570,7 +570,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		}
 
 		/// <summary>
-		/// Gets or sets the icon content template to show a custom icon or something else.
+		/// Gets or sets a icon content template for the title bar.
 		/// </summary>
 		[Bindable(true)]
 		public DataTemplate IconTemplate
