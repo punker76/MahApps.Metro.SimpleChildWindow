@@ -23,7 +23,7 @@ namespace MahApps.Metro.SimpleChildWindow
 			FullWindow,
 
 			/// <summary>
-			/// The overlay covers only then window content, so the window taskbar is useable
+			/// The overlay covers only then window content, so the window title bar is useable
 			/// </summary>
 			WindowContent
 		}
