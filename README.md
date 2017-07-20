@@ -1,4 +1,4 @@
-# ![icon](https://raw.github.com/punker76/MahApps.Metro.SimpleChildWindow/master/MahApps.Metro.SimpleChildWindow/MahApps.Metro.SimpleChildWindow48.png) MahApps.Metro.SimpleChildWindow
+# ![icon](./src/MahApps.Metro.SimpleChildWindow48.png) MahApps.Metro.SimpleChildWindow
 
 [![Join the chat at https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow](https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square)](https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 

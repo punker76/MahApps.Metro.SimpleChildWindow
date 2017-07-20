@@ -8,7 +8,7 @@
     <owners>punker76</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow</projectUrl>
-    <iconUrl>https://raw.github.com/punker76/MahApps.Metro.SimpleChildWindow/master/MahApps.Metro.SimpleChildWindow/MahApps.Metro.SimpleChildWindow.png</iconUrl>
+    <iconUrl>https://raw.github.com/punker76/MahApps.Metro.SimpleChildWindow/master/src/MahApps.Metro.SimpleChildWindow.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A simple child window for MahApps.Metro the "Metro" or "Modern UI" for WPF4+ apps.</description>
     <summary>A simple child window for MahApps.Metro the "Metro" or "Modern UI" for WPF4+ apps.</summary>
