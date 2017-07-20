@@ -12,9 +12,7 @@
 
 A simple child window for [MahApps.Metro](https://github.com/MahApps/MahApps.Metro). Yes, this means you need `MahApps.Metro` to use this control.
 
-The dll contains the `ChildWindow` and a helper class `ChildWindowManager`.
-
-**MahApps.Metro.SimpleChildWindow** can be installed via [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow).
+The [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow) package contains a dll with the `ChildWindow` and a helper class `ChildWindowManager` inside.
 
 ## [Getting started][wiki]
 
