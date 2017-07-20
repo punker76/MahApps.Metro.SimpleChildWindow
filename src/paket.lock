@@ -1,0 +1,9 @@
+RESTRICTION: || (== net40) (== net45)
+NUGET
+  remote: https://www.nuget.org/api/v2
+    Costura.Fody (1.6.2)
+      Fody (>= 2.0 < 3.0)
+    Fody (2.1)
+    JetBrains.Annotations (10.4)
+    MahApps.Metro (1.5)
+    MahApps.Metro.IconPacks (1.9)

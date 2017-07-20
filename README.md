@@ -1,131 +1,51 @@
 # ![icon](https://raw.github.com/punker76/MahApps.Metro.SimpleChildWindow/master/MahApps.Metro.SimpleChildWindow/MahApps.Metro.SimpleChildWindow48.png) MahApps.Metro.SimpleChildWindow
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow](https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square)](https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build status](https://img.shields.io/appveyor/ci/punker76/mahapps-metro-simplechildwindow/master.svg?style=flat-square)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/master)
+[![Master build status](https://img.shields.io/appveyor/ci/punker76/mahapps-metro-simplechildwindow/master.svg?label=build-master&style=flat-square)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/master)
+[![Dev build status](https://img.shields.io/appveyor/ci/punker76/mahapps-metro-simplechildwindow/dev.svg?label=build-dev&style=flat-square)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/dev)
+[![Issues](https://img.shields.io/github/issues/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/issues)
 [![Release](https://img.shields.io/github/release/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/releases/latest)
 [![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow/)
-[![Issues](https://img.shields.io/github/issues/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/issues)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/blob/master/License.txt)
 [![Twitter](https://img.shields.io/badge/twitter-%40punker76-55acee.svg?style=flat-square)](https://twitter.com/punker76)
-
 
 A simple child window for [MahApps.Metro](https://github.com/MahApps/MahApps.Metro). Yes, this means you need `MahApps.Metro` to use this control.
 
-The dll contains the `ChildWindow` and a helper class `ChildWindowManager`.
+The [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow) package contains a dll with the `ChildWindow` and a helper class `ChildWindowManager` inside.
 
-**MahApps.Metro.SimpleChildWindow** can be installed via [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow).
+## [Getting started][wiki]
+
+* [Samples][samples]
+* [ChildWindow][childwindow]
+* [ChildWindowManager][childwindowmanager]
 
 ## Want to say thanks?
  * Hit the :star: Star :star: button
- 
-### ChildWindow Properties
 
-| Property | Description |
-| --- | --- |
-| `AllowMove` (`bool` default `false`) | The child window can be moved by the title bar |
-| `IsModal` (`bool` default `true`) | The overlay takes the mouse events if an overlay brush exists (by default it is black with an opacity) |
-| `OverlayBrush` (`Brush` default `Transparent`) | The brush for the overlay container. The theme defines this to a black solid brush with an opacity |
-| `ShowTitleBar` (`bool` default `true`) | Show/hides the title bar |
-| `TitleBarHeight` (`int` default `30`) | Sets the title bar height |
-| `TitleBarBackground` (`Brush` default `WindowTitleColorBrush` from MahApps.Metro) | The title bar background |
-| `TitleForeground` (`Brush` default `IdealForegroundColorBrush` from MahApps.Metro) | The title foreground |
-| `Title` (`string`) | The title for the child window |
-| `TitleFontSize` (`double` default `WindowTitleFontSize` from MahApps.Metro) | |
-| `TitleFontFamily` (`FontFamily` default `HeaderFontFamily` from MahApps.Metro) | |
-| `Icon` (`object`) | Defines an icon for the title bar |
-| `IconTemplate` (`DataTemplate`) | Defines a template for the `Icon` or something else |
-| `ShowCloseButton` (`bool` default `false`) | Show a close button on the title bar |
-| `CloseOnOverlay` (`bool` default `false`) | If set to `true` the `ChildWindow` can be closed by clicking on the overlay. |
-| `CloseByEscape` (`bool` default `true`) | If set to `true` the `ChildWindow` can be closed by the Escape key. |
-| `CloseButtonStyle` (`Style` default `MetroWindowButtonStyle` from MahApps.Metro) | Defines the style for the close button |
-| `CloseButtonCommand` (`ICommand`) | Defines a command for the close button. This command will be only executed if the `Close` method was called. |
-| `CloseButtonCommandParameter` (`object`) | Defines a (bindable) parameter for the close button command |
-| `IsOpen` (`bool`) | Show or closes the child window |
-| `ChildWindowWidth` (`double`) | Defines the width for the child window |
-| `ChildWindowHeight` (`double`) | Defines the height for the child window |
-| `EnableDropShadow` (`bool` default `true`) | Shows a shadow (glow) around the child window |
-| `GlowBrush` (`SolidColorBrush` default `Black`) | Defines the glow (shadow) for the child window |
-| `BorderBrush` | Defines the brush for the child window border |
-| `BorderThickness` |  Defines the border thickness for the child window |
-| `FocusedElement` (`FrameworkElement`) | Which element should be focused after open the child window (if no element is defined, the first element will be focused) |
-| `AllowFocusElement` (`bool` default `true`) | Defines if the child window should focus an element |
-| `VerticalContentAlignment` | Defines the vertical position of the child window |
-| `HorizontalContentAlignment` | Defines the horizontal position of the child window |
+## Samples
 
-### ChildWindow Methods
+#### Stretch with Margin
 
-| Method | Description |
-| --- | --- |
-| `Close()` | Closes the `ChildWindow`. It will also raise the `Closing` event and execute the `CloseButtonCommand`. After all successfully closing stuff the `ClosingFinished` event will be raised.  |
+![2014-12-13_23h46_00](https://user-images.githubusercontent.com/658431/28338627-de8c2890-6c09-11e7-99c3-c424e2c588a2.png)
 
-### ChildWindow Events
+#### Without Shadow
 
-| Event | Description |
-| --- | --- |
-| `IsOpenChanged` (RoutedEventHandler) | An event that is raised when `IsOpen` property changes. |
-| `Closing` (EventHandler<CancelEventArgs>) | An event that is raised when the `ChildWindow` is closing. |
-| `ClosingFinished` (RoutedEventHandler) | An event that is raised when the closing animation has finished. |
+![2014-12-13_23h46_16](https://user-images.githubusercontent.com/658431/28338628-dea5f8e2-6c09-11e7-8349-8bce5cf7a1c8.png)
 
-### ChildWindowManager
+#### AutoSize
 
-Show a child window with this method.
+![2014-12-13_23h46_32](https://user-images.githubusercontent.com/658431/28338629-dea8afba-6c09-11e7-8b7d-cf7e2db2fa82.png)
 
-```csharp
-public static Task ShowChildWindowAsync(this MetroWindow window,
-                                        ChildWindow dialog,
-                                        OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
-```
+#### With Icon or IconTemplate
 
-- `OverlayFillBehavior` : An enumeration to control the fill behavior of the behavior (full window or only the content)
+![2014-12-14_21h20_55](https://user-images.githubusercontent.com/658431/28338630-deacb9ca-6c09-11e7-8bdf-054fb008afd6.png)
 
-### Usage
-
-Directly in `XAML`
-
-```xaml
-<simpleChildWindow:ChildWindow
-                 IsOpen="{Binding IsChildWindowOpenOrNotProperty}"
-                 HorizontalContentAlignment="Stretch"
-                 VerticalContentAlignment="Stretch"
-                 Padding="15"
-                 ChildWindowImage="Error"
-                 Title="TestChild 1">
-  <Grid>
-  </Grid>
-</simpleChildWindow:ChildWindow>
-```
-
-Or with the `ChildWindowManager`
-
-```csharp
-private async void OpenAChildWindow_OnButtonClick(object sender, RoutedEventArgs e)
-{
-  // opens a cool child window
-  await this.ShowChildWindowAsync(new CoolChildWindow() { IsModal = false });
-}
-```
-
-### Stretch with Margin
-
-![](./screenshots/2014-12-13_23h46_00.png)  
-
-### Without Shadow
-
-![](./screenshots/2014-12-13_23h46_16.png)  
-
-### AutoSize
-
-![](./screenshots/2014-12-13_23h46_32.png)  
-
-### With Icon or IconTemplate
-
-![](./screenshots/2014-12-14_21h20_55.png)  
-
-# License
+## License
 
 The MIT License (MIT)
 
-Copyright (c) 2014-2015 Jan Karger
+Copyright (c) 2014-2017 Jan Karger
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -144,3 +64,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+[wiki]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki
+[childwindow]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/ChildWindow
+[childwindowmanager]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/ChildWindowManager
+[samples]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/Samples
