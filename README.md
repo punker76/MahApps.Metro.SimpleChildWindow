@@ -17,9 +17,7 @@ The [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow) pack
 ## [Getting started][wiki]
 
 * [Samples][samples]
-* [Properties][properties]
-* [Methods][methods]
-* [Events][events]
+* [ChildWindow][childwindow]
 * [ChildWindowManager][childwindowmanager]
 
 ## Want to say thanks?
@@ -68,8 +66,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 [wiki]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki
-[properties]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/Properties
-[methods]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/Methods
-[events]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/Events
+[childwindow]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/ChildWindow
 [childwindowmanager]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/ChildWindowManager
 [samples]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/Samples
