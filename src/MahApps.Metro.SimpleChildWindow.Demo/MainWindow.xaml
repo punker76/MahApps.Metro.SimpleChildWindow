@@ -4,8 +4,9 @@
                       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
                       Title="MahApps.Metro Simple ChildWindow Demo"
-                      Width="800"
+                      Width="700"
                       Height="600"
+					  SizeToContent="Height"
                       GlowBrush="{DynamicResource AccentColorBrush}"
                       WindowStartupLocation="CenterScreen">
 
@@ -46,7 +47,6 @@
 		                               Padding="15"
 		                               HorizontalContentAlignment="Stretch"
 		                               VerticalContentAlignment="Stretch"
-		                               ChildWindowImage="Error"
 		                               CloseByEscape="False"
 		                               Closing="Child01_OnClosing"
 		                               IsAutoCloseEnabled="True">
