@@ -4,6 +4,7 @@ NUGET
     Costura.Fody (1.6.2)
       Fody (>= 2.0 < 3.0)
     Fody (2.1)
+    gitlink (3.1)
     JetBrains.Annotations (10.4)
     MahApps.Metro (1.5)
     MahApps.Metro.IconPacks (1.9)
