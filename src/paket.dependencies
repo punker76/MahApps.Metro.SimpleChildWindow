@@ -4,5 +4,5 @@ source https://nuget.org/api/v2
 nuget JetBrains.Annotations
 nuget gitlink
 nuget Costura.Fody
-nuget MahApps.Metro
+nuget MahApps.Metro prerelease
 nuget MahApps.Metro.IconPacks
