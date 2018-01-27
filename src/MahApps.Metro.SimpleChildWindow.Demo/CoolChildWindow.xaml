@@ -25,7 +25,11 @@
 		                          Kind="Cog" />
 	</simpleChildWindow:ChildWindow.Icon>
 
-	<Grid>
+    <simpleChildWindow:ChildWindow.OverlayBrush>
+        <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
+    </simpleChildWindow:ChildWindow.OverlayBrush>
+
+    <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />

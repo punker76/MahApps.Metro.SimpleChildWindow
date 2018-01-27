@@ -55,9 +55,6 @@
 			      UseLayoutRounding="True">
 
 				<AdornerDecorator Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableDropShadow, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-					<AdornerDecorator.CacheMode>
-						<BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-					</AdornerDecorator.CacheMode>
 					<Border x:Name="PART_GlowEffect"
 					        Background="{TemplateBinding Background}"
 					        BorderBrush="Transparent"

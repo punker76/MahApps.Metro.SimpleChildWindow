@@ -77,7 +77,7 @@ namespace MahApps.Metro.SimpleChildWindow
 			}
 			if (overlayFillBehavior == OverlayFillBehavior.WindowContent)
 			{
-				metroDialogContainer.SetValue(Grid.RowProperty, 1);
+				metroDialogContainer.SetValue(Grid.RowProperty, (int)metroDialogContainer.GetValue(Grid.RowProperty) + 1);
 				metroDialogContainer.SetValue(Grid.RowSpanProperty, 1);
 			}
 			return ShowChildWindowInternalAsync<TResult>(dialog, metroDialogContainer);

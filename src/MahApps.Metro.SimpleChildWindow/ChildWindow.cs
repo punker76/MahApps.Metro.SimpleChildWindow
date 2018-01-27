@@ -10,8 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using ControlzEx.Native;
 using MahApps.Metro.Controls;
-using MahApps.Metro.SimpleChildWindow.Utils;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
@@ -689,7 +689,7 @@ namespace MahApps.Metro.SimpleChildWindow
 		{
 			if (this.AllowFocusElement && !DesignerProperties.GetIsInDesignMode(this))
 			{
-				var elementToFocus = this.FocusedElement ?? Utils.TreeHelper.FindChildren<UIElement>(this).FirstOrDefault(c => c.Focusable);
+				var elementToFocus = this.FocusedElement ?? MahApps.Metro.Controls.TreeHelper.FindChildren<UIElement>(this).FirstOrDefault(c => c.Focusable);
 				if (this.ShowCloseButton && this.closeButton != null && elementToFocus == null)
 				{
 					this.closeButton.Focusable = true;
@@ -1138,16 +1138,22 @@ namespace MahApps.Metro.SimpleChildWindow
 			this.OnPreviewKeyUp(e);
 		}
 
-		private SafeLibraryHandle user32 = null;
+#pragma warning disable 618
+	    private SafeLibraryHandle user32;
+#pragma warning restore 618
 
-		private string GetCaption(int id)
-		{
-			if (this.user32 == null)
-				this.user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
+#pragma warning disable 618
+	    private string GetCaption(int id)
+	    {
+	        if (user32 == null)
+	        {
+	            user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
+	        }
 
-			var sb = new StringBuilder(256);
-			UnsafeNativeMethods.LoadString(this.user32, (uint)id, sb, sb.Capacity);
-			return sb.ToString().Replace("&", "");
-		}
+	        var sb = new StringBuilder(256);
+	        UnsafeNativeMethods.LoadString(user32, (uint)id, sb, sb.Capacity);
+	        return sb.ToString().Replace("&", "");
+	    }
+#pragma warning restore 618
 	}
 }

@@ -63,10 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChildWindowManager.cs" />
-    <Compile Include="Utils\SafeLibraryHandle.cs" />
     <Compile Include="Utils\SingletonBase.cs" />
-    <Compile Include="Utils\TreeHelper.cs" />
-    <Compile Include="Utils\UnsafeNativeMethods.cs" />
     <Compile Include="ValueConverter\EnumToVisibilityConverter.cs" />
     <Compile Include="ValueConverter\MessageBoxImageToImageSourceConverter.cs" />
     <Compile Include="ChildWindow.cs" />
