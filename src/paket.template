@@ -1,7 +1,7 @@
 type file
 id MahApps.Metro.SimpleChildWindow
 title MahApps.Metro.SimpleChildWindow
-version 1.4.1
+version 1.5.0
 authors Jan Karger
 owners punker76
 licenseUrl https://github.com/punker76/MahApps.Metro.SimpleChildWindow/blob/dev/LICENSE
@@ -14,7 +14,7 @@ description
 summary
   A simple child window for MahApps.Metro, the "Metro" or "Modern UI" for WPF4+ apps.
 dependencies
-  MahApps.Metro < 1.6
+  MahApps.Metro >= 1.6
 include-pdbs true
 files
   bin/Release/NET4/MahApps.Metro.SimpleChildWindow.* ==> lib/net40/
