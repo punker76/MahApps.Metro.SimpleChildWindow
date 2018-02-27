@@ -6,76 +6,76 @@
                       Title="MahApps.Metro Simple ChildWindow Demo"
                       Width="700"
                       Height="600"
-					  SizeToContent="Height"
                       GlowBrush="{DynamicResource AccentColorBrush}"
+                      SizeToContent="Height"
                       WindowStartupLocation="CenterScreen">
 
-	<Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid">
 
-		<StackPanel>
-			<Button Margin="20"
-			        VerticalAlignment="Top"
-			        Click="FirstTest_OnClick"
-			        Content="Hello to my test"
-			        FontSize="36"
-			        FontWeight="Thin" />
+        <StackPanel>
+            <Button Margin="20"
+                    VerticalAlignment="Top"
+                    Click="FirstTest_OnClick"
+                    Content="Hello to my test"
+                    FontSize="36"
+                    FontWeight="Thin" />
 
-			<Button Margin="20"
-			        VerticalAlignment="Top"
-			        Click="SecTest_OnClick"
-			        Content="another testo..."
-			        FontSize="36"
-			        FontWeight="Thin" />
+            <Button Margin="20"
+                    VerticalAlignment="Top"
+                    Click="SecTest_OnClick"
+                    Content="another testo..."
+                    FontSize="36"
+                    FontWeight="Thin" />
 
-			<Button Margin="20"
-			        VerticalAlignment="Top"
-			        Click="ThirdTest_OnClick"
-			        Content="this one is great!"
-			        FontSize="36"
-			        FontWeight="Thin" />
+            <Button Margin="20"
+                    VerticalAlignment="Top"
+                    Click="ThirdTest_OnClick"
+                    Content="this one is great!"
+                    FontSize="36"
+                    FontWeight="Thin" />
 
-			<Button Margin="20"
-			        VerticalAlignment="Top"
-			        Click="MovingTest_OnClick"
-			        Content="moving time"
-			        FontSize="36"
-			        FontWeight="Thin" />
-		</StackPanel>
+            <Button Margin="20"
+                    VerticalAlignment="Top"
+                    Click="MovingTest_OnClick"
+                    Content="moving time"
+                    FontSize="36"
+                    FontWeight="Thin" />
+        </StackPanel>
 
-		<simpleChildWindow:ChildWindow x:Name="child01"
-		                               Title="TestChild 1"
-		                               Padding="15"
-		                               HorizontalContentAlignment="Stretch"
-		                               VerticalContentAlignment="Stretch"
-		                               CloseByEscape="False"
-		                               Closing="Child01_OnClosing"
-		                               IsAutoCloseEnabled="True">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<TextBlock Grid.Row="0"
-				           Margin="20"
-				           FontSize="36"
-				           FontWeight="Thin"
-				           Text="awesome!" />
-				<TextBox Grid.Row="1"
-				         Margin="20"
-				         Text="Note: it's an auto closing window..." />
-				<Button Grid.Row="3"
-				        Margin="20"
-				        VerticalAlignment="Top"
-				        Click="CloseFirst_OnClick"
-				        Content="Close Me"
-				        FontSize="20"
-				        FontWeight="Thin"
-				        IsDefault="True" />
-			</Grid>
-		</simpleChildWindow:ChildWindow>
+        <simpleChildWindow:ChildWindow x:Name="child01"
+                                       Title="TestChild 1"
+                                       Padding="15"
+                                       HorizontalContentAlignment="Stretch"
+                                       VerticalContentAlignment="Stretch"
+                                       CloseByEscape="False"
+                                       Closing="Child01_OnClosing"
+                                       IsAutoCloseEnabled="True">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Margin="20"
+                           FontSize="36"
+                           FontWeight="Thin"
+                           Text="awesome!" />
+                <TextBox Grid.Row="1"
+                         Margin="20"
+                         Text="Note: it's an auto closing window..." />
+                <Button Grid.Row="3"
+                        Margin="20"
+                        VerticalAlignment="Top"
+                        Click="CloseFirst_OnClick"
+                        Content="Close Me"
+                        FontSize="20"
+                        FontWeight="Thin"
+                        IsDefault="True" />
+            </Grid>
+        </simpleChildWindow:ChildWindow>
 
-	</Grid>
+    </Grid>
 
 </Controls:MetroWindow>

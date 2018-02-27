@@ -5,263 +5,281 @@
                     xmlns:scw="clr-namespace:MahApps.Metro.SimpleChildWindow"
                     xmlns:valueConverter="clr-namespace:MahApps.Metro.SimpleChildWindow.ValueConverter">
 
-	<valueConverter:EnumToVisibilityConverter x:Key="EnumToVisibilityCollapsedConverter"
-	                                          FalseValue="Visible"
-	                                          TrueValue="Collapsed" />
-	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <valueConverter:EnumToVisibilityConverter x:Key="EnumToVisibilityCollapsedConverter"
+                                              FalseValue="Visible"
+                                              TrueValue="Collapsed" />
+    <mahConverters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-	<Style x:Key="SimpleChildWindowFocusVisual">
-		<Setter Property="Control.Template">
-			<Setter.Value>
-				<ControlTemplate>
-					<Rectangle Margin="1"
-					           SnapsToDevicePixels="true"
-					           Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-					           StrokeDashArray="1 2"
-					           StrokeThickness="1" />
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+    <Style x:Key="SimpleChildWindowFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="1"
+                               SnapsToDevicePixels="true"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               StrokeThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-	<ControlTemplate x:Key="ChildWindowTemplate" TargetType="{x:Type scw:ChildWindow}">
-		<Grid x:Name="PART_Overlay"
-		      Background="{TemplateBinding OverlayBrush}"
-		      ClipToBounds="True"
-		      FocusVisualStyle="{x:Null}"
-		      KeyboardNavigation.TabNavigation="None"
-		      Opacity="0"
-		      Visibility="Collapsed">
-			<Grid.Resources>
-				<DropShadowEffect x:Key="GlowBrushEffect"
-				                  BlurRadius="10"
-				                  Opacity="0.8"
-				                  ShadowDepth="0"
-				                  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(GlowBrush).Color, Mode=OneWay}" />
-				<DropShadowEffect x:Key="NonActiveGlowBrushEffect"
-				                  BlurRadius="10"
-				                  Opacity="0.8"
-				                  ShadowDepth="0"
-				                  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(NonActiveGlowBrush).Color, Mode=OneWay}" />
-			</Grid.Resources>
+    <ControlTemplate x:Key="ChildWindowTemplate" TargetType="{x:Type scw:ChildWindow}">
+        <Grid x:Name="PART_Overlay"
+              Background="{TemplateBinding OverlayBrush}"
+              ClipToBounds="True"
+              FocusVisualStyle="{x:Null}"
+              KeyboardNavigation.TabNavigation="None"
+              Opacity="0"
+              Visibility="Collapsed">
+            <Grid.Resources>
+                <DropShadowEffect x:Key="GlowBrushEffect"
+                                  BlurRadius="10"
+                                  Opacity="0.8"
+                                  ShadowDepth="0"
+                                  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(GlowBrush).Color, Mode=OneWay}" />
+                <DropShadowEffect x:Key="NonActiveGlowBrushEffect"
+                                  BlurRadius="10"
+                                  Opacity="0.8"
+                                  ShadowDepth="0"
+                                  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(NonActiveGlowBrush).Color, Mode=OneWay}" />
+            </Grid.Resources>
 
-			<Grid x:Name="PART_Window"
-			      Width="{TemplateBinding ChildWindowWidth}"
-			      Height="{TemplateBinding ChildWindowHeight}"
-			      Margin="{TemplateBinding Padding}"
-			      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-			      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-			      FocusVisualStyle="{x:Null}"
-			      UseLayoutRounding="True">
+            <Grid x:Name="PART_Window"
+                  Width="{TemplateBinding ChildWindowWidth}"
+                  Height="{TemplateBinding ChildWindowHeight}"
+                  Margin="{TemplateBinding Padding}"
+                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                  Background="{TemplateBinding Background}"
+                  FocusVisualStyle="{x:Null}"
+                  UseLayoutRounding="True">
 
-				<AdornerDecorator Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableDropShadow, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-					<Border x:Name="PART_GlowEffect"
-					        Background="{TemplateBinding Background}"
-					        BorderBrush="Transparent"
-					        BorderThickness="{TemplateBinding BorderThickness}"
-					        Effect="{DynamicResource GlowBrushEffect}"
-					        FocusVisualStyle="{x:Null}"
-					        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-				</AdornerDecorator>
+                <Border x:Name="PART_GlowEffect"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="Transparent"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Effect="{DynamicResource GlowBrushEffect}"
+                        FocusVisualStyle="{x:Null}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        UseLayoutRounding="True"
+                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableDropShadow, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-				<Border x:Name="PART_Border"
-				        Background="{TemplateBinding Background}"
-				        BorderBrush="{TemplateBinding BorderBrush}"
-				        BorderThickness="{TemplateBinding BorderThickness}"
-				        FocusVisualStyle="{x:Null}"
-				        KeyboardNavigation.TabNavigation="None"
-				        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-				        UseLayoutRounding="False">
+                <Border x:Name="PART_Border"
+                        Background="{x:Null}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        FocusVisualStyle="{x:Null}"
+                        KeyboardNavigation.TabNavigation="None"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        UseLayoutRounding="True" />
 
-					<AdornerDecorator>
-						<Grid KeyboardNavigation.ControlTabNavigation="Cycle"
-						      KeyboardNavigation.DirectionalNavigation="Cycle"
-						      KeyboardNavigation.TabNavigation="Cycle">
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="*" />
-							</Grid.RowDefinitions>
+                <AdornerDecorator>
+                    <Grid KeyboardNavigation.ControlTabNavigation="Cycle"
+                          KeyboardNavigation.DirectionalNavigation="Cycle"
+                          KeyboardNavigation.TabNavigation="Cycle">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Left}}" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Right}}" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Bottom}}" />
+                        </Grid.RowDefinitions>
 
-							<Grid x:Name="PART_Header"
-							      Grid.Row="0"
-							      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-							      Background="{TemplateBinding TitleBarBackground}"
-							      Focusable="False"
-							      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Rectangle x:Name="PART_TitleBarBackground"
+                                   Grid.Row="1"
+                                   Grid.Column="1"
+                                   Fill="{TemplateBinding TitleBarBackground}"
+                                   Focusable="False"
+                                   StrokeThickness="0"
+                                   Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="Auto" />
-									<ColumnDefinition Width="*" />
-									<ColumnDefinition Width="Auto" />
-								</Grid.ColumnDefinitions>
+                        <Grid x:Name="PART_Header"
+                              Grid.Row="1"
+                              Grid.Column="1"
+                              Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                              Focusable="False"
+                              Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-								<!--  icon  -->
-								<ContentControl x:Name="PART_Icon"
-								                Grid.Column="0"
-								                Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-								                MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-								                HorizontalContentAlignment="Stretch"
-								                VerticalContentAlignment="Stretch"
-								                Content="{TemplateBinding Icon}"
-								                ContentTemplate="{TemplateBinding IconTemplate}"
-								                Focusable="False" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-								<!--  title  -->
-								<mahControls:MetroThumbContentControl x:Name="PART_HeaderThumb"
-								                                      Grid.Column="1"
-								                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-								                                      HorizontalAlignment="Stretch"
-								                                      VerticalAlignment="Stretch"
-								                                      HorizontalContentAlignment="{TemplateBinding TitleHorizontalAlignment}"
-								                                      VerticalContentAlignment="{TemplateBinding TitleVerticalAlignment}"
-								                                      Content="{TemplateBinding Title}"
-								                                      ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
-								                                      ContentTemplate="{TemplateBinding TitleTemplate}"
-								                                      Focusable="False"
-								                                      FontFamily="{TemplateBinding TitleFontFamily}"
-								                                      FontSize="{TemplateBinding TitleFontSize}">
-									<ContentControl.Foreground>
-										<MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
-											<Binding Mode="OneWay"
-											         Path="TitleBarBackground"
-											         RelativeSource="{RelativeSource TemplatedParent}" />
-											<Binding Mode="OneWay"
-											         Path="TitleForeground"
-											         RelativeSource="{RelativeSource TemplatedParent}" />
-										</MultiBinding>
-									</ContentControl.Foreground>
-								</mahControls:MetroThumbContentControl>
+                            <!--  icon  -->
+                            <ContentControl x:Name="PART_Icon"
+                                            Grid.Column="0"
+                                            Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                            MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                            HorizontalContentAlignment="Stretch"
+                                            VerticalContentAlignment="Stretch"
+                                            Content="{TemplateBinding Icon}"
+                                            ContentTemplate="{TemplateBinding IconTemplate}"
+                                            Focusable="False" />
 
-								<!--  close button  -->
-								<Button x:Name="PART_CloseButton"
-								        Grid.Column="2"
-								        Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-								        FocusVisualStyle="{StaticResource SimpleChildWindowFocusVisual}"
-								        Focusable="False"
-								        IsTabStop="True"
-								        Style="{TemplateBinding CloseButtonStyle}"
-								        ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type scw:ChildWindow}}, Path=CloseButtonToolTip, Mode=OneWay}"
-								        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ShowCloseButton, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-									<Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
-									      Fill="{TemplateBinding TitleForeground}"
-									      SnapsToDevicePixels="True" />
-								</Button>
-							</Grid>
-							<Grid Grid.Row="1">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="Auto" />
-									<ColumnDefinition Width="*" />
-								</Grid.ColumnDefinitions>
+                            <!--  title  -->
+                            <mahControls:MetroThumbContentControl x:Name="PART_HeaderThumb"
+                                                                  Grid.Column="1"
+                                                                  Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                                  HorizontalAlignment="Stretch"
+                                                                  VerticalAlignment="Stretch"
+                                                                  HorizontalContentAlignment="{TemplateBinding TitleHorizontalAlignment}"
+                                                                  VerticalContentAlignment="{TemplateBinding TitleVerticalAlignment}"
+                                                                  Content="{TemplateBinding Title}"
+                                                                  ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
+                                                                  ContentTemplate="{TemplateBinding TitleTemplate}"
+                                                                  Focusable="False"
+                                                                  FontFamily="{TemplateBinding TitleFontFamily}"
+                                                                  FontSize="{TemplateBinding TitleFontSize}">
+                                <ContentControl.Foreground>
+                                    <MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
+                                        <Binding Mode="OneWay"
+                                                 Path="TitleBarBackground"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Mode="OneWay"
+                                                 Path="TitleForeground"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                    </MultiBinding>
+                                </ContentControl.Foreground>
+                            </mahControls:MetroThumbContentControl>
 
-								<Rectangle Grid.Column="0"
-								           Width="48"
-								           Height="48"
-								           Margin="4 0 0 4"
-								           VerticalAlignment="Center"
-								           Visibility="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={StaticResource EnumToVisibilityCollapsedConverter}, ConverterParameter={x:Static MessageBoxImage.None}}">
-									<Rectangle.Fill>
-										<VisualBrush x:Name="iconBrush"
-										             Stretch="Fill"
-										             Visual="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={x:Static valueConverter:MessageBoxImageToImageSourceConverter.Instance}}" />
-									</Rectangle.Fill>
-								</Rectangle>
-								<ContentPresenter x:Name="PART_Content"
-								                  Grid.Column="1"
-								                  Content="{TemplateBinding Content}"
-								                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
-								                  ContentTemplate="{TemplateBinding ContentTemplate}"
-								                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
-							</Grid>
-						</Grid>
-					</AdornerDecorator>
+                            <!--  close button  -->
+                            <Button x:Name="PART_CloseButton"
+                                    Grid.Column="2"
+                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    FocusVisualStyle="{StaticResource SimpleChildWindowFocusVisual}"
+                                    Focusable="False"
+                                    IsTabStop="True"
+                                    Style="{TemplateBinding CloseButtonStyle}"
+                                    ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type scw:ChildWindow}}, Path=CloseButtonToolTip, Mode=OneWay}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ShowCloseButton, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+                                      Fill="{TemplateBinding TitleForeground}"
+                                      SnapsToDevicePixels="True" />
+                            </Button>
+                        </Grid>
 
-				</Border>
-			</Grid>
+                        <Grid Grid.Row="2"
+                              Grid.Column="1"
+                              UseLayoutRounding="False">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-			<VisualStateManager.VisualStateGroups>
-				<VisualStateGroup>
-					<VisualState x:Name="Default" />
-					<VisualState x:Name="Hide">
-						<Storyboard x:Name="HideStoryboard">
-							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-							                               Storyboard.TargetName="PART_Overlay"
-							                               Storyboard.TargetProperty="(UIElement.Opacity)">
-								<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
-								<SplineDoubleKeyFrame KeyTime="00:00:00.100" Value="0" />
-							</DoubleAnimationUsingKeyFrames>
-							<ObjectAnimationUsingKeyFrames BeginTime="00:00:00.100"
-							                               Storyboard.TargetName="PART_Overlay"
-							                               Storyboard.TargetProperty="(UIElement.Visibility)">
-								<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}" />
-							</ObjectAnimationUsingKeyFrames>
-						</Storyboard>
-					</VisualState>
-					<VisualState x:Name="Show">
-						<Storyboard>
-							<ObjectAnimationUsingKeyFrames BeginTime="00:00:00"
-							                               Storyboard.TargetName="PART_Overlay"
-							                               Storyboard.TargetProperty="(UIElement.Visibility)">
-								<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}" />
-							</ObjectAnimationUsingKeyFrames>
-							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-							                               Storyboard.TargetName="PART_Overlay"
-							                               Storyboard.TargetProperty="(UIElement.Opacity)">
-								<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
-								<SplineDoubleKeyFrame KeyTime="00:00:00.200" Value="1" />
-							</DoubleAnimationUsingKeyFrames>
-						</Storyboard>
-					</VisualState>
-				</VisualStateGroup>
-			</VisualStateManager.VisualStateGroups>
-		</Grid>
-		<ControlTemplate.Triggers>
-			<Trigger Property="IsModal" Value="False">
-				<Setter TargetName="PART_Overlay" Property="Background" Value="{x:Null}" />
-			</Trigger>
-			<MultiTrigger>
-				<MultiTrigger.Conditions>
-					<Condition Property="Icon" Value="{x:Null}" />
-					<Condition Property="IconTemplate" Value="{x:Null}" />
-				</MultiTrigger.Conditions>
-				<Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
-			</MultiTrigger>
-			<MultiTrigger>
-				<MultiTrigger.Conditions>
-					<Condition Property="IsVisible" Value="True" />
-					<Condition Property="IsWindowHostActive" Value="False" />
-				</MultiTrigger.Conditions>
-				<Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NonActiveBorderBrush, Mode=OneWay}" />
-				<Setter TargetName="PART_GlowEffect" Property="Effect" Value="{DynamicResource NonActiveGlowBrushEffect}" />
-				<Setter TargetName="PART_Header" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TitleBarNonActiveBackground, Mode=OneWay}" />
-			</MultiTrigger>
-		</ControlTemplate.Triggers>
-	</ControlTemplate>
+                            <Rectangle Grid.Column="0"
+                                       Width="48"
+                                       Height="48"
+                                       Margin="4 0 0 4"
+                                       VerticalAlignment="Center"
+                                       Visibility="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={StaticResource EnumToVisibilityCollapsedConverter}, ConverterParameter={x:Static MessageBoxImage.None}}">
+                                <Rectangle.Fill>
+                                    <VisualBrush x:Name="iconBrush"
+                                                 Stretch="Fill"
+                                                 Visual="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={x:Static valueConverter:MessageBoxImageToImageSourceConverter.Instance}}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <ContentPresenter x:Name="PART_Content"
+                                              Grid.Column="1"
+                                              Content="{TemplateBinding Content}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+                        </Grid>
+                    </Grid>
+                </AdornerDecorator>
+            </Grid>
 
-	<Style TargetType="{x:Type scw:ChildWindow}">
-		<Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
-		<Setter Property="CloseButtonStyle" Value="{DynamicResource MetroWindowButtonStyle}" />
-		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
-		<Setter Property="NonActiveGlowBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
-		<Setter Property="OverlayBrush" Value="{DynamicResource GrayBrush3}" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="Template" Value="{StaticResource ChildWindowTemplate}" />
-		<Setter Property="TitleBarBackground" Value="{DynamicResource WindowTitleColorBrush}" />
-		<Setter Property="TitleBarNonActiveBackground" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
-		<Setter Property="TitleFontFamily" Value="{DynamicResource HeaderFontFamily}" />
-		<Setter Property="TitleFontSize" Value="{DynamicResource WindowTitleFontSize}" />
-		<Setter Property="TitleForeground" Value="{DynamicResource IdealForegroundColorBrush}" />
-		<Setter Property="TitleTemplate">
-			<Setter.Value>
-				<DataTemplate>
-					<TextBlock Margin="4"
-					           Text="{TemplateBinding Content}"
-					           TextTrimming="CharacterEllipsis" />
-				</DataTemplate>
-			</Setter.Value>
-		</Setter>
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-	</Style>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState x:Name="Default" />
+                    <VisualState x:Name="Hide">
+                        <Storyboard x:Name="HideStoryboard">
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetName="PART_Overlay"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.100" Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00.100"
+                                                           Storyboard.TargetName="PART_Overlay"
+                                                           Storyboard.TargetProperty="(UIElement.Visibility)">
+                                <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Show">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetName="PART_Overlay"
+                                                           Storyboard.TargetProperty="(UIElement.Visibility)">
+                                <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetName="PART_Overlay"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.200" Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsModal" Value="False">
+                <Setter TargetName="PART_Overlay" Property="Background" Value="{x:Null}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Icon" Value="{x:Null}" />
+                    <Condition Property="IconTemplate" Value="{x:Null}" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsVisible" Value="True" />
+                    <Condition Property="IsWindowHostActive" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NonActiveBorderBrush, Mode=OneWay}" />
+                <Setter TargetName="PART_GlowEffect" Property="Effect" Value="{DynamicResource NonActiveGlowBrushEffect}" />
+                <Setter TargetName="PART_Header" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TitleBarNonActiveBackground, Mode=OneWay}" />
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type scw:ChildWindow}">
+        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="CloseButtonStyle" Value="{DynamicResource MetroWindowButtonStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
+        <Setter Property="NonActiveGlowBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
+        <Setter Property="OverlayBrush" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template" Value="{StaticResource ChildWindowTemplate}" />
+        <Setter Property="TitleBarBackground" Value="{DynamicResource WindowTitleColorBrush}" />
+        <Setter Property="TitleBarNonActiveBackground" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
+        <Setter Property="TitleFontFamily" Value="{DynamicResource HeaderFontFamily}" />
+        <Setter Property="TitleFontSize" Value="{DynamicResource WindowTitleFontSize}" />
+        <Setter Property="TitleForeground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="TitleTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Margin="4"
+                               Text="{TemplateBinding Content}"
+                               TextTrimming="CharacterEllipsis" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
 
 </ResourceDictionary>

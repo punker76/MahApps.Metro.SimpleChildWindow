@@ -16,47 +16,47 @@
                                ShowCloseButton="True"
                                mc:Ignorable="d">
 
-	<simpleChildWindow:ChildWindow.Icon>
-		<iconPacks:PackIconModern Width="22"
-		                          Height="22"
-		                          HorizontalAlignment="Center"
-		                          VerticalAlignment="Center"
-		                          Foreground="{DynamicResource IdealForegroundColorBrush}"
-		                          Kind="Cog" />
-	</simpleChildWindow:ChildWindow.Icon>
+    <simpleChildWindow:ChildWindow.Icon>
+        <iconPacks:PackIconModern Width="22"
+                                  Height="22"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                  Kind="Cog" />
+    </simpleChildWindow:ChildWindow.Icon>
 
     <simpleChildWindow:ChildWindow.OverlayBrush>
         <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
 
     <Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<TextBlock Grid.Row="0"
-		           Margin="5"
-		           FontSize="36"
-		           FontWeight="Thin"
-		           Text="Yepp, it works!" />
-		<TextBox Grid.Row="1" Margin="5" />
-		<UniformGrid Grid.Row="3"
-		             Margin="5"
-		             Columns="2">
-			<Button Margin="5"
-			        Click="OkButtonOnClick"
-			        Content="Ok"
-			        FontSize="20"
-			        FontWeight="Thin"
-			        IsDefault="True" />
-			<Button Margin="5"
-					Click="CloseSec_OnClick"
-			        Content="Cancel"
-			        FontSize="20"
-			        FontWeight="Thin"
-			        IsDefault="True" />
-		</UniformGrid>
-	</Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Margin="5"
+                   FontSize="36"
+                   FontWeight="Thin"
+                   Text="Yepp, it works!" />
+        <TextBox Grid.Row="1" Margin="5" />
+        <UniformGrid Grid.Row="3"
+                     Margin="5"
+                     Columns="2">
+            <Button Margin="5"
+                    Click="OkButtonOnClick"
+                    Content="Ok"
+                    FontSize="20"
+                    FontWeight="Thin"
+                    IsDefault="True" />
+            <Button Margin="5"
+                    Click="CloseSec_OnClick"
+                    Content="Cancel"
+                    FontSize="20"
+                    FontWeight="Thin"
+                    IsDefault="True" />
+        </UniformGrid>
+    </Grid>
 </simpleChildWindow:ChildWindow>
