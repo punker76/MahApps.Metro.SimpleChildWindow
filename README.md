@@ -63,6 +63,25 @@ The [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow) pack
 
 * Hit the :star: Star :star: button. That's all...
 
+<h2>Tools</h2>
+
+I use these awesome tools to develop, build and deploy MahApps.Metro.SimpleChildWindow.
+
+<div>
+  <a href="https://fsprojects.github.io/Paket/">
+    <img alt="Paket" width="128" heigth="128" src="./tools/paket_logo.png">
+  </a>
+  <a href="https://cakebuild.net/">
+    <img alt="cakebuild.net" width="128" heigth="128" hspace="40" src="./tools/cake-medium.png">
+  </a>
+  <a href="https://www.jetbrains.com/resharper/">
+    <img alt="R#" width="128" heigth="128" hspace="40" src="./tools/icon_ReSharper.png">
+  </a>
+  <a href="https://www.appveyor.com/">
+    <img alt="appveyor" width="128" heigth="128" src="./tools/Appveyor_logo.svg">
+  </a>
+</div>
+
 ## Samples
 
 #### Stretch with Margin
