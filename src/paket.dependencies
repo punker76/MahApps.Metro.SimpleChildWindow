@@ -3,6 +3,18 @@ source https://nuget.org/api/v2
 
 nuget JetBrains.Annotations
 nuget gitlink
-nuget Costura.Fody
-nuget MahApps.Metro
+nuget Fody
+nuget Costura.Fody 1.4.1
+nuget MahApps.Metro prerelease
 nuget MahApps.Metro.IconPacks
+
+group cake
+	source https://nuget.org/api/v2
+	framework: net45
+	
+	nuget Cake
+	nuget Cake.Figlet
+	nuget Cake.Paket
+	nuget Cake.Paket.Module
+	nuget GitVersion.CommandLine prerelease
+	nuget gitreleasemanager

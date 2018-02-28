@@ -27,7 +27,7 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 
 		private async void ThirdTest_OnClick(object sender, RoutedEventArgs e)
 		{
-			var result = await this.ShowChildWindowAsync<bool>(new CoolChildWindow() {IsModal = false, AllowMove = true});
+			var result = await this.ShowChildWindowAsync<bool>(new CoolChildWindow() {IsModal = true, AllowMove = true}, ChildWindowManager.OverlayFillBehavior.FullWindow);
 			if (result)
 			{
 				await this.ShowMessageAsync("ChildWindow Result", "He, you just clicked the 'Ok' button.");

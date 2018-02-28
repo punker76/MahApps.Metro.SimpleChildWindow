@@ -1,27 +1,67 @@
-# ![icon](./src/MahApps.Metro.SimpleChildWindow48.png) MahApps.Metro.SimpleChildWindow
+<div align="center">
+  <a href="https://github.com/punker76/MahApps.Metro.SimpleChildWindow">
+    <img alt="MahApps.Metro.SimpleChildWindow" width="200" heigth="200" src="./src/MahApps.Metro.SimpleChildWindow.png">
+  </a>
+  <h1>MahApps.Metro.SimpleChildWindow</h1>
+  <p>
+    A simple child window for <a href="https://github.com/MahApps/MahApps.Metro">MahApps.Metro</a>.
+  </p>
+  <a href="https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow">
+    <img src="https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square">
+  </a>
+  <a href="https://twitter.com/punker76">
+    <img src="https://img.shields.io/badge/twitter-%40punker76-55acee.svg?style=flat-square">
+  </a>
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square">
+  </a>
+  <br />
+  <a href="https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow">
+    <img src="https://img.shields.io/nuget/dt/MahApps.Metro.SimpleChildWindow.svg?style=flat-square">
+  </a>
+  <a href="https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow">
+    <img src="https://img.shields.io/nuget/v/MahApps.Metro.SimpleChildWindow.svg?style=flat-square">
+  </a>
+  <a href="https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow">
+    <img src="https://img.shields.io/nuget/vpre/MahApps.Metro.SimpleChildWindow.svg?style=flat-square&label=nuget-pre">
+  </a>
+  <a href="https://github.com/punker76/MahApps.Metro.SimpleChildWindow/releases/latest">
+    <img src="https://img.shields.io/github/release/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square">
+  </a>
+  <br />
+  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/master">
+    <img alt="masterstatus" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro-simplechildwindow/master.svg?style=flat-square&&label=master">
+  </a>
+  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/dev">
+    <img alt="devstatus" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro-simplechildwindow/dev.svg?style=flat-square&&label=dev">
+  </a>
+  <br />
+  <a href="https://github.com/punker76/MahApps.Metro.SimpleChildWindow/issues">
+    <img src="https://img.shields.io/github/issues-raw/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square">
+  </a>
+  <a href="https://github.com/punker76/MahApps.Metro.SimpleChildWindow/issues">
+    <img src="https://img.shields.io/github/issues-closed-raw/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square">
+  </a>
+  <a href="https://github.com/punker76/MahApps.Metro.SimpleChildWindow/issues">
+    <img src="https://img.shields.io/github/issues-pr-raw/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square">
+  </a>
+  <a href="https://github.com/punker76/MahApps.Metro.SimpleChildWindow/issues">
+    <img src="https://img.shields.io/github/issues-pr-closed-raw/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square">
+  </a>
+</div>
 
-[![Join the chat at https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow](https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square)](https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+## Getting started
 
-[![Master build status](https://img.shields.io/appveyor/ci/punker76/mahapps-metro-simplechildwindow/master.svg?label=build-master&style=flat-square)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/master)
-[![Dev build status](https://img.shields.io/appveyor/ci/punker76/mahapps-metro-simplechildwindow/dev.svg?label=build-dev&style=flat-square)](https://ci.appveyor.com/project/punker76/mahapps-metro-simplechildwindow/branch/dev)
-[![Issues](https://img.shields.io/github/issues/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/issues)
-[![Release](https://img.shields.io/github/release/punker76/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/releases/latest)
-[![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.SimpleChildWindow.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow/)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/punker76/MahApps.Metro.SimpleChildWindow/blob/master/License.txt)
-[![Twitter](https://img.shields.io/badge/twitter-%40punker76-55acee.svg?style=flat-square)](https://twitter.com/punker76)
+The [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow) package contains an assembly with the `ChildWindow` class and the `ChildWindowManager` helper class inside.
 
-A simple child window for [MahApps.Metro](https://github.com/MahApps/MahApps.Metro). Yes, this means you need `MahApps.Metro` to use this control.
-
-The [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow) package contains a dll with the `ChildWindow` and a helper class `ChildWindowManager` inside.
-
-## [Getting started][wiki]
-
+* [Wiki][wiki]
 * [Samples][samples]
 * [ChildWindow][childwindow]
 * [ChildWindowManager][childwindowmanager]
 
 ## Want to say thanks?
- * Hit the :star: Star :star: button
+
+* Hit the :star: Star :star: button. That's all...
 
 ## Samples
 
@@ -43,27 +83,7 @@ The [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow) pack
 
 ## License
 
-The MIT License (MIT)
-
-Copyright (c) 2014-2017 Jan Karger
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+[The MIT License (MIT)](./LICENSE)
 
 [wiki]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki
 [childwindow]: https://github.com/punker76/MahApps.Metro.SimpleChildWindow/wiki/ChildWindow

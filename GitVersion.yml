@@ -1,6 +1,6 @@
 assembly-versioning-scheme: MajorMinorPatchTag
 mode: ContinuousDeployment
-next-version: 1.4.1
+next-version: 1.5.0
 branches:
   master:
     mode: ContinuousDeployment

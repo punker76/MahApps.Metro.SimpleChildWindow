@@ -1,10 +1,23 @@
 RESTRICTION: || (== net40) (== net45)
 NUGET
   remote: https://www.nuget.org/api/v2
-    Costura.Fody (1.6.2)
-      Fody (>= 2.0 < 3.0)
-    Fody (2.1)
+    ControlzEx (3.0.2.4)
+    Costura.Fody (1.4.1)
+      Fody (>= 2.0.6)
+    Fody (2.4.2)
     gitlink (3.1)
-    JetBrains.Annotations (10.4)
-    MahApps.Metro (1.5)
-    MahApps.Metro.IconPacks (1.9)
+    JetBrains.Annotations (11.1)
+    MahApps.Metro (1.6)
+      ControlzEx (> 3.0.2 < 4.0)
+    MahApps.Metro.IconPacks (2.0)
+
+GROUP cake
+RESTRICTION: == net45
+NUGET
+  remote: https://www.nuget.org/api/v2
+    Cake (0.25)
+    Cake.Figlet (1.0)
+    Cake.Paket (2.0)
+    Cake.Paket.Module (2.0)
+    gitreleasemanager (0.6)
+    GitVersion.CommandLine (4.0.0-beta0012)

@@ -12,38 +12,38 @@
                                ChildWindowWidth="400"
                                EnableDropShadow="False"
                                mc:Ignorable="d">
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<TextBlock Grid.Row="0"
-		           Margin="10"
-		           FontSize="36"
-		           FontWeight="Thin"
-		           Text="das hier auch" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Margin="10"
+                   FontSize="36"
+                   FontWeight="Thin"
+                   Text="das hier auch" />
 
-		<TextBox Grid.Row="1" Margin="10" />
+        <TextBox Grid.Row="1" Margin="10" />
 
-		<UniformGrid Grid.Row="3"
-		             Margin="5"
-		             Columns="2">
-			<Button Margin="5"
-			        Click="MessageButtonOnClick"
-			        Content="Message"
-			        FontSize="20"
-			        FontWeight="Thin"
-			        IsDefault="True" />
+        <UniformGrid Grid.Row="3"
+                     Margin="5"
+                     Columns="2">
+            <Button Margin="5"
+                    Click="MessageButtonOnClick"
+                    Content="Message"
+                    FontSize="20"
+                    FontWeight="Thin"
+                    IsDefault="True" />
 
-			<Button Margin="5"
-			        Click="CloseSec_OnClick"
-			        Content="Close Me"
-			        FontSize="20"
-			        FontWeight="Thin"
-			        IsDefault="True" />
-		</UniformGrid>
-	</Grid>
+            <Button Margin="5"
+                    Click="CloseSec_OnClick"
+                    Content="Close Me"
+                    FontSize="20"
+                    FontWeight="Thin"
+                    IsDefault="True" />
+        </UniformGrid>
+    </Grid>
 </simpleChildWindow:ChildWindow>
 
