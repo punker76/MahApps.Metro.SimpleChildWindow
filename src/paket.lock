@@ -4,7 +4,7 @@ NUGET
     ControlzEx (3.0.2.4)
     Costura.Fody (1.4.1)
       Fody (>= 2.0.6)
-    Fody (2.4.2)
+    Fody (2.4.4)
     gitlink (3.1)
     JetBrains.Annotations (11.1)
     MahApps.Metro (1.6)
@@ -15,9 +15,9 @@ GROUP cake
 RESTRICTION: == net45
 NUGET
   remote: https://www.nuget.org/api/v2
-    Cake (0.25)
+    Cake (0.24)
     Cake.Figlet (1.0)
     Cake.Paket (2.0)
     Cake.Paket.Module (2.0)
-    gitreleasemanager (0.6)
+    gitreleasemanager (0.7)
     GitVersion.CommandLine (4.0.0-beta0012)

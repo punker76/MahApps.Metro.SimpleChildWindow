@@ -12,9 +12,9 @@ group cake
 	source https://nuget.org/api/v2
 	framework: net45
 	
-	nuget Cake
+	nuget Cake 0.24.0
 	nuget Cake.Figlet
 	nuget Cake.Paket
 	nuget Cake.Paket.Module
 	nuget GitVersion.CommandLine prerelease
-	nuget gitreleasemanager
+	nuget gitreleasemanager prerelease
