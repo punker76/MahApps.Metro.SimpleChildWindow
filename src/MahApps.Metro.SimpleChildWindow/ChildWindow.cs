@@ -1035,8 +1035,7 @@ namespace MahApps.Metro.SimpleChildWindow
             // drag only if IsWindowDraggable is set to true
             if (allowDragging && (Math.Abs(e.HorizontalChange) > 2 || Math.Abs(e.VerticalChange) > 2))
             {
-                var horizontalChange = this.FlowDirection == FlowDirection.RightToLeft ? -e.HorizontalChange : e.HorizontalChange;
-                this.ProcessMove(horizontalChange, e.VerticalChange);
+                this.ProcessMove(e.HorizontalChange, e.VerticalChange);
             }
         }
 
