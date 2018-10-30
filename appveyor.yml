@@ -1,5 +1,6 @@
-# configuration for develop/CI branch
+# http://www.appveyor.com/docs/appveyor-yml
 
+# configuration for develop/CI and master/Release branch
 -
   branches:
     only:
@@ -8,21 +9,16 @@
 
   skip_tags: true
   image: Visual Studio 2017
-  configuration: Release
-  platform: Any CPU
   test: off
 
   pull_requests:
     do_not_increment_build_number: false
 
   build_script:
-    - ps: cd src
-    - ps: .\build.ps1 -Target appveyor
-    - ps: cd..
-
-  cache:
-    - src\packages -> **\packages.config
-    # - '%USERPROFILE%\.nuget\packages -> **\project.json'
+    - ps: .\build.ps1 -target appveyor
 
   artifacts:
-    - path: \src\Publish\*.*
+    - path: \Publish\*.*
+
+  nuget:
+    disable_publish_on_pr: true
