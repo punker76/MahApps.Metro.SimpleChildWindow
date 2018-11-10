@@ -1,0 +1,16 @@
+<Project>
+    <!-- Project properties -->
+    <PropertyGroup>
+        <TargetFrameworks>net47;net46;net45</TargetFrameworks>
+        <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
+        <ExtrasDefaultResourceIncludes>Resources\*.xaml</ExtrasDefaultResourceIncludes>
+        <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Remove="**\*.png;**\*.jpg;**\*.ico"/>
+        <Resource Include="**\*.png;**\*.jpg;**\*.ico"/>
+    </ItemGroup>
+</Project>

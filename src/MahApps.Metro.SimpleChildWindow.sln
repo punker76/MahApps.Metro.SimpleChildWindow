@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.SimpleChildWindow", "MahApps.Metro.SimpleChildWindow\MahApps.Metro.SimpleChildWindow.csproj", "{EBC1D848-F291-492F-9280-82E3175FF67E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MahApps.Metro.SimpleChildWindow", "MahApps.Metro.SimpleChildWindow\MahApps.Metro.SimpleChildWindow.csproj", "{EBC1D848-F291-492F-9280-82E3175FF67E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.SimpleChildWindow.Demo", "MahApps.Metro.SimpleChildWindow.Demo\MahApps.Metro.SimpleChildWindow.Demo.csproj", "{0F56EDA9-CF7F-4C49-A67B-3FCD434D4902}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MahApps.Metro.SimpleChildWindow.Demo", "MahApps.Metro.SimpleChildWindow.Demo\MahApps.Metro.SimpleChildWindow.Demo.csproj", "{0F56EDA9-CF7F-4C49-A67B-3FCD434D4902}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-framework: auto-detect
+framework: >= net45
 
 source https://api.nuget.org/v3/index.json
 
@@ -8,8 +8,8 @@ nuget Costura.Fody
 nuget JetBrains.Annotations copy_local: true // => PrivateAssets=All, mean all these type of assets are private of the project (so no need to add the deps in the nupkg dep list)
 nuget gitlink prerelease copy_local: true // => PrivateAssets=All, mean all these type of assets are private of the project (so no need to add the deps in the nupkg dep list)
 
-nuget MahApps.Metro
-nuget MahApps.Metro.IconPacks
+nuget MahApps.Metro prerelease
+nuget MahApps.Metro.IconPacks prerelease
 
 group cake
 	source https://api.nuget.org/v3/index.json

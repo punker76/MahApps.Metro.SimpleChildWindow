@@ -1,0 +1,22 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- NuGet -->
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <Authors>Jan Karger</Authors>
+        <PackageLicenseUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow/blob/dev/LICENSE</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow</PackageProjectUrl>
+        <PackageIconUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow/raw/dev/MahApps.Metro.SimpleChildWindow.png</PackageIconUrl>
+        <PackageTags>WPF;UI;Metro;Modern;Material;XAML;Toolkit;Library;.NET;OSS;OpenSource</PackageTags>
+        <PackageReleaseNotes>https://github.com/punker76/MahApps.Metro.SimpleChildWindow/releases</PackageReleaseNotes>
+        <RepositoryUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    </PropertyGroup>
+    <!-- Sign assembly -->
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <SignAssembly>True</SignAssembly>
+        <AssemblyOriginatorKeyFile>$(MSBuildProjectDirectory)\..\childwindow.public.snk</AssemblyOriginatorKeyFile>
+        <DelaySign>false</DelaySign>
+        <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    </PropertyGroup>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.build.targets', '$(MSBuildThisFileDirectory)../'))"/>
+</Project>

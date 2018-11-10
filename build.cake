@@ -124,7 +124,6 @@ Task("Build")
 {
     var msBuildSettings = new MSBuildSettings { ToolPath = msBuildPath, ArgumentCustomization = args => args.Append("/m") };
     MSBuild(solution, msBuildSettings
-                .UseToolVersion(MSBuildToolVersion.VS2015) // for now
                 .SetMaxCpuCount(0)
                 .SetConfiguration(configuration)
                 .SetVerbosity(Verbosity.Normal)
@@ -140,14 +139,32 @@ Task("Pack")
     .Does(() =>
 {
 	EnsureDirectoryExists(Directory(publishDir));
+
 	// PaketPack(publishDir, new PaketPackSettings { Version = isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion });
+
+    var msBuildSettings = new MSBuildSettings { ToolPath = msBuildPath };
+    var project = "./src/MahApps.Metro.SimpleChildWindow/MahApps.Metro.SimpleChildWindow.csproj";
+
+    MSBuild(project, msBuildSettings
+      .SetConfiguration(configuration)
+      .SetVerbosity(Verbosity.Normal)
+      .WithTarget("pack")
+      .WithProperty("PackageOutputPath", "../../" + publishDir)
+      .WithProperty("RepositoryBranch", branchName)
+      .WithProperty("RepositoryCommit", gitVersion.Sha)
+      //.WithProperty("Description", "The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a 'Modern' UI for their WPF apps (>= .Net 4.5), with minimal effort.")
+      .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
+      .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
+      .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
+      .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
+    );
 });
 
 Task("Zip")
     .Does(() =>
 {
 	EnsureDirectoryExists(Directory(publishDir));
-    // Zip(buildDir + "/Release/MahApps.Metro.SimpleChildWindow.Demo/", publishDir + "/MahApps.Metro.SimpleChildWindow.Demo-v" + gitVersion.NuGetVersion + ".zip");
+    Zip("./src/MahApps.Metro.SimpleChildWindow.Demo/bin/" + configuration, publishDir + "/MahApps.Metro.SimpleChildWindow-v" + gitVersion.NuGetVersion + ".zip");
 });
 
 Task("CreateRelease")
