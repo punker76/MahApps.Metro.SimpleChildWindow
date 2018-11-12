@@ -1,0 +1,26 @@
+<Project>
+    <!-- Project properties -->
+    <PropertyGroup>
+        <TargetFrameworks>net47;net46;net45</TargetFrameworks>
+        <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
+        <ExtrasDefaultResourceIncludes>Resources\*.xaml</ExtrasDefaultResourceIncludes>
+        <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Remove="**\*.png;**\*.jpg;**\*.ico"/>
+        <Resource Include="**\*.png;**\*.jpg;**\*.ico"/>
+    </ItemGroup>
+    <!-- SourceLink -->
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <!-- Optional: Declare that the Repository URL can be published to NuSpec -->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <!-- Optional: Include PDB in the built .nupkg -->
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <!-- https://github.com/dotnet/sourcelink/blob/master/docs/README.md#embedallsources -->
+        <EmbedAllSources>true</EmbedAllSources>
+    </PropertyGroup>
+</Project>

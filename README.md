@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/punker76/MahApps.Metro.SimpleChildWindow">
-    <img alt="MahApps.Metro.SimpleChildWindow" width="200" heigth="200" src="./src/MahApps.Metro.SimpleChildWindow.png">
+    <img alt="MahApps.Metro.SimpleChildWindow" width="200" heigth="200" src="./MahApps.Metro.SimpleChildWindow.png">
   </a>
   <h1>MahApps.Metro.SimpleChildWindow</h1>
   <p>

@@ -1,0 +1,21 @@
+type file
+id MahApps.Metro.SimpleChildWindow
+title MahApps.Metro.SimpleChildWindow
+version 1.5.0
+authors Jan Karger
+owners punker76
+licenseUrl https://github.com/punker76/MahApps.Metro.SimpleChildWindow/blob/dev/LICENSE
+projectUrl https://github.com/punker76/MahApps.Metro.SimpleChildWindow
+iconUrl https://raw.github.com/punker76/MahApps.Metro.SimpleChildWindow/master/src/MahApps.Metro.SimpleChildWindow.png
+requireLicenseAcceptance false
+tags WPF UI Metro Modern XAML Toolkit Library .NET OSS OpenSource
+description
+  A simple child window for MahApps.Metro, the "Metro" or "Modern UI" for WPF4+ apps.
+summary
+  A simple child window for MahApps.Metro, the "Metro" or "Modern UI" for WPF4+ apps.
+dependencies
+  MahApps.Metro >= 1.6
+include-pdbs true
+files
+  bin/Release/NET4/MahApps.Metro.SimpleChildWindow.* ==> lib/net40/
+  bin/Release/MahApps.Metro.SimpleChildWindow.* ==> lib/net45/

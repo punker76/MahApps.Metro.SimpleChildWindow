@@ -1,1 +1,2 @@
-.\XamlStyler\xstyler.exe -r -d ..\src\ -c .\XamlStyler\Options\MahApps.Metro.XAMLStyler.json
+.\XamlStyler\xstyler.exe -r -d ..\src\MahApps.Metro.SimpleChildWindow\ -c .\XamlStyler\Options\XAMLStyler.json
+.\XamlStyler\xstyler.exe -r -d ..\src\MahApps.Metro.SimpleChildWindow.Demo\ -c .\XamlStyler\Options\XAMLStyler.json

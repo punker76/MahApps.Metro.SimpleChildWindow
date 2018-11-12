@@ -1,0 +1,28 @@
+RESTRICTION: >= net45
+NUGET
+  remote: https://api.nuget.org/v3/index.json
+    ControlzEx (4.0.0-alpha0197)
+    Costura.Fody (3.1.6)
+      Fody (>= 3.2.12) - restriction: >= net46
+    Fody (3.2.17)
+    JetBrains.Annotations (2018.2.1) - copy_local: true
+    MahApps.Metro (2.0.0-alpha0105)
+      ControlzEx (>= 4.0.0-alpha0196)
+    MahApps.Metro.IconPacks (3.0.0-alpha0088)
+    Microsoft.Build.Tasks.Git (1.0.0-beta-63127-02) - copy_local: true
+    Microsoft.SourceLink.Common (1.0.0-beta-63127-02) - copy_local: true
+    Microsoft.SourceLink.GitHub (1.0.0-beta-63127-02) - copy_local: true
+      Microsoft.Build.Tasks.Git (>= 1.0.0-beta-63127-02)
+      Microsoft.SourceLink.Common (>= 1.0.0-beta-63127-02)
+
+GROUP cake
+RESTRICTION: == net45
+NUGET
+  remote: https://api.nuget.org/v3/index.json
+    Cake (0.30)
+    Cake.Figlet (1.2)
+    Cake.Paket (4.0)
+    Cake.Paket.Module (4.0)
+    gitreleasemanager (0.7.1)
+    GitVersion.CommandLine (4.0.1-beta1-38)
+    vswhere (2.5.2)
