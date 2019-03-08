@@ -3,60 +3,47 @@
 // TOOLS / ADDINS
 //////////////////////////////////////////////////////////////////////
 
-#tool paket:?package=GitVersion.CommandLine
-#tool paket:?package=gitreleasemanager
-#tool paket:?package=vswhere
-#addin paket:?package=Cake.Figlet
-#addin paket:?package=Cake.Paket
+#tool GitVersion.CommandLine
+#tool gitreleasemanager
+#tool vswhere
+#addin Cake.Figlet
 
 //////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
-if (string.IsNullOrWhiteSpace(target))
-{
-    target = "Default";
-}
-
 var configuration = Argument("configuration", "Release");
-if (string.IsNullOrWhiteSpace(configuration))
-{
-    configuration = "Release";
-}
-
-var verbosity = Argument("verbosity", Verbosity.Normal);
-if (string.IsNullOrWhiteSpace(configuration))
-{
-    verbosity = Verbosity.Normal;
-}
+var verbosity = Argument("verbosity", Verbosity.Minimal);
 
 //////////////////////////////////////////////////////////////////////
 // PREPARATION
 //////////////////////////////////////////////////////////////////////
 
 var repoName = "MahApps.Metro.SimpleChildWindow";
-var local = BuildSystem.IsLocalBuild;
+var isLocal = BuildSystem.IsLocalBuild;
 
 // Set build version
-if (local == false
-    || verbosity == Verbosity.Verbose)
+if (isLocal == false || verbosity == Verbosity.Verbose)
 {
     GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.BuildServer });
 }
 GitVersion gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.Json });
 
-var latestInstallationPath = VSWhereProducts("*", new VSWhereProductSettings { Version = "[\"15.0\",\"16.0\"]" }).FirstOrDefault();
-var msBuildPath = latestInstallationPath.CombineWithFilePath("./MSBuild/15.0/Bin/MSBuild.exe");
+var latestInstallationPath = VSWhereLatest(new VSWhereLatestSettings { IncludePrerelease = true });
+var msBuildPath = latestInstallationPath.Combine("./MSBuild/Current/Bin");
+var msBuildPathExe = msBuildPath.CombineWithFilePath("./MSBuild.exe");
+
+if (FileExists(msBuildPathExe) == false)
+{
+    throw new NotImplementedException("You need at least Visual Studio 2019 to build this project.");
+}
 
 var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
 var branchName = gitVersion.BranchName;
 var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("dev", branchName);
 var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", branchName);
 var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
-
-// Version
-var nugetVersion = isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion;
 
 // Directories and Paths
 var solution = "./src/MahApps.Metro.SimpleChildWindow.sln";
@@ -71,6 +58,8 @@ Action Abort = () => { throw new Exception("a non-recoverable fatal error occurr
 
 Setup(context =>
 {
+    // Executed BEFORE the first task.
+
     if (!IsRunningOnWindows())
     {
         throw new NotImplementedException($"{repoName} will only build on Windows because it's not possible to target WPF and Windows Forms from UNIX.");
@@ -83,7 +72,7 @@ Setup(context =>
     Information("AssemblySemVer Version : {0}", gitVersion.AssemblySemVer);
     Information("MajorMinorPatch Version: {0}", gitVersion.MajorMinorPatch);
     Information("NuGet Version          : {0}", gitVersion.NuGetVersion);
-    Information("IsLocalBuild           : {0}", local);
+    Information("IsLocalBuild           : {0}", isLocal);
     Information("Branch                 : {0}", branchName);
     Information("Configuration          : {0}", configuration);
     Information("MSBuildPath            : {0}", msBuildPath);
@@ -102,57 +91,61 @@ Task("Clean")
     .ContinueOnError()
     .Does(() =>
 {
-    var directoriesToDelete = GetDirectories("./**/obj").Concat(GetDirectories("./**/bin")).Concat(GetDirectories("./**/Publish"));
+    var directoriesToDelete = GetDirectories("./**/obj")
+        .Concat(GetDirectories("./**/bin"))
+        .Concat(GetDirectories("./**/Publish"));
     DeleteDirectories(directoriesToDelete, new DeleteDirectorySettings { Recursive = true, Force = true });
 });
 
 Task("Restore")
     .Does(() =>
 {
-    PaketRestore();
-
-    var msBuildSettings = new MSBuildSettings { ToolPath = msBuildPath, ArgumentCustomization = args => args.Append("/m") };
-    MSBuild(solution, msBuildSettings
-            //.SetConfiguration(configuration)
-            .SetVerbosity(Verbosity.Minimal)
-            .WithTarget("restore")
-            );
+    var msBuildSettings = new MSBuildSettings {
+        Verbosity = verbosity
+        , ToolPath = msBuildPathExe
+        , Configuration = configuration
+        , ArgumentCustomization = args => args.Append("/m")
+    };
+    MSBuild(solution, msBuildSettings.WithTarget("restore"));
 });
 
 Task("Build")
     .Does(() =>
 {
-    var msBuildSettings = new MSBuildSettings { ToolPath = msBuildPath, ArgumentCustomization = args => args.Append("/m") };
+    var msBuildSettings = new MSBuildSettings {
+        Verbosity = verbosity
+        , ToolPath = msBuildPathExe
+        , Configuration = configuration
+        , ArgumentCustomization = args => args.Append("/m")
+        , BinaryLogger = new MSBuildBinaryLogSettings() { Enabled = isLocal }
+    };
     MSBuild(solution, msBuildSettings
-                .SetMaxCpuCount(0)
-                .SetConfiguration(configuration)
-                .SetVerbosity(Verbosity.Normal)
-                //.WithRestore() only with cake 0.28.x            
-                .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
-                .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
-                .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
-                );
+            .SetMaxCpuCount(0)
+            .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
+            .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
+            .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
+            .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
+            );
 });
 
 Task("Pack")
-    .WithCriteria(() => !isPullRequest)
+    .ContinueOnError()
     .Does(() =>
 {
 	EnsureDirectoryExists(Directory(publishDir));
 
-	// PaketPack(publishDir, new PaketPackSettings { Version = isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion });
-
-    var msBuildSettings = new MSBuildSettings { ToolPath = msBuildPath };
+    var msBuildSettings = new MSBuildSettings {
+        Verbosity = verbosity
+        , ToolPath = msBuildPathExe
+        , Configuration = configuration
+    };
     var project = "./src/MahApps.Metro.SimpleChildWindow/MahApps.Metro.SimpleChildWindow.csproj";
 
     MSBuild(project, msBuildSettings
-      .SetConfiguration(configuration)
-      .SetVerbosity(Verbosity.Normal)
       .WithTarget("pack")
       .WithProperty("PackageOutputPath", "../../" + publishDir)
       .WithProperty("RepositoryBranch", branchName)
       .WithProperty("RepositoryCommit", gitVersion.Sha)
-      //.WithProperty("Description", "The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a 'Modern' UI for their WPF apps (>= .Net 4.5), with minimal effort.")
       .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
       .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
       .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)

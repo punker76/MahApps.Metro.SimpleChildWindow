@@ -59,28 +59,86 @@ The [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow) pack
 * [ChildWindow][childwindow]
 * [ChildWindowManager][childwindowmanager]
 
-## Want to say thanks?
+## Tools
 
-* Hit the :star: Star :star: button. That's all...
-
-<h2>Tools</h2>
-
-I use these awesome tools to develop, build and deploy MahApps.Metro.SimpleChildWindow.
+MahApps use these awesome tools to develop, build and deploy MahApps.Metro.SimpleChildWindow.
 
 <div>
   <a href="https://fsprojects.github.io/Paket/">
-    <img alt="Paket" width="128" heigth="128" src="./tools/paket_logo.png">
+    <img alt="Paket" width="128" heigth="128"vspace="20" hspace="20" src="./docs/paket_logo.png">
   </a>
   <a href="https://cakebuild.net/">
-    <img alt="cakebuild.net" width="128" heigth="128" hspace="40" src="./tools/cake-medium.png">
+    <img alt="cakebuild.net" width="128" heigth="128" vspace="20" hspace="20" src="./docs/cake-medium.png">
   </a>
   <a href="https://www.jetbrains.com/resharper/">
-    <img alt="R#" width="128" heigth="128" hspace="40" src="./tools/icon_ReSharper.png">
+    <img alt="R#" width="128" heigth="128" vspace="20" hspace="20" src="./docs/icon_ReSharper.png">
   </a>
   <a href="https://www.appveyor.com/">
-    <img alt="appveyor" width="128" heigth="128" src="./tools/Appveyor_logo.svg">
+    <img alt="appveyor" width="128" heigth="128" vspace="20" hspace="20" src="./docs/Appveyor_logo.svg">
   </a>
 </div>
+
+## Sponsorship
+
+The MahApps.Metro framework is free and can be used for free, open source and commercial applications. MahApps.Metro and MahApps.Metro.SimpleChildWindow (all code, NuGets and binaries) are under the [MIT License (MIT)](./LICENSE). It's tested, used and contributed by many awesome people. So hit the magic :star: button, we appreciate it!!! :pray: Thx! :squirrel:
+
+The core team members, MahApps.Metro contributors and contributors in the ecosystem do this open source work in their free time. If you use MahApps.Metro a serious task, and you'd like us to invest more time on it, please donate. This project increases your income/productivity/usabilty too.
+
+## Why charge/sponsor for open source?
+
+ * [Open-Source Maintainers are Jerks! | Nick Randolph & Geoffrey Huntley](https://vimeo.com/296579853)
+ * [FOSS is free as in toilet | Geoffroy Couprie](http://unhandledexpression.com/general/2018/11/27/foss-is-free-as-in-toilet.html)
+ * [How to Charge for your Open Source | Mike Perham](https://www.mikeperham.com/2015/11/23/how-to-charge-for-your-open-source/)
+ * [Sustain OSS: The Report](https://sustainoss.org/assets/pdf/SustainOSS-west-2017-report.pdf)
+ * [Open Source Maintainers Owe You Nothing | Mike McQuaid](https://mikemcquaid.com/2018/03/19/open-source-maintainers-owe-you-nothing/)
+ * [Who should fund open source projects? | Jane Elizabeth](https://jaxenter.com/who-funds-open-source-projects-133222.html)
+ * [Apply at OSS Inc today| Ryan Chenkie](https://twitter.com/ryanchenkie/status/1067801413974032385)
+ * [The Ethics of Unpaid Labor and the OSS Community | Ashe Dryden](https://www.ashedryden.com/blog/the-ethics-of-unpaid-labor-and-the-oss-community)
+
+## Backers
+
+[Become a backer](https://opencollective.com/mahappsmetro#backer) and show your support to our open source project.
+
+  <a href="https://opencollective.com/mahappsmetro/backers/0/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/0/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/1/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/1/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/2/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/2/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/3/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/3/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/4/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/4/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/5/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/5/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/6/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/6/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/7/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/7/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/8/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/8/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/9/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/9/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/10/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/10/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/11/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/11/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/12/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/12/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/13/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/13/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/14/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/14/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/15/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/15/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/16/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/16/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/17/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/17/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/18/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/18/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/19/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/19/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/20/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/20/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/21/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/21/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/22/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/22/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/23/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/23/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/24/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/24/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/25/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/25/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/26/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/26/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/27/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/27/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/28/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/28/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/backers/29/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backers/29/avatar"></a>
+
+## Sponsors
+
+Does your company use MahApps.Metro or MahApps.Metro.SimpleChildWindow?  Ask your manager or marketing team if your company would be interested in supporting our project.  Support will allow the maintainers to dedicate more time for maintenance and new features for everyone.  Also, your company's logo will show [on GitHub](https://github.com/MahApps/MahApps.Metro#readme) and on [our site](https://mahapps.com) - who doesn't want a little extra exposure?
+
+  <a href="https://opencollective.com/mahappsmetro/sponsors/0/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsors/0/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/sponsors/1/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsors/1/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/sponsors/2/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsors/2/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/sponsors/3/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsors/3/avatar"></a>
+  <a href="https://opencollective.com/mahappsmetro/sponsors/4/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsors/4/avatar"></a>
 
 ## Samples
 
