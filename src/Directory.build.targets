@@ -5,7 +5,7 @@
         <Company>MahApps</Company>
         <Product>MahApps.Metro.SimpleChildWindow</Product>
         <Copyright>Copyright © 2014 - $([System.DateTime]::Today.ToString(yyyy)) Jan Karger</Copyright>
-        <Description>A simple child window for MahApps.Metro, Metro / Modern UI for WPF apps.</Description>
+        <Description>A simple child window for MahApps.Metro (A toolkit for creating Metro / Modern UI styled WPF apps).</Description>
 
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <Version>2.0.0.0</Version>

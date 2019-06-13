@@ -10,7 +10,6 @@
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <StartupObject />
         <NoWarn>SA1652</NoWarn>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
@@ -19,12 +18,15 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
-        <PackageReference Include="Fody" Version="4.*" />
-        <PackageReference Include="Costura.Fody" Version="3.*" />
+        <PackageReference Include="Fody" Version="5.*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Costura.Fody" Version="4.*" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="app.manifest"/>
-        <None Remove="App.config"/>
+        <None Include="app.manifest" />
+        <None Remove="App.config" />
     </ItemGroup>
     <ItemGroup Condition=" !$(TargetFramework.StartsWith('netcore')) ">
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">

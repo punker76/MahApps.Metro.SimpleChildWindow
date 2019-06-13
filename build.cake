@@ -1,24 +1,27 @@
-
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // TOOLS / ADDINS
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+#module nuget:?package=Cake.DotNetTool.Module
+#tool "dotnet:?package=NuGetKeyVaultSignTool&version=1.2.18"
+#tool "dotnet:?package=AzureSignTool&version=2.0.17"
 
 #tool GitVersion.CommandLine
 #tool gitreleasemanager
 #tool vswhere
 #addin Cake.Figlet
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 var verbosity = Argument("verbosity", Verbosity.Minimal);
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // PREPARATION
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 var repoName = "MahApps.Metro.SimpleChildWindow";
 var isLocal = BuildSystem.IsLocalBuild;
@@ -49,14 +52,11 @@ var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
 var solution = "./src/MahApps.Metro.SimpleChildWindow.sln";
 var publishDir = "./Publish";
 
-// Define global marcos.
-Action Abort = () => { throw new Exception("a non-recoverable fatal error occurred."); };
-
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
 
-Setup(context =>
+Setup(ctx =>
 {
     // Executed BEFORE the first task.
 
@@ -67,25 +67,25 @@ Setup(context =>
 
     Information(Figlet(repoName));
 
-    Information("Informational Version  : {0}", gitVersion.InformationalVersion);
-    Information("SemVer Version         : {0}", gitVersion.SemVer);
-    Information("AssemblySemVer Version : {0}", gitVersion.AssemblySemVer);
+    Information("Informational   Version: {0}", gitVersion.InformationalVersion);
+    Information("SemVer          Version: {0}", gitVersion.SemVer);
+    Information("AssemblySemVer  Version: {0}", gitVersion.AssemblySemVer);
     Information("MajorMinorPatch Version: {0}", gitVersion.MajorMinorPatch);
-    Information("NuGet Version          : {0}", gitVersion.NuGetVersion);
+    Information("NuGet           Version: {0}", gitVersion.NuGetVersion);
     Information("IsLocalBuild           : {0}", isLocal);
     Information("Branch                 : {0}", branchName);
     Information("Configuration          : {0}", configuration);
     Information("MSBuildPath            : {0}", msBuildPath);
 });
 
-Teardown(context =>
+Teardown(ctx =>
 {
-    // Executed AFTER the last task.
+   // Executed AFTER the last task.
 });
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // TASKS
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 Task("Clean")
     .ContinueOnError()
@@ -105,7 +105,7 @@ Task("Restore")
         , ToolPath = msBuildPathExe
         , Configuration = configuration
         , ArgumentCustomization = args => args.Append("/m")
-    };
+        };
     MSBuild(solution, msBuildSettings.WithTarget("restore"));
 });
 
@@ -118,7 +118,8 @@ Task("Build")
         , Configuration = configuration
         , ArgumentCustomization = args => args.Append("/m")
         , BinaryLogger = new MSBuildBinaryLogSettings() { Enabled = isLocal }
-    };
+        };
+
     MSBuild(solution, msBuildSettings
             .SetMaxCpuCount(0)
             .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
@@ -132,17 +133,19 @@ Task("Pack")
     .ContinueOnError()
     .Does(() =>
 {
-	EnsureDirectoryExists(Directory(publishDir));
+    EnsureDirectoryExists(Directory(publishDir));
 
     var msBuildSettings = new MSBuildSettings {
         Verbosity = verbosity
         , ToolPath = msBuildPathExe
         , Configuration = configuration
     };
-    var project = "./src/MahApps.Metro.SimpleChildWindow/MahApps.Metro.SimpleChildWindow.csproj";
 
+    var project = "./src/MahApps.Metro.SimpleChildWindow/MahApps.Metro.SimpleChildWindow.csproj";
     MSBuild(project, msBuildSettings
       .WithTarget("pack")
+      .WithProperty("NoBuild", "true")
+      .WithProperty("IncludeBuildOutput", "true")
       .WithProperty("PackageOutputPath", "../../" + publishDir)
       .WithProperty("RepositoryBranch", branchName)
       .WithProperty("RepositoryCommit", gitVersion.Sha)
@@ -153,15 +156,168 @@ Task("Pack")
     );
 });
 
+void SignFiles(IEnumerable<FilePath> files, string description)
+{
+    var vurl = EnvironmentVariable("azure-key-vault-url");
+    if(string.IsNullOrWhiteSpace(vurl)) {
+        Error("Could not resolve signing url.");
+        return;
+    }
+
+    var vcid = EnvironmentVariable("azure-key-vault-client-id");
+    if(string.IsNullOrWhiteSpace(vcid)) {
+        Error("Could not resolve signing client id.");
+        return;
+    }
+
+    var vcs = EnvironmentVariable("azure-key-vault-client-secret");
+    if(string.IsNullOrWhiteSpace(vcs)) {
+        Error("Could not resolve signing client secret.");
+        return;
+    }
+
+    var vc = EnvironmentVariable("azure-key-vault-certificate");
+    if(string.IsNullOrWhiteSpace(vc)) {
+        Error("Could not resolve signing certificate.");
+        return;
+    }
+
+    foreach(var file in files)
+    {
+        Information($"Sign file: {file}");
+        var processSettings = new ProcessSettings {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            Arguments = new ProcessArgumentBuilder()
+                .Append("sign")
+                .Append(MakeAbsolute(file).FullPath)
+                .AppendSwitchQuoted("--file-digest", "sha256")
+                .AppendSwitchQuoted("--description", description)
+                .AppendSwitchQuoted("--description-url", "https://github.com/punker76/MahApps.Metro.SimpleChildWindow")
+                .Append("--no-page-hashing")
+                .AppendSwitchQuoted("--timestamp-rfc3161", "http://timestamp.digicert.com")
+                .AppendSwitchQuoted("--timestamp-digest", "sha256")
+                .AppendSwitchQuoted("--azure-key-vault-url", vurl)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-id", vcid)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-secret", vcs)
+                .AppendSwitchQuotedSecret("--azure-key-vault-certificate", vc)
+        };
+
+        using(var process = StartAndReturnProcess("tools/AzureSignTool", processSettings))
+        {
+            process.WaitForExit();
+
+            if (process.GetStandardOutput().Any())
+            {
+                Information($"Output:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardOutput())}");
+            }
+
+            if (process.GetStandardError().Any())
+            {
+                Information($"Errors occurred:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardError())}");
+            }
+
+            // This should output 0 as valid arguments supplied
+            Information("Exit code: {0}", process.GetExitCode());
+        }
+    }
+}
+
+Task("Sign")
+    .ContinueOnError()
+    .Does(() =>
+{
+    var files = GetFiles("./src/MahApps.Metro.SimpleChildWindow/bin/**/*/MahApps.Metro.SimpleChildWindow.dll");
+    SignFiles(files, "MahApps.Metro.SimpleChildWindow, a simple child window for MahApps.Metro.");
+
+    files = GetFiles("./src/MahApps.Metro.SimpleChildWindow.Demo/**/bin/**/*.exe");
+    SignFiles(files, "Demo application of MahApps.Metro.SimpleChildWindow, a simple child window for MahApps.Metro.");
+});
+
+Task("SignNuGet")
+    .ContinueOnError()
+    .Does(() =>
+{
+    if (!DirectoryExists(Directory(publishDir)))
+    {
+        return;
+    }
+
+    var vurl = EnvironmentVariable("azure-key-vault-url");
+    if(string.IsNullOrWhiteSpace(vurl)) {
+        Error("Could not resolve signing url.");
+        return;
+    }
+
+    var vcid = EnvironmentVariable("azure-key-vault-client-id");
+    if(string.IsNullOrWhiteSpace(vcid)) {
+        Error("Could not resolve signing client id.");
+        return;
+    }
+
+    var vcs = EnvironmentVariable("azure-key-vault-client-secret");
+    if(string.IsNullOrWhiteSpace(vcs)) {
+        Error("Could not resolve signing client secret.");
+        return;
+    }
+
+    var vc = EnvironmentVariable("azure-key-vault-certificate");
+    if(string.IsNullOrWhiteSpace(vc)) {
+        Error("Could not resolve signing certificate.");
+        return;
+    }
+
+    var nugetFiles = GetFiles(publishDir + "/*.nupkg");
+    foreach(var file in nugetFiles)
+    {
+        Information($"Sign file: {file}");
+        var processSettings = new ProcessSettings {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            Arguments = new ProcessArgumentBuilder()
+                .Append("sign")
+                .Append(MakeAbsolute(file).FullPath)
+                .Append("--force")
+                .AppendSwitchQuoted("--file-digest", "sha256")
+                .AppendSwitchQuoted("--timestamp-rfc3161", "http://timestamp.digicert.com")
+                .AppendSwitchQuoted("--timestamp-digest", "sha256")
+                .AppendSwitchQuoted("--azure-key-vault-url", vurl)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-id", vcid)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-secret", vcs)
+                .AppendSwitchQuotedSecret("--azure-key-vault-certificate", vc)
+        };
+
+        using(var process = StartAndReturnProcess("tools/NuGetKeyVaultSignTool", processSettings))
+        {
+            process.WaitForExit();
+
+            if (process.GetStandardOutput().Any())
+            {
+                Information($"Output:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardOutput())}");
+            }
+
+            if (process.GetStandardError().Any())
+            {
+                Information($"Errors occurred:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardError())}");
+            }
+
+            // This should output 0 as valid arguments supplied
+            Information("Exit code: {0}", process.GetExitCode());
+        }
+    }
+});
+
 Task("Zip")
     .Does(() =>
 {
-	EnsureDirectoryExists(Directory(publishDir));
+    EnsureDirectoryExists(Directory(publishDir));
+
     Zip("./src/MahApps.Metro.SimpleChildWindow.Demo/bin/" + configuration, publishDir + "/MahApps.Metro.SimpleChildWindow-v" + gitVersion.NuGetVersion + ".zip");
 });
 
 Task("CreateRelease")
     .WithCriteria(() => !isTagged)
+    .WithCriteria(() => !isPullRequest)
     .Does(() =>
 {
     var username = EnvironmentVariable("GITHUB_USERNAME");
@@ -185,9 +341,9 @@ Task("CreateRelease")
     });
 });
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // TASK TARGETS
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 Task("Default")
     .IsDependentOn("Clean")
@@ -196,11 +352,14 @@ Task("Default")
 
 Task("appveyor")
     .IsDependentOn("Default")
+    .IsDependentOn("Sign")
     .IsDependentOn("Pack")
-    .IsDependentOn("Zip");
+    .IsDependentOn("SignNuGet")
+    .IsDependentOn("Zip")
+    ;
 
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // EXECUTION
-//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 RunTarget(target);
