@@ -8,11 +8,11 @@
                                Title="Cool Window with long title"
                                d:DesignHeight="300"
                                d:DesignWidth="300"
-                               BorderBrush="{DynamicResource AccentBaseColorBrush}"
+                               BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"
                                BorderThickness="1"
                                ChildWindowWidth="300"
                                CloseOnOverlay="True"
-                               GlowBrush="{DynamicResource AccentColorBrush}"
+                               GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
                                ShowCloseButton="True"
                                mc:Ignorable="d">
 
@@ -21,12 +21,12 @@
                                   Height="22"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                  Foreground="{DynamicResource MahApps.Brushes.IdealForeground}"
                                   Kind="Cog" />
     </simpleChildWindow:ChildWindow.Icon>
 
     <simpleChildWindow:ChildWindow.OverlayBrush>
-        <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
+        <SolidColorBrush Opacity="0.7" Color="{StaticResource MahApps.Colors.Black}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
 
     <Grid>
