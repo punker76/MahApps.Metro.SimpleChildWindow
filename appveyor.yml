@@ -19,11 +19,9 @@ environment:
 
 skip_tags: true
 image: Visual Studio 2019 Preview
-configuration: Release
 test: off
 
 install:
-  # Install dotnet core 3.0 latest (alpha!!), as this is not provided on AppVeyor yet
   - cinst dotnetcore-sdk --pre
 
 pull_requests:

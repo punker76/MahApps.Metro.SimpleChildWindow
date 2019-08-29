@@ -18,7 +18,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
-        <PackageReference Include="Fody" Version="5.*">
+        <PackageReference Include="Fody" Version="6.*">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
