@@ -3,7 +3,7 @@
     <!-- NuGet -->
     <PropertyGroup>
         <Authors>Jan Karger</Authors>
-        <PackageLicenseUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow/blob/dev/LICENSE</PackageLicenseUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow</PackageProjectUrl>
         <PackageIconUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow/raw/dev/MahApps.Metro.SimpleChildWindow.png</PackageIconUrl>
         <PackageTags>WPF;UI;Metro;Modern;Material;XAML;Toolkit;Library;.NET;OSS;OpenSource</PackageTags>

@@ -10,7 +10,7 @@
               Width="38"
               Height="38"
               Data="F1 M 38,19C 48.4934,19 57,27.5066 57,38C 57,48.4934 48.4934,57 38,57C 27.5066,57 19,48.4934 19,38C 19,27.5066 27.5066,19 38,19 Z M 23.75,34.8334L 23.75,41.1667L 52.25,41.1667L 52.25,34.8334L 23.75,34.8334 Z "
-              Fill="{DynamicResource BlackBrush}"
+              Fill="{DynamicResource MahApps.Brushes.Black}"
               Stretch="Fill" />
     </Canvas>
 

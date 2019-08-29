@@ -1,8 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:scw="clr-namespace:MahApps.Metro.SimpleChildWindow">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/MahApps.Metro.SimpleChildWindow;component/Themes/ChildWindow.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource MahApps.Styles.ChildWindow}" TargetType="{x:Type scw:ChildWindow}" />
 
 </ResourceDictionary>

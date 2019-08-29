@@ -11,7 +11,7 @@
     <mahConverters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <Style x:Key="SimpleChildWindowFocusVisual">
+    <Style x:Key="MahApps.Styles.ChildWindow.FocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -25,7 +25,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="ChildWindowTemplate" TargetType="{x:Type scw:ChildWindow}">
+    <ControlTemplate x:Key="MahApps.Templates.ChildWindow" TargetType="{x:Type scw:ChildWindow}">
         <Grid x:Name="PART_Overlay"
               Background="{TemplateBinding OverlayBrush}"
               ClipToBounds="True"
@@ -153,7 +153,7 @@
                             <Button x:Name="PART_CloseButton"
                                     Grid.Column="2"
                                     Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    FocusVisualStyle="{StaticResource SimpleChildWindowFocusVisual}"
+                                    FocusVisualStyle="{StaticResource MahApps.Styles.ChildWindow.FocusVisualStyle}"
                                     Focusable="False"
                                     IsTabStop="True"
                                     Style="{TemplateBinding CloseButtonStyle}"
@@ -255,21 +255,21 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style TargetType="{x:Type scw:ChildWindow}">
-        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="CloseButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
+    <Style x:Key="MahApps.Styles.ChildWindow" TargetType="{x:Type scw:ChildWindow}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="CloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
-        <Setter Property="NonActiveGlowBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
-        <Setter Property="OverlayBrush" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="NonActiveBorderBrush" Value="{DynamicResource MahApps.Brushes.Border.NonActive}" />
+        <Setter Property="NonActiveGlowBrush" Value="{DynamicResource MahApps.Brushes.Border.NonActive}" />
+        <Setter Property="OverlayBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Template" Value="{StaticResource ChildWindowTemplate}" />
-        <Setter Property="TitleBarBackground" Value="{DynamicResource WindowTitleColorBrush}" />
-        <Setter Property="TitleBarNonActiveBackground" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
-        <Setter Property="TitleFontFamily" Value="{DynamicResource HeaderFontFamily}" />
-        <Setter Property="TitleFontSize" Value="{DynamicResource WindowTitleFontSize}" />
-        <Setter Property="TitleForeground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.ChildWindow}" />
+        <Setter Property="TitleBarBackground" Value="{DynamicResource MahApps.Brushes.WindowTitle}" />
+        <Setter Property="TitleBarNonActiveBackground" Value="{DynamicResource MahApps.Brushes.WindowTitle.NonActive}" />
+        <Setter Property="TitleFontFamily" Value="{DynamicResource MahApps.Fonts.Header}" />
+        <Setter Property="TitleFontSize" Value="{DynamicResource MahApps.Sizes.Font.WindowTitle}" />
+        <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="TitleTemplate">
             <Setter.Value>
                 <DataTemplate>
