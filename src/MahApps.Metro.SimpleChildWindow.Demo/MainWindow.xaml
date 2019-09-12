@@ -48,6 +48,7 @@
                                        VerticalContentAlignment="Stretch"
                                        CloseByEscape="False"
                                        Closing="Child01_OnClosing"
+                                       OverlayBrush="Transparent"
                                        IsAutoCloseEnabled="True">
             <Grid>
                 <Grid.RowDefinitions>

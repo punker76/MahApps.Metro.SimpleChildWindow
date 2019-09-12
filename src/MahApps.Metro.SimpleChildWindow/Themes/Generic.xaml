@@ -6,6 +6,10 @@
         <ResourceDictionary Source="/MahApps.Metro.SimpleChildWindow;component/Themes/ChildWindow.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style BasedOn="{StaticResource MahApps.Styles.ChildWindow}" TargetType="{x:Type scw:ChildWindow}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ChildWindow}"
+           TargetType="{x:Type scw:ChildWindow}">
+        <Setter Property="OverlayBrush"
+                Value="{StaticResource MahApps.Brushes.ChildWindow.SemitransparentBlackOverlay}" />
+    </Style>
 
 </ResourceDictionary>

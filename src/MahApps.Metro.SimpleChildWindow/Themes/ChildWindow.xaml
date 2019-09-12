@@ -11,6 +11,14 @@
     <mahConverters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
+    <!-- Some default OverlayBrushes -->
+    <SolidColorBrush x:Key="MahApps.Brushes.ChildWindow.SemitransparentBlackOverlay" 
+                     Color="{DynamicResource MahApps.Colors.Black}" 
+                     Opacity="0.7" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ChildWindow.SemitransparentGrayOverlay"
+                     Color="{DynamicResource MahApps.Colors.Gray2}"
+                     Opacity="0.8" />
+    
     <Style x:Key="MahApps.Styles.ChildWindow.FocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>

@@ -25,10 +25,6 @@
                                   Kind="Cog" />
     </simpleChildWindow:ChildWindow.Icon>
 
-    <simpleChildWindow:ChildWindow.OverlayBrush>
-        <SolidColorBrush Opacity="0.7" Color="{StaticResource MahApps.Colors.Black}" />
-    </simpleChildWindow:ChildWindow.OverlayBrush>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
