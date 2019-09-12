@@ -2,8 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mahControls="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:mahConverters="http://metro.mahapps.com/winfx/xaml/shared"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:scw="clr-namespace:MahApps.Metro.SimpleChildWindow"
-                    xmlns:valueConverter="clr-namespace:MahApps.Metro.SimpleChildWindow.ValueConverter">
+                    xmlns:valueConverter="clr-namespace:MahApps.Metro.SimpleChildWindow.ValueConverter"
+                    mc:Ignorable="options">
 
     <valueConverter:EnumToVisibilityConverter x:Key="EnumToVisibilityCollapsedConverter"
                                               FalseValue="Visible"
@@ -11,14 +14,8 @@
     <mahConverters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <!-- Some default OverlayBrushes -->
-    <SolidColorBrush x:Key="MahApps.Brushes.ChildWindow.SemitransparentBlackOverlay" 
-                     Color="{DynamicResource MahApps.Colors.Black}" 
-                     Opacity="0.7" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ChildWindow.SemitransparentGrayOverlay"
-                     Color="{DynamicResource MahApps.Colors.Gray2}"
-                     Opacity="0.8" />
-    
+    <SolidColorBrush x:Key="MahApps.Brushes.ChildWindow.Overlay" Opacity="0.7" Color="{DynamicResource MahApps.Colors.Black}" options:Freeze="True" />
+
     <Style x:Key="MahApps.Styles.ChildWindow.FocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -270,7 +267,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="NonActiveBorderBrush" Value="{DynamicResource MahApps.Brushes.Border.NonActive}" />
         <Setter Property="NonActiveGlowBrush" Value="{DynamicResource MahApps.Brushes.Border.NonActive}" />
-        <Setter Property="OverlayBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="OverlayBrush" Value="{StaticResource MahApps.Brushes.ChildWindow.Overlay}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.ChildWindow}" />
         <Setter Property="TitleBarBackground" Value="{DynamicResource MahApps.Brushes.WindowTitle}" />
