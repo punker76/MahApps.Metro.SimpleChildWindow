@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
@@ -704,7 +705,13 @@ namespace MahApps.Metro.SimpleChildWindow
                     DependencyPropertyChangedEventHandler eh = null;
                     eh = (sender, args) => {
                         elementToFocus.IsVisibleChanged -= eh;
-                        elementToFocus.Focus();
+                        if (elementToFocus.Focusable)
+                        {
+                            if (elementToFocus is HwndHost == false)
+                            {
+                                elementToFocus.Focus();
+                            }
+                        }
                     };
                     elementToFocus.IsVisibleChanged += eh;
                 }
