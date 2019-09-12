@@ -1044,8 +1044,9 @@ namespace MahApps.Metro.SimpleChildWindow
             var width = this.partOverlay.RenderSize.Width;
             var height = this.partOverlay.RenderSize.Height;
 
-            var widthOffset = width / 2 - this.partWindow.RenderSize.Width / 2;
-            var heightOffset = height / 2 - this.partWindow.RenderSize.Height / 2;
+            var offset = VisualTreeHelper.GetOffset(this.partWindow);
+            var widthOffset = offset.X;
+            var heightOffset = offset.Y;
 
             var realX = this.moveTransform.X + x + widthOffset;
             var realY = this.moveTransform.Y + y + heightOffset;

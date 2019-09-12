@@ -50,7 +50,7 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 
 		private async void MovingTest_OnClick(object sender, RoutedEventArgs e)
 		{
-			await this.ShowChildWindowAsync(new CoolChildWindow() {IsModal = true, AllowMove = true}, RootGrid);
+			await this.ShowChildWindowAsync(new CoolChildWindow() {IsModal = true, AllowMove = true, VerticalContentAlignment = VerticalAlignment.Bottom}, RootGrid);
 		}
 	}
 }
