@@ -766,6 +766,11 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public object ChildWindowResult { get; protected set; }
 
+        /// <summary>
+        /// Gets the dialog close reason.
+        /// </summary>
+        public CloseReason ClosedBy { get; private set; } = CloseReason.None;
+
         DispatcherTimer autoCloseTimer;
 
         private static void OnIsAutoCloseEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -828,7 +833,7 @@ namespace MahApps.Metro.SimpleChildWindow
             // if the ChildWindow is open and autoclose is still enabled then close the ChildWindow
             if (this.IsOpen && this.IsAutoCloseEnabled)
             {
-                this.Close();
+                this.Close(CloseReason.AutoClose);
             }
         }
 
@@ -958,7 +963,7 @@ namespace MahApps.Metro.SimpleChildWindow
         {
             if (Equals(e.OriginalSource, this.partOverlay) && this.CloseOnOverlay)
             {
-                this.Close();
+                this.Close(CloseReason.Overlay);
             }
         }
 
@@ -1026,7 +1031,7 @@ namespace MahApps.Metro.SimpleChildWindow
 
         private void OnCloseButtonClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.Close(CloseReason.Close);
         }
 
         /// <summary>
@@ -1039,13 +1044,27 @@ namespace MahApps.Metro.SimpleChildWindow
         }
 
         /// <summary>
-        /// Closes this instance.
+        /// Closes this dialog.
         /// </summary>
+        /// <param name="childWindowResult">A dialog result (optional).</param>
         public bool Close(object childWindowResult = null)
         {
+            return this.Close(CloseReason.Close, childWindowResult);
+        }
+
+        /// <summary>
+        /// Closes this dialog.
+        /// </summary>
+        /// <param name="closedBy">The dialog close reason.</param>
+        /// <param name="childWindowResult">A dialog result (optional).</param>
+        public bool Close(CloseReason closedBy, object childWindowResult = null)
+        {
+            this.ClosedBy = closedBy;
+
             // check if we really want close the dialog
             var e = new CancelEventArgs();
             this.OnClosing(e);
+
             if (!e.Cancel)
             {
                 // now handle the command
@@ -1066,6 +1085,7 @@ namespace MahApps.Metro.SimpleChildWindow
             }
             else
             {
+                this.ClosedBy = CloseReason.None;
                 return false;
             }
         }
@@ -1075,7 +1095,7 @@ namespace MahApps.Metro.SimpleChildWindow
         {
             if (this.CloseByEscape && e.Key == Key.Escape)
             {
-                e.Handled = this.Close();
+                e.Handled = this.Close(CloseReason.Escape);
             }
 
             this.OnPreviewKeyUp(e);
