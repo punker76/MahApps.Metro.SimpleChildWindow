@@ -161,7 +161,7 @@ namespace MahApps.Metro.SimpleChildWindow
                 dialog.ClosingFinished -= OnDialogClosingFinished;
                 dialog.PreviewMouseDown -= OnDialogPreviewMouseDown;
                 container.Children.Remove(dialog);
-                tcs.TrySetResult(dialog.ChildWindowResult is TResult result ? result : default(TResult));
+                tcs.TrySetResult(dialog.ChildWindowResult is TResult result ? result : (dialog.ClosedBy is TResult closedBy ? closedBy : default));
             }
 
             dialog.ClosingFinished += OnDialogClosingFinished;

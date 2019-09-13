@@ -49,8 +49,13 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 		}
 
 		private async void MovingTest_OnClick(object sender, RoutedEventArgs e)
-		{
-			await this.ShowChildWindowAsync(new CoolChildWindow() {IsModal = true, AllowMove = true, VerticalContentAlignment = VerticalAlignment.Bottom}, RootGrid);
-		}
+        {
+            var childWindow = new CoolChildWindow() {IsModal = true, AllowMove = true, VerticalContentAlignment = VerticalAlignment.Bottom};
+            var result = await this.ShowChildWindowAsync<CloseReason>(childWindow, RootGrid);
+            if (result == CloseReason.Cancel)
+            {
+                await this.ShowMessageAsync("ChildWindow Result", "The dialog was canceled.");
+            }
+        }
 	}
 }
