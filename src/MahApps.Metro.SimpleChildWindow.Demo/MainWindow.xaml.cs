@@ -17,7 +17,7 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 
 		private void FirstTest_OnClick(object sender, RoutedEventArgs e)
 		{
-			this.child01.IsOpen = true;
+			this.child01.SetCurrentValue(ChildWindow.IsOpenProperty, true);
 		}
 
 		private async void SecTest_OnClick(object sender, RoutedEventArgs e)

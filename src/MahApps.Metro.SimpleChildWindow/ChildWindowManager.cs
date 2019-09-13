@@ -77,8 +77,8 @@ namespace MahApps.Metro.SimpleChildWindow
 			}
 			if (overlayFillBehavior == OverlayFillBehavior.WindowContent)
 			{
-				metroDialogContainer.SetValue(Grid.RowProperty, (int)metroDialogContainer.GetValue(Grid.RowProperty) + 1);
-				metroDialogContainer.SetValue(Grid.RowSpanProperty, 1);
+				metroDialogContainer.SetCurrentValue(Grid.RowProperty, (int)metroDialogContainer.GetValue(Grid.RowProperty) + 1);
+				metroDialogContainer.SetCurrentValue(Grid.RowSpanProperty, 1);
 			}
 			return ShowChildWindowInternalAsync<TResult>(dialog, metroDialogContainer);
 		}
@@ -141,30 +141,32 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private static Task<TResult> OpenDialogAsync<TResult>(ChildWindow dialog, Panel container)
 		{
-			MouseButtonEventHandler dialogOnMouseUp = null;
-			dialogOnMouseUp = (sender, args) => {
-				var elementOnTop = container.Children.OfType<UIElement>().OrderBy(c => c.GetValue(Panel.ZIndexProperty)).LastOrDefault();
-				if (elementOnTop != null && !Equals(elementOnTop, dialog))
-				{
-					var zIndex = (int)elementOnTop.GetValue(Panel.ZIndexProperty);
-					elementOnTop.SetCurrentValue(Panel.ZIndexProperty, zIndex - 1);
-					dialog.SetCurrentValue(Panel.ZIndexProperty, zIndex);
-				}
-			};
-			dialog.PreviewMouseDown += dialogOnMouseUp;
+            void OnDialogPreviewMouseDown(object sender, MouseButtonEventArgs args)
+            {
+                var elementOnTop = container.Children.OfType<UIElement>().OrderBy(c => c.GetValue(Panel.ZIndexProperty)).LastOrDefault();
+                if (elementOnTop != null && !Equals(elementOnTop, dialog))
+                {
+                    var zIndex = (int)elementOnTop.GetValue(Panel.ZIndexProperty);
+                    elementOnTop.SetCurrentValue(Panel.ZIndexProperty, zIndex - 1);
+                    dialog.SetCurrentValue(Panel.ZIndexProperty, zIndex);
+                }
+            }
+
+            dialog.PreviewMouseDown += OnDialogPreviewMouseDown;
 
 			var tcs = new TaskCompletionSource<TResult>();
 
-			RoutedEventHandler handler = null;
-			handler = (sender, args) => {
-				dialog.ClosingFinished -= handler;
-				dialog.PreviewMouseDown -= dialogOnMouseUp;
-				container.Children.Remove(dialog);
-				tcs.TrySetResult(dialog.ChildWindowResult is TResult ? (TResult)dialog.ChildWindowResult : default(TResult));
-			};
-			dialog.ClosingFinished += handler;
+            void OnDialogClosingFinished(object sender, RoutedEventArgs args)
+            {
+                dialog.ClosingFinished -= OnDialogClosingFinished;
+                dialog.PreviewMouseDown -= OnDialogPreviewMouseDown;
+                container.Children.Remove(dialog);
+                tcs.TrySetResult(dialog.ChildWindowResult is TResult result ? result : default(TResult));
+            }
 
-			dialog.IsOpen = true;
+            dialog.ClosingFinished += OnDialogClosingFinished;
+
+			dialog.SetCurrentValue(ChildWindow.IsOpenProperty, true);
 
 			return tcs.Task;
 		}

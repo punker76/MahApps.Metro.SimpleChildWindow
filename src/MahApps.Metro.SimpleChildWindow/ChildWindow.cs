@@ -39,117 +39,91 @@ namespace MahApps.Metro.SimpleChildWindow
         private const string PART_Border = "PART_Border";
         private const string PART_Content = "PART_Content";
 
-        /// <summary>
-        /// Identifies the <see cref="AllowMove"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="AllowMove"/> dependency property.</summary>
         public static readonly DependencyProperty AllowMoveProperty
             = DependencyProperty.Register(nameof(AllowMove),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(default(bool)));
 
-        /// <summary>
-        /// Identifies the <see cref="IsModal"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="IsModal"/> dependency property.</summary>
         public static readonly DependencyProperty IsModalProperty
             = DependencyProperty.Register(nameof(IsModal),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        /// <summary>
-        /// Identifies the <see cref="OverlayBrush"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="OverlayBrush"/> dependency property.</summary>
         public static readonly DependencyProperty OverlayBrushProperty
             = DependencyProperty.Register(nameof(OverlayBrush),
                                           typeof(Brush),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        /// <summary>
-        /// Identifies the <see cref="CloseOnOverlay"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="CloseOnOverlay"/> dependency property.</summary>
         public static readonly DependencyProperty CloseOnOverlayProperty
             = DependencyProperty.Register(nameof(CloseOnOverlay),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(default(bool)));
 
-        /// <summary>
-        /// Identifies the <see cref="CloseByEscape"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="CloseByEscape"/> dependency property.</summary>
         public static readonly DependencyProperty CloseByEscapeProperty
             = DependencyProperty.Register(nameof(CloseByEscape),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="ShowTitleBar"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ShowTitleBar"/> dependency property.</summary>
         public static readonly DependencyProperty ShowTitleBarProperty
             = DependencyProperty.Register(nameof(ShowTitleBar),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="TitleBarHeight"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="TitleBarHeight"/> dependency property.</summary>
         public static readonly DependencyProperty TitleBarHeightProperty
             = DependencyProperty.Register(nameof(TitleBarHeight),
                                           typeof(int),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(30));
 
-        /// <summary>
-        /// Identifies the <see cref="TitleBarBackground"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="TitleBarBackground"/> dependency property.</summary>
         public static readonly DependencyProperty TitleBarBackgroundProperty
             = DependencyProperty.Register(nameof(TitleBarBackground),
                                           typeof(Brush),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        /// <summary>
-        /// Identifies the <see cref="TitleBarNonActiveBackground"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="TitleBarNonActiveBackground"/> dependency property.</summary>
         public static readonly DependencyProperty TitleBarNonActiveBackgroundProperty
             = DependencyProperty.Register(nameof(TitleBarNonActiveBackground),
                                           typeof(Brush),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(Brushes.Gray));
 
-        /// <summary>
-        /// Identifies the <see cref="NonActiveBorderBrush"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="NonActiveBorderBrush"/> dependency property.</summary>
         public static readonly DependencyProperty NonActiveBorderBrushProperty
             = DependencyProperty.Register(nameof(NonActiveBorderBrush),
                                           typeof(Brush),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(Brushes.Gray));
 
-        /// <summary>
-        /// Identifies the <see cref="TitleForeground"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="TitleForeground"/> dependency property.</summary>
         public static readonly DependencyProperty TitleForegroundProperty
             = DependencyProperty.Register(nameof(TitleForeground),
                                           typeof(Brush),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        /// <summary>
-        /// Identifies the <see cref="Title"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="Title"/> dependency property.</summary>
         public static readonly DependencyProperty TitleProperty
             = DependencyProperty.Register(nameof(Title),
                                           typeof(string),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(default(string)));
 
-        /// <summary>
-        /// Identifies the <see cref="TitleCharacterCasing"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="TitleCharacterCasing"/> dependency property.</summary>
         public static readonly DependencyProperty TitleCharacterCasingProperty
             = DependencyProperty.Register(nameof(TitleCharacterCasing),
                                           typeof(CharacterCasing),
@@ -157,207 +131,161 @@ namespace MahApps.Metro.SimpleChildWindow
                                           new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure),
                                           value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
 
-        /// <summary>
-        /// Identifies the <see cref="TitleHorizontalAlignment"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="TitleHorizontalAlignment"/> dependency property.</summary>
         public static readonly DependencyProperty TitleHorizontalAlignmentProperty
             = DependencyProperty.Register(nameof(TitleHorizontalAlignment),
                                           typeof(HorizontalAlignment),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(HorizontalAlignment.Stretch));
 
-        /// <summary>
-        /// Identifies the <see cref="TitleVerticalAlignment"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="TitleVerticalAlignment"/> dependency property.</summary>
         public static readonly DependencyProperty TitleVerticalAlignmentProperty
             = DependencyProperty.Register(nameof(TitleVerticalAlignment),
                                           typeof(VerticalAlignment),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(VerticalAlignment.Center));
 
-        /// <summary>
-        /// Identifies the <see cref="TitleTemplate"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="TitleTemplate"/> dependency property.</summary>
         public static readonly DependencyProperty TitleTemplateProperty
             = DependencyProperty.Register(nameof(TitleTemplate),
                                           typeof(DataTemplate),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(null));
 
-        /// <summary>
-        /// Identifies the <see cref="TitleFontSize"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="TitleFontSize"/> dependency property.</summary>
         public static readonly DependencyProperty TitleFontSizeProperty
             = DependencyProperty.Register(nameof(TitleFontSize),
                                           typeof(double),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(SystemFonts.CaptionFontSize, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
 
-        /// <summary>
-        /// Identifies the <see cref="TitleFontFamily"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="TitleFontFamily"/> dependency property.</summary>
         public static readonly DependencyProperty TitleFontFamilyProperty
             = DependencyProperty.Register(nameof(TitleFontFamily),
                                           typeof(FontFamily),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(SystemFonts.CaptionFontFamily, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
 
-        /// <summary>
-        /// Identifies the <see cref="Icon"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="Icon"/> dependency property.</summary>
         public static readonly DependencyProperty IconProperty
             = DependencyProperty.Register(nameof(Icon),
                                           typeof(object),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
-        /// <summary>
-        /// Identifies the <see cref="IconTemplate"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="IconTemplate"/> dependency property.</summary>
         public static readonly DependencyProperty IconTemplateProperty
             = DependencyProperty.Register(nameof(IconTemplate),
                                           typeof(DataTemplate),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
-        /// <summary>
-        /// Identifies the <see cref="ShowCloseButton"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ShowCloseButton"/> dependency property.</summary>
         public static readonly DependencyProperty ShowCloseButtonProperty
             = DependencyProperty.Register(nameof(ShowCloseButton),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
-        /// <summary>
-        /// Identifies the <see cref="CloseButtonStyle"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="CloseButtonStyle"/> dependency property.</summary>
         public static readonly DependencyProperty CloseButtonStyleProperty
             = DependencyProperty.Register(nameof(CloseButtonStyle),
                                           typeof(Style),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
-        /// <summary>
-        /// Identifies the <see cref="CloseButtonCommand"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="CloseButtonCommand"/> dependency property.</summary>
         public static readonly DependencyProperty CloseButtonCommandProperty
             = DependencyProperty.Register(nameof(CloseButtonCommand),
                                           typeof(ICommand),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(default(ICommand)));
 
-        /// <summary>
-        /// Identifies the <see cref="CloseButtonCommandParameter"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="CloseButtonCommandParameter"/> dependency property.</summary>
         public static readonly DependencyProperty CloseButtonCommandParameterProperty
             = DependencyProperty.Register(nameof(CloseButtonCommandParameter),
                                           typeof(object),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(null));
 
-        /// <summary>
-        /// Identifies the <see cref="IsOpen"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="IsOpen"/> dependency property.</summary>
         public static readonly DependencyProperty IsOpenProperty
             = DependencyProperty.Register(nameof(IsOpen),
                                           typeof(bool),
                                           typeof(ChildWindow),
-                                          new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+                                          new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsOpenChanged));
 
-        /// <summary>
-        /// Identifies the <see cref="ChildWindowWidth"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ChildWindowWidth"/> dependency property.</summary>
         public static readonly DependencyProperty ChildWindowWidthProperty
             = DependencyProperty.Register(nameof(ChildWindowWidth),
                                           typeof(double),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
 
-        /// <summary>
-        /// Identifies the <see cref="ChildWindowHeight"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ChildWindowHeight"/> dependency property.</summary>
         public static readonly DependencyProperty ChildWindowHeightProperty
             = DependencyProperty.Register(nameof(ChildWindowHeight),
                                           typeof(double),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
 
-        /// <summary>
-        /// Identifies the <see cref="ChildWindowImage"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ChildWindowImage"/> dependency property.</summary>
         public static readonly DependencyProperty ChildWindowImageProperty
             = DependencyProperty.Register(nameof(ChildWindowImage),
                                           typeof(MessageBoxImage),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(MessageBoxImage.None, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
-        /// <summary>
-        /// Identifies the <see cref="EnableDropShadow"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="EnableDropShadow"/> dependency property.</summary>
         public static readonly DependencyProperty EnableDropShadowProperty
             = DependencyProperty.Register(nameof(EnableDropShadow),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        /// <summary>
-        /// Identifies the <see cref="AllowFocusElement"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="AllowFocusElement"/> dependency property.</summary>
         public static readonly DependencyProperty AllowFocusElementProperty
             = DependencyProperty.Register(nameof(AllowFocusElement),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="FocusedElement"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="FocusedElement"/> dependency property.</summary>
         public static readonly DependencyProperty FocusedElementProperty
             = DependencyProperty.Register(nameof(FocusedElement),
                                           typeof(FrameworkElement),
                                           typeof(ChildWindow),
                                           new UIPropertyMetadata(null));
 
-        /// <summary>
-        /// Identifies the <see cref="GlowBrush"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="GlowBrush"/> dependency property.</summary>
         public static readonly DependencyProperty GlowBrushProperty
             = DependencyProperty.Register(nameof(GlowBrush),
                                           typeof(SolidColorBrush),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        /// <summary>
-        /// Identifies the <see cref="NonActiveGlowBrush"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="NonActiveGlowBrush"/> dependency property.</summary>
         public static readonly DependencyProperty NonActiveGlowBrushProperty
             = DependencyProperty.Register(nameof(NonActiveGlowBrush),
                                           typeof(SolidColorBrush),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(Brushes.Gray));
 
-        /// <summary>
-        /// Identifies the <see cref="IsAutoCloseEnabled"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="IsAutoCloseEnabled"/> dependency property.</summary>
         public static readonly DependencyProperty IsAutoCloseEnabledProperty
             = DependencyProperty.Register(nameof(IsAutoCloseEnabled),
                                           typeof(bool),
                                           typeof(ChildWindow),
-                                          new FrameworkPropertyMetadata(false, IsAutoCloseEnabledChanged));
+                                          new FrameworkPropertyMetadata(false, OnIsAutoCloseEnabledChanged));
 
-        /// <summary>
-        /// Identifies the <see cref="AutoCloseInterval"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="AutoCloseInterval"/> dependency property.</summary>
         public static readonly DependencyProperty AutoCloseIntervalProperty
             = DependencyProperty.Register(nameof(AutoCloseInterval),
                                           typeof(long),
                                           typeof(ChildWindow),
-                                          new FrameworkPropertyMetadata(5000L, AutoCloseIntervalChanged));
+                                          new FrameworkPropertyMetadata(5000L, OnAutoCloseIntervalChanged));
 
-        /// <summary>
-        /// Identifies the <see cref="IsWindowHostActive"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="IsWindowHostActive"/> dependency property.</summary>
         public static readonly DependencyProperty IsWindowHostActiveProperty
             = DependencyProperty.Register(nameof(IsWindowHostActive),
                                           typeof(bool),
@@ -378,8 +306,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public event RoutedEventHandler IsOpenChanged
         {
-            add { this.AddHandler(IsOpenChangedEvent, value); }
-            remove { this.RemoveHandler(IsOpenChangedEvent, value); }
+            add => this.AddHandler(IsOpenChangedEvent, value);
+            remove => this.RemoveHandler(IsOpenChangedEvent, value);
         }
 
         /// <summary>
@@ -401,8 +329,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public event RoutedEventHandler ClosingFinished
         {
-            add { this.AddHandler(ClosingFinishedEvent, value); }
-            remove { this.RemoveHandler(ClosingFinishedEvent, value); }
+            add => this.AddHandler(ClosingFinishedEvent, value);
+            remove => this.RemoveHandler(ClosingFinishedEvent, value);
         }
 
         /// <summary>
@@ -410,8 +338,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public bool AllowMove
         {
-            get { return (bool)this.GetValue(AllowMoveProperty); }
-            set { this.SetValue(AllowMoveProperty, value); }
+            get => (bool)this.GetValue(AllowMoveProperty);
+            set => this.SetValue(AllowMoveProperty, value);
         }
 
         /// <summary>
@@ -419,8 +347,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public bool IsModal
         {
-            get { return (bool)this.GetValue(IsModalProperty); }
-            set { this.SetValue(IsModalProperty, value); }
+            get => (bool)this.GetValue(IsModalProperty);
+            set => this.SetValue(IsModalProperty, value);
         }
 
         /// <summary>
@@ -428,8 +356,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public Brush OverlayBrush
         {
-            get { return (Brush)this.GetValue(OverlayBrushProperty); }
-            set { this.SetValue(OverlayBrushProperty, value); }
+            get => (Brush)this.GetValue(OverlayBrushProperty);
+            set => this.SetValue(OverlayBrushProperty, value);
         }
 
         /// <summary>
@@ -437,8 +365,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public bool CloseOnOverlay
         {
-            get { return (bool)this.GetValue(CloseOnOverlayProperty); }
-            set { this.SetValue(CloseOnOverlayProperty, value); }
+            get => (bool)this.GetValue(CloseOnOverlayProperty);
+            set => this.SetValue(CloseOnOverlayProperty, value);
         }
 
         /// <summary>
@@ -446,8 +374,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public bool CloseByEscape
         {
-            get { return (bool)this.GetValue(CloseByEscapeProperty); }
-            set { this.SetValue(CloseByEscapeProperty, value); }
+            get => (bool)this.GetValue(CloseByEscapeProperty);
+            set => this.SetValue(CloseByEscapeProperty, value);
         }
 
         /// <summary>
@@ -455,8 +383,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public bool ShowTitleBar
         {
-            get { return (bool)this.GetValue(ShowTitleBarProperty); }
-            set { this.SetValue(ShowTitleBarProperty, value); }
+            get => (bool)this.GetValue(ShowTitleBarProperty);
+            set => this.SetValue(ShowTitleBarProperty, value);
         }
 
         /// <summary>
@@ -464,8 +392,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public int TitleBarHeight
         {
-            get { return (int)this.GetValue(TitleBarHeightProperty); }
-            set { this.SetValue(TitleBarHeightProperty, value); }
+            get => (int)this.GetValue(TitleBarHeightProperty);
+            set => this.SetValue(TitleBarHeightProperty, value);
         }
 
         /// <summary>
@@ -473,8 +401,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public Brush TitleBarBackground
         {
-            get { return (Brush)this.GetValue(TitleBarBackgroundProperty); }
-            set { this.SetValue(TitleBarBackgroundProperty, value); }
+            get => (Brush)this.GetValue(TitleBarBackgroundProperty);
+            set => this.SetValue(TitleBarBackgroundProperty, value);
         }
 
         /// <summary>
@@ -482,8 +410,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public Brush TitleBarNonActiveBackground
         {
-            get { return (Brush)this.GetValue(TitleBarNonActiveBackgroundProperty); }
-            set { this.SetValue(TitleBarNonActiveBackgroundProperty, value); }
+            get => (Brush)this.GetValue(TitleBarNonActiveBackgroundProperty);
+            set => this.SetValue(TitleBarNonActiveBackgroundProperty, value);
         }
 
         /// <summary>
@@ -491,8 +419,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public Brush NonActiveBorderBrush
         {
-            get { return (Brush)this.GetValue(NonActiveBorderBrushProperty); }
-            set { this.SetValue(NonActiveBorderBrushProperty, value); }
+            get => (Brush)this.GetValue(NonActiveBorderBrushProperty);
+            set => this.SetValue(NonActiveBorderBrushProperty, value);
         }
 
         /// <summary>
@@ -500,8 +428,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public Brush TitleForeground
         {
-            get { return (Brush)this.GetValue(TitleForegroundProperty); }
-            set { this.SetValue(TitleForegroundProperty, value); }
+            get => (Brush)this.GetValue(TitleForegroundProperty);
+            set => this.SetValue(TitleForegroundProperty, value);
         }
 
         /// <summary>
@@ -509,8 +437,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public string Title
         {
-            get { return (string)this.GetValue(TitleProperty); }
-            set { this.SetValue(TitleProperty, value); }
+            get => (string)this.GetValue(TitleProperty);
+            set => this.SetValue(TitleProperty, value);
         }
 
         /// <summary>
@@ -518,8 +446,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public CharacterCasing TitleCharacterCasing
         {
-            get { return (CharacterCasing)this.GetValue(TitleCharacterCasingProperty); }
-            set { this.SetValue(TitleCharacterCasingProperty, value); }
+            get => (CharacterCasing)this.GetValue(TitleCharacterCasingProperty);
+            set => this.SetValue(TitleCharacterCasingProperty, value);
         }
 
         /// <summary>
@@ -527,8 +455,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public HorizontalAlignment TitleHorizontalAlignment
         {
-            get { return (HorizontalAlignment)this.GetValue(TitleHorizontalAlignmentProperty); }
-            set { this.SetValue(TitleHorizontalAlignmentProperty, value); }
+            get => (HorizontalAlignment)this.GetValue(TitleHorizontalAlignmentProperty);
+            set => this.SetValue(TitleHorizontalAlignmentProperty, value);
         }
 
         /// <summary>
@@ -536,8 +464,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public VerticalAlignment TitleVerticalAlignment
         {
-            get { return (VerticalAlignment)this.GetValue(TitleVerticalAlignmentProperty); }
-            set { this.SetValue(TitleVerticalAlignmentProperty, value); }
+            get => (VerticalAlignment)this.GetValue(TitleVerticalAlignmentProperty);
+            set => this.SetValue(TitleVerticalAlignmentProperty, value);
         }
 
         /// <summary>
@@ -545,8 +473,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public DataTemplate TitleTemplate
         {
-            get { return (DataTemplate)this.GetValue(TitleTemplateProperty); }
-            set { this.SetValue(TitleTemplateProperty, value); }
+            get => (DataTemplate)this.GetValue(TitleTemplateProperty);
+            set => this.SetValue(TitleTemplateProperty, value);
         }
 
         /// <summary> 
@@ -555,8 +483,8 @@ namespace MahApps.Metro.SimpleChildWindow
         [TypeConverter(typeof(FontSizeConverter))]
         public double TitleFontSize
         {
-            get { return (double)this.GetValue(TitleFontSizeProperty); }
-            set { this.SetValue(TitleFontSizeProperty, value); }
+            get => (double)this.GetValue(TitleFontSizeProperty);
+            set => this.SetValue(TitleFontSizeProperty, value);
         }
 
         /// <summary> 
@@ -565,8 +493,8 @@ namespace MahApps.Metro.SimpleChildWindow
         [Bindable(true)]
         public FontFamily TitleFontFamily
         {
-            get { return (FontFamily)this.GetValue(TitleFontFamilyProperty); }
-            set { this.SetValue(TitleFontFamilyProperty, value); }
+            get => (FontFamily)this.GetValue(TitleFontFamilyProperty);
+            set => this.SetValue(TitleFontFamilyProperty, value);
         }
 
         /// <summary>
@@ -575,8 +503,8 @@ namespace MahApps.Metro.SimpleChildWindow
         [Bindable(true)]
         public object Icon
         {
-            get { return (object)this.GetValue(IconProperty); }
-            set { this.SetValue(IconProperty, value); }
+            get => this.GetValue(IconProperty);
+            set => this.SetValue(IconProperty, value);
         }
 
         /// <summary>
@@ -585,8 +513,8 @@ namespace MahApps.Metro.SimpleChildWindow
         [Bindable(true)]
         public DataTemplate IconTemplate
         {
-            get { return (DataTemplate)this.GetValue(IconTemplateProperty); }
-            set { this.SetValue(IconTemplateProperty, value); }
+            get => (DataTemplate)this.GetValue(IconTemplateProperty);
+            set => this.SetValue(IconTemplateProperty, value);
         }
 
         /// <summary>
@@ -594,8 +522,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public bool ShowCloseButton
         {
-            get { return (bool)this.GetValue(ShowCloseButtonProperty); }
-            set { this.SetValue(ShowCloseButtonProperty, value); }
+            get => (bool)this.GetValue(ShowCloseButtonProperty);
+            set => this.SetValue(ShowCloseButtonProperty, value);
         }
 
         /// <summary>
@@ -604,8 +532,8 @@ namespace MahApps.Metro.SimpleChildWindow
         [Bindable(true)]
         public Style CloseButtonStyle
         {
-            get { return (Style)this.GetValue(CloseButtonStyleProperty); }
-            set { this.SetValue(CloseButtonStyleProperty, value); }
+            get => (Style)this.GetValue(CloseButtonStyleProperty);
+            set => this.SetValue(CloseButtonStyleProperty, value);
         }
 
         /// <summary>
@@ -613,8 +541,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public ICommand CloseButtonCommand
         {
-            get { return (ICommand)this.GetValue(CloseButtonCommandProperty); }
-            set { this.SetValue(CloseButtonCommandProperty, value); }
+            get => (ICommand)this.GetValue(CloseButtonCommandProperty);
+            set => this.SetValue(CloseButtonCommandProperty, value);
         }
 
         /// <summary>
@@ -622,8 +550,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public object CloseButtonCommandParameter
         {
-            get { return (object)this.GetValue(CloseButtonCommandParameterProperty); }
-            set { this.SetValue(CloseButtonCommandParameterProperty, value); }
+            get => this.GetValue(CloseButtonCommandParameterProperty);
+            set => this.SetValue(CloseButtonCommandParameterProperty, value);
         }
 
         /// <summary>
@@ -631,11 +559,11 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public bool IsOpen
         {
-            get { return (bool)this.GetValue(IsOpenProperty); }
-            set { this.SetValue(IsOpenProperty, value); }
+            get => (bool)this.GetValue(IsOpenProperty);
+            set => this.SetValue(IsOpenProperty, value);
         }
 
-        private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void OnIsOpenChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             if (Equals(e.OldValue, e.NewValue))
             {
@@ -644,7 +572,8 @@ namespace MahApps.Metro.SimpleChildWindow
 
             var childWindow = (ChildWindow)dependencyObject;
 
-            Action openedChangedAction = () => {
+            void OpenChangedAction()
+            {
                 if ((bool)e.NewValue)
                 {
                     if (childWindow.hideStoryboard != null)
@@ -655,9 +584,9 @@ namespace MahApps.Metro.SimpleChildWindow
                     }
 
                     var parent = childWindow.Parent as Panel;
-                    Panel.SetZIndex(childWindow, parent != null ? parent.Children.Count + 1 : 99);
+                    Panel.SetZIndex(childWindow, parent?.Children.Count + 1 ?? 99);
 
-                    childWindow.TryFocusElement();
+                    childWindow.TryToSetFocusedElement();
 
                     if (childWindow.IsAutoCloseEnabled)
                     {
@@ -681,12 +610,12 @@ namespace MahApps.Metro.SimpleChildWindow
                 VisualStateManager.GoToState(childWindow, (bool)e.NewValue == false ? "Hide" : "Show", true);
 
                 childWindow.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent, childWindow));
-            };
+            }
 
-            childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Background, openedChangedAction);
+            childWindow.Dispatcher?.BeginInvoke(DispatcherPriority.Background, (Action)OpenChangedAction);
         }
 
-        private void TryFocusElement()
+        private void TryToSetFocusedElement()
         {
             if (this.AllowFocusElement && !DesignerProperties.GetIsInDesignMode(this))
             {
@@ -696,24 +625,22 @@ namespace MahApps.Metro.SimpleChildWindow
                 var elementToFocus = this.FocusedElement ?? MahApps.Metro.Controls.TreeHelper.FindChildren<UIElement>(this).FirstOrDefault(c => c.Focusable);
                 if (this.ShowCloseButton && this.closeButton != null && elementToFocus == null)
                 {
-                    this.closeButton.Focusable = true;
+                    this.closeButton.SetCurrentValue(FocusableProperty, true);
                     elementToFocus = this.closeButton;
                 }
 
                 if (elementToFocus != null)
                 {
-                    DependencyPropertyChangedEventHandler eh = null;
-                    eh = (sender, args) => {
-                        elementToFocus.IsVisibleChanged -= eh;
-                        if (elementToFocus.Focusable)
+                    void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
+                    {
+                        elementToFocus.IsVisibleChanged -= OnIsVisibleChanged;
+                        if (elementToFocus.Focusable && elementToFocus is HwndHost == false)
                         {
-                            if (elementToFocus is HwndHost == false)
-                            {
-                                elementToFocus.Focus();
-                            }
+                            elementToFocus.Focus();
                         }
-                    };
-                    elementToFocus.IsVisibleChanged += eh;
+                    }
+
+                    elementToFocus.IsVisibleChanged += OnIsVisibleChanged;
                 }
             }
         }
@@ -734,8 +661,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public double ChildWindowWidth
         {
-            get { return (double)this.GetValue(ChildWindowWidthProperty); }
-            set { this.SetValue(ChildWindowWidthProperty, value); }
+            get => (double)this.GetValue(ChildWindowWidthProperty);
+            set => this.SetValue(ChildWindowWidthProperty, value);
         }
 
         private static bool IsWidthHeightValid(object value)
@@ -749,8 +676,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public double ChildWindowHeight
         {
-            get { return (double)this.GetValue(ChildWindowHeightProperty); }
-            set { this.SetValue(ChildWindowHeightProperty, value); }
+            get => (double)this.GetValue(ChildWindowHeightProperty);
+            set => this.SetValue(ChildWindowHeightProperty, value);
         }
 
         /// <summary>
@@ -758,8 +685,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public MessageBoxImage ChildWindowImage
         {
-            get { return (MessageBoxImage)this.GetValue(ChildWindowImageProperty); }
-            set { this.SetValue(ChildWindowImageProperty, value); }
+            get => (MessageBoxImage)this.GetValue(ChildWindowImageProperty);
+            set => this.SetValue(ChildWindowImageProperty, value);
         }
 
         /// <summary>
@@ -767,8 +694,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public bool EnableDropShadow
         {
-            get { return (bool)this.GetValue(EnableDropShadowProperty); }
-            set { this.SetValue(EnableDropShadowProperty, value); }
+            get => (bool)this.GetValue(EnableDropShadowProperty);
+            set => this.SetValue(EnableDropShadowProperty, value);
         }
 
         /// <summary>
@@ -776,8 +703,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public bool AllowFocusElement
         {
-            get { return (bool)this.GetValue(AllowFocusElementProperty); }
-            set { this.SetValue(AllowFocusElementProperty, value); }
+            get => (bool)this.GetValue(AllowFocusElementProperty);
+            set => this.SetValue(AllowFocusElementProperty, value);
         }
 
         /// <summary>
@@ -785,8 +712,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public FrameworkElement FocusedElement
         {
-            get { return (FrameworkElement)this.GetValue(FocusedElementProperty); }
-            set { this.SetValue(FocusedElementProperty, value); }
+            get => (FrameworkElement)this.GetValue(FocusedElementProperty);
+            set => this.SetValue(FocusedElementProperty, value);
         }
 
         /// <summary>
@@ -794,8 +721,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public SolidColorBrush GlowBrush
         {
-            get { return (SolidColorBrush)this.GetValue(GlowBrushProperty); }
-            set { this.SetValue(GlowBrushProperty, value); }
+            get => (SolidColorBrush)this.GetValue(GlowBrushProperty);
+            set => this.SetValue(GlowBrushProperty, value);
         }
 
         /// <summary>
@@ -803,8 +730,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public SolidColorBrush NonActiveGlowBrush
         {
-            get { return (SolidColorBrush)this.GetValue(NonActiveGlowBrushProperty); }
-            set { this.SetValue(NonActiveGlowBrushProperty, value); }
+            get => (SolidColorBrush)this.GetValue(NonActiveGlowBrushProperty);
+            set => this.SetValue(NonActiveGlowBrushProperty, value);
         }
 
         /// <summary>
@@ -812,8 +739,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public bool IsAutoCloseEnabled
         {
-            get { return (bool)this.GetValue(IsAutoCloseEnabledProperty); }
-            set { this.SetValue(IsAutoCloseEnabledProperty, value); }
+            get => (bool)this.GetValue(IsAutoCloseEnabledProperty);
+            set => this.SetValue(IsAutoCloseEnabledProperty, value);
         }
 
         /// <summary>
@@ -821,8 +748,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public long AutoCloseInterval
         {
-            get { return (long)this.GetValue(AutoCloseIntervalProperty); }
-            set { this.SetValue(AutoCloseIntervalProperty, value); }
+            get => (long)this.GetValue(AutoCloseIntervalProperty);
+            set => this.SetValue(AutoCloseIntervalProperty, value);
         }
 
         /// <summary>
@@ -830,8 +757,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public bool IsWindowHostActive
         {
-            get { return (bool)this.GetValue(IsWindowHostActiveProperty); }
-            set { this.SetValue(IsWindowHostActiveProperty, value); }
+            get => (bool)this.GetValue(IsWindowHostActiveProperty);
+            set => this.SetValue(IsWindowHostActiveProperty, value);
         }
 
         /// <summary>
@@ -841,11 +768,12 @@ namespace MahApps.Metro.SimpleChildWindow
 
         DispatcherTimer autoCloseTimer;
 
-        private static void IsAutoCloseEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void OnIsAutoCloseEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var childWindow = (ChildWindow)dependencyObject;
 
-            Action autoCloseEnabledChangedAction = () => {
+            void AutoCloseEnabledChangedAction()
+            {
                 if (e.NewValue != e.OldValue)
                 {
                     if ((bool)e.NewValue)
@@ -860,16 +788,17 @@ namespace MahApps.Metro.SimpleChildWindow
                         childWindow.StopAutoCloseTimer();
                     }
                 }
-            };
+            }
 
-            childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseEnabledChangedAction);
+            childWindow.Dispatcher?.BeginInvoke(DispatcherPriority.Background, (Action)AutoCloseEnabledChangedAction);
         }
 
-        private static void AutoCloseIntervalChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void OnAutoCloseIntervalChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var childWindow = (ChildWindow)dependencyObject;
 
-            Action autoCloseIntervalChangedAction = () => {
+            void AutoCloseIntervalChangedAction()
+            {
                 if (e.NewValue != e.OldValue)
                 {
                     childWindow.InitializeAutoCloseTimer();
@@ -878,9 +807,9 @@ namespace MahApps.Metro.SimpleChildWindow
                         childWindow.StartAutoCloseTimer();
                     }
                 }
-            };
+            }
 
-            childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseIntervalChangedAction);
+            childWindow.Dispatcher?.BeginInvoke(DispatcherPriority.Background, (Action)AutoCloseIntervalChangedAction);
         }
 
         private void InitializeAutoCloseTimer()
@@ -907,7 +836,7 @@ namespace MahApps.Metro.SimpleChildWindow
         {
             // in case it is already running
             this.StopAutoCloseTimer();
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 this.autoCloseTimer.Start();
             }
@@ -942,7 +871,7 @@ namespace MahApps.Metro.SimpleChildWindow
         private Storyboard hideStoryboard;
         private IMetroThumb headerThumb;
         private Button closeButton;
-        private TranslateTransform moveTransform = new TranslateTransform();
+        private readonly TranslateTransform moveTransform = new TranslateTransform();
         private Grid partWindow;
         private Grid partOverlay;
         private ContentControl icon;
@@ -998,10 +927,7 @@ namespace MahApps.Metro.SimpleChildWindow
             }
 
             this.partWindow = this.Template.FindName(PART_Window, this) as Grid;
-            if (this.partWindow != null)
-            {
-                this.partWindow.RenderTransform = this.moveTransform;
-            }
+            partWindow?.SetCurrentValue(RenderTransformProperty, this.moveTransform);
 
             this.icon = this.Template.FindName(PART_Icon, this) as ContentControl;
 
@@ -1092,8 +1018,8 @@ namespace MahApps.Metro.SimpleChildWindow
 
             if (!Equals(changeX, this.moveTransform.X) || !Equals(changeY, this.moveTransform.Y))
             {
-                this.moveTransform.X = changeX;
-                this.moveTransform.Y = changeY;
+                this.moveTransform.SetCurrentValue(TranslateTransform.XProperty, changeX);
+                this.moveTransform.SetCurrentValue(TranslateTransform.YProperty, changeY);
                 this.InvalidateArrange();
             }
         }
@@ -1135,7 +1061,7 @@ namespace MahApps.Metro.SimpleChildWindow
                 }
 
                 this.ChildWindowResult = childWindowResult;
-                this.IsOpen = false;
+                this.SetCurrentValue(IsOpenProperty, false);
                 return true;
             }
             else
