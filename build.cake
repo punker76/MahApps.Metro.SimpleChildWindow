@@ -33,6 +33,12 @@ if (isLocal == false || verbosity == Verbosity.Verbose)
 }
 GitVersion gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.Json });
 
+var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
+var branchName = gitVersion.BranchName;
+var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("dev", branchName);
+var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", branchName);
+var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
+
 var latestInstallationPath = VSWhereLatest(new VSWhereLatestSettings { IncludePrerelease = true });
 var msBuildPath = latestInstallationPath.Combine("./MSBuild/Current/Bin");
 var msBuildPathExe = msBuildPath.CombineWithFilePath("./MSBuild.exe");
@@ -41,12 +47,6 @@ if (FileExists(msBuildPathExe) == false)
 {
     throw new NotImplementedException("You need at least Visual Studio 2019 to build this project.");
 }
-
-var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
-var branchName = gitVersion.BranchName;
-var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("dev", branchName);
-var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", branchName);
-var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
 
 // Directories and Paths
 var solution = "./src/MahApps.Metro.SimpleChildWindow.sln";
@@ -58,8 +58,6 @@ var publishDir = "./Publish";
 
 Setup(ctx =>
 {
-    // Executed BEFORE the first task.
-
     if (!IsRunningOnWindows())
     {
         throw new NotImplementedException($"{repoName} will only build on Windows because it's not possible to target WPF and Windows Forms from UNIX.");
@@ -80,7 +78,6 @@ Setup(ctx =>
 
 Teardown(ctx =>
 {
-   // Executed AFTER the last task.
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -100,13 +97,7 @@ Task("Clean")
 Task("Restore")
     .Does(() =>
 {
-    var msBuildSettings = new MSBuildSettings {
-        Verbosity = verbosity
-        , ToolPath = msBuildPathExe
-        , Configuration = configuration
-        , ArgumentCustomization = args => args.Append("/m")
-        };
-    MSBuild(solution, msBuildSettings.WithTarget("restore"));
+    NuGetRestore(solution, new NuGetRestoreSettings { MSBuildPath = msBuildPath.ToString() });
 });
 
 Task("Build")
@@ -116,10 +107,9 @@ Task("Build")
         Verbosity = verbosity
         , ToolPath = msBuildPathExe
         , Configuration = configuration
-        , ArgumentCustomization = args => args.Append("/m")
+        , ArgumentCustomization = args => args.Append("/m").Append("/nr:false") // The /nr switch tells msbuild to quite once it’s done
         , BinaryLogger = new MSBuildBinaryLogSettings() { Enabled = isLocal }
-        };
-
+    };
     MSBuild(solution, msBuildSettings
             .SetMaxCpuCount(0)
             .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
