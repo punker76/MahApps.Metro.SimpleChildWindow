@@ -2,6 +2,7 @@
 using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow.Demo.Properties;
 
 namespace MahApps.Metro.SimpleChildWindow.Demo
 {
@@ -50,12 +51,14 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
 
 		private async void MovingTest_OnClick(object sender, RoutedEventArgs e)
         {
-            var childWindow = new CoolChildWindow() {IsModal = true, AllowMove = true, VerticalContentAlignment = VerticalAlignment.Bottom};
+            var childWindow = new CoolChildWindow() {IsModal = true, AllowMove = true, VerticalContentAlignment = VerticalAlignment.Top, HorizontalContentAlignment = HorizontalAlignment.Left};
             var result = await this.ShowChildWindowAsync<CloseReason>(childWindow, RootGrid);
             if (result == CloseReason.Cancel)
             {
                 await this.ShowMessageAsync("ChildWindow Result", "The dialog was canceled.");
             }
+
+            Settings.Default.Save();
         }
 	}
 }

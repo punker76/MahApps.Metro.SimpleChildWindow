@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -45,6 +45,23 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(default(bool)));
+
+
+        /// <summary>Identifies the <see cref="OffsetX"/> dependency property.</summary>
+        public static readonly DependencyProperty OffsetXProperty 
+            = DependencyProperty.Register(nameof(OffsetX), 
+                                          typeof(double), 
+                                          typeof(ChildWindow), 
+                                          new UIPropertyMetadata(0d, OnOffsetXChanged));
+
+
+        /// <summary>Identifies the <see cref="OffsetY"/> dependency property.</summary>
+        public static readonly DependencyProperty OffsetYProperty 
+            = DependencyProperty.Register(nameof(OffsetY), 
+                                          typeof(double), 
+                                          typeof(ChildWindow), 
+                                          new UIPropertyMetadata(0d, OnOffsetYChanged));
+
 
         /// <summary>Identifies the <see cref="IsModal"/> dependency property.</summary>
         public static readonly DependencyProperty IsModalProperty
@@ -340,6 +357,40 @@ namespace MahApps.Metro.SimpleChildWindow
         {
             get => (bool)this.GetValue(AllowMoveProperty);
             set => this.SetValue(AllowMoveProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or Sets the current X-Position of the ChildWindow.
+        /// </summary>
+        public double OffsetX
+        {
+            get { return (double)GetValue(OffsetXProperty); }
+            set { SetValue(OffsetXProperty, value); }
+        }
+
+        private static void OnOffsetXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ChildWindow childWindow)
+            {
+                childWindow.moveTransform.SetCurrentValue(TranslateTransform.XProperty, e.NewValue);
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the current Y-Position of the ChildWindow.
+        /// </summary>
+        public double OffsetY
+        {
+            get { return (double)GetValue(OffsetYProperty); }
+            set { SetValue(OffsetYProperty, value); }
+        }
+
+        private static void OnOffsetYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ChildWindow childWindow)
+            {
+                childWindow.moveTransform.SetCurrentValue(TranslateTransform.YProperty, e.NewValue);
+            }
         }
 
         /// <summary>
@@ -1030,8 +1081,9 @@ namespace MahApps.Metro.SimpleChildWindow
 
             if (!Equals(changeX, this.moveTransform.X) || !Equals(changeY, this.moveTransform.Y))
             {
-                this.moveTransform.SetCurrentValue(TranslateTransform.XProperty, changeX);
-                this.moveTransform.SetCurrentValue(TranslateTransform.YProperty, changeY);
+                this.SetCurrentValue(OffsetXProperty, changeX);
+                this.SetCurrentValue(OffsetYProperty, changeY);
+
                 this.InvalidateArrange();
             }
         }
