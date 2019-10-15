@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -923,12 +923,14 @@ namespace MahApps.Metro.SimpleChildWindow
             if (this.partOverlay != null)
             {
                 this.partOverlay.MouseLeftButtonDown -= this.PartOverlayOnClose;
+                this.partOverlay.SizeChanged -= PartOverlay_SizeChanged;
             }
 
             this.partOverlay = this.Template.FindName(PART_Overlay, this) as Grid;
             if (this.partOverlay != null)
             {
                 this.partOverlay.MouseLeftButtonDown += this.PartOverlayOnClose;
+                this.partOverlay.SizeChanged += PartOverlay_SizeChanged;
             }
 
             this.partWindow = this.Template.FindName(PART_Window, this) as Grid;
@@ -965,6 +967,11 @@ namespace MahApps.Metro.SimpleChildWindow
             {
                 this.Close(CloseReason.Overlay);
             }
+        }
+
+        private void PartOverlay_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            this.ProcessMove(0, 0);
         }
 
         private void HeaderThumbDragDelta(object sender, DragDeltaEventArgs e)
