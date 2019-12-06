@@ -1,17 +1,25 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+    <ItemGroup>
+      <None Include="..\..\MahApps.Metro.SimpleChildWindow.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+
     <!-- NuGet -->
     <PropertyGroup>
         <Authors>Jan Karger</Authors>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow</PackageProjectUrl>
-        <PackageIconUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow/raw/dev/MahApps.Metro.SimpleChildWindow.png</PackageIconUrl>
+        <PackageIcon>MahApps.Metro.SimpleChildWindow.png</PackageIcon>
         <PackageTags>WPF;UI;Metro;Modern;Material;XAML;Toolkit;Library;.NET;OSS;OpenSource</PackageTags>
         <PackageReleaseNotes>https://github.com/punker76/MahApps.Metro.SimpleChildWindow/releases</PackageReleaseNotes>
         <RepositoryUrl>https://github.com/punker76/MahApps.Metro.SimpleChildWindow.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <GenerateLibraryLayout>true</GenerateLibraryLayout>
     </PropertyGroup>
+
     <!-- Sign assembly -->
     <PropertyGroup>
         <SignAssembly>True</SignAssembly>

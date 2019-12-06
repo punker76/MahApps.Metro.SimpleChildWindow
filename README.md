@@ -6,6 +6,9 @@
   <p>
     A simple child window for <a href="https://github.com/MahApps/MahApps.Metro">MahApps.Metro</a>.
   </p>
+  <p>
+    Supporting .NET Framework (4.5+) and .NET Core (3.0 and 3.1)
+  </p>
   <a href="https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow">
     <img src="https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square">
   </a>
@@ -64,9 +67,9 @@ The [NuGet](https://www.nuget.org/packages/MahApps.Metro.SimpleChildWindow) pack
 MahApps use these awesome tools to develop, build and deploy MahApps.Metro.SimpleChildWindow.
 
 <div>
-  <a href="https://fsprojects.github.io/Paket/">
+  <!-- <a href="https://fsprojects.github.io/Paket/">
     <img alt="Paket" width="128" heigth="128"vspace="20" hspace="20" src="./docs/paket_logo.png">
-  </a>
+  </a> -->
   <a href="https://cakebuild.net/">
     <img alt="cakebuild.net" width="128" heigth="128" vspace="20" hspace="20" src="./docs/cake-medium.png">
   </a>

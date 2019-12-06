@@ -257,3 +257,6 @@ paket-files/
 *.sln.iml
 
 [tT]ools/
+
+# XamlStyler
+!XamlStyler/
