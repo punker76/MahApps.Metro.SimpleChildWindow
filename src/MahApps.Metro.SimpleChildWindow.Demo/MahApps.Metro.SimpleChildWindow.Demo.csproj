@@ -16,7 +16,7 @@
         <ProjectReference Include="..\MahApps.Metro.SimpleChildWindow\MahApps.Metro.SimpleChildWindow.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="MahApps.Metro.IconPacks" Version="3.3.0" />
+        <PackageReference Include="MahApps.Metro.IconPacks" Version="3.*" />
         <PackageReference Include="Fody" Version="6.*">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,10 +26,8 @@
     <ItemGroup>
         <None Include="app.manifest" />
         <None Remove="App.config" />
-    </ItemGroup>
-    <ItemGroup Condition=" !$(TargetFramework.StartsWith('netcore')) ">
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
-            <TargetPath>$(AssemblyName).config</TargetPath>
+            <TargetPath>$(AssemblyName).exe.config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
     <ItemGroup>

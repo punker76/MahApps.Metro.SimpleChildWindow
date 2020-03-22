@@ -14,7 +14,7 @@
     <mahConverters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.ChildWindow.Overlay" Opacity="0.7" Color="{DynamicResource MahApps.Colors.Black}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ChildWindow.Overlay" Opacity="0.7" Color="{DynamicResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
 
     <Style x:Key="MahApps.Styles.ChildWindow.FocusVisualStyle">
         <Setter Property="Control.Template">
@@ -261,7 +261,7 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Styles.ChildWindow" TargetType="{x:Type scw:ChildWindow}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="CloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -272,8 +272,8 @@
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.ChildWindow}" />
         <Setter Property="TitleBarBackground" Value="{DynamicResource MahApps.Brushes.WindowTitle}" />
         <Setter Property="TitleBarNonActiveBackground" Value="{DynamicResource MahApps.Brushes.WindowTitle.NonActive}" />
-        <Setter Property="TitleFontFamily" Value="{DynamicResource MahApps.Fonts.Header}" />
-        <Setter Property="TitleFontSize" Value="{DynamicResource MahApps.Sizes.Font.WindowTitle}" />
+        <Setter Property="TitleFontFamily" Value="{DynamicResource MahApps.Fonts.Family.Header}" />
+        <Setter Property="TitleFontSize" Value="{DynamicResource MahApps.Font.Size.Window.Title}" />
         <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="TitleTemplate">
             <Setter.Value>
