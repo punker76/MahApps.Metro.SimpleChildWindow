@@ -116,6 +116,7 @@ Task("Build")
             .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
             .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
             .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
+            .WithProperty("ContinuousIntegrationBuild", isReleaseBranch || isLocal ? "true" : "false")
             );
 });
 
