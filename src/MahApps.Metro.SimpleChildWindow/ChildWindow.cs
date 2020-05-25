@@ -46,22 +46,19 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new PropertyMetadata(default(bool)));
 
-
         /// <summary>Identifies the <see cref="OffsetX"/> dependency property.</summary>
-        public static readonly DependencyProperty OffsetXProperty 
-            = DependencyProperty.Register(nameof(OffsetX), 
-                                          typeof(double), 
-                                          typeof(ChildWindow), 
+        public static readonly DependencyProperty OffsetXProperty
+            = DependencyProperty.Register(nameof(OffsetX),
+                                          typeof(double),
+                                          typeof(ChildWindow),
                                           new UIPropertyMetadata(0d, OnOffsetXChanged));
 
-
         /// <summary>Identifies the <see cref="OffsetY"/> dependency property.</summary>
-        public static readonly DependencyProperty OffsetYProperty 
-            = DependencyProperty.Register(nameof(OffsetY), 
-                                          typeof(double), 
-                                          typeof(ChildWindow), 
+        public static readonly DependencyProperty OffsetYProperty
+            = DependencyProperty.Register(nameof(OffsetY),
+                                          typeof(double),
+                                          typeof(ChildWindow),
                                           new UIPropertyMetadata(0d, OnOffsetYChanged));
-
 
         /// <summary>Identifies the <see cref="IsModal"/> dependency property.</summary>
         public static readonly DependencyProperty IsModalProperty
@@ -364,8 +361,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public double OffsetX
         {
-            get { return (double)GetValue(OffsetXProperty); }
-            set { SetValue(OffsetXProperty, value); }
+            get => (double)this.GetValue(OffsetXProperty);
+            set => this.SetValue(OffsetXProperty, value);
         }
 
         private static void OnOffsetXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -381,8 +378,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </summary>
         public double OffsetY
         {
-            get { return (double)GetValue(OffsetYProperty); }
-            set { SetValue(OffsetYProperty, value); }
+            get => (double)this.GetValue(OffsetYProperty);
+            set => this.SetValue(OffsetYProperty, value);
         }
 
         private static void OnOffsetYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -673,7 +670,7 @@ namespace MahApps.Metro.SimpleChildWindow
                 // first focus itself
                 this.Focus();
 
-                var elementToFocus = this.FocusedElement ?? MahApps.Metro.Controls.TreeHelper.FindChildren<UIElement>(this).FirstOrDefault(c => c.Focusable);
+                var elementToFocus = this.FocusedElement ?? TreeHelper.FindChildren<UIElement>(this).FirstOrDefault(c => c.Focusable);
                 if (this.ShowCloseButton && this.closeButton != null && elementToFocus == null)
                 {
                     this.closeButton.SetCurrentValue(FocusableProperty, true);
@@ -953,13 +950,14 @@ namespace MahApps.Metro.SimpleChildWindow
                 return;
             }
 
-            var isActiveBindingAction = new Action(() => {
-                var window = Window.GetWindow(this);
-                if (window != null)
+            var isActiveBindingAction = new Action(() =>
                 {
-                    this.SetBinding(ChildWindow.IsWindowHostActiveProperty, new Binding(nameof(Window.IsActive)) {Source = window, Mode = BindingMode.OneWay});
-                }
-            });
+                    var window = Window.GetWindow(this);
+                    if (window != null)
+                    {
+                        this.SetBinding(IsWindowHostActiveProperty, new Binding(nameof(Window.IsActive)) { Source = window, Mode = BindingMode.OneWay });
+                    }
+                });
             if (!this.IsLoaded)
             {
                 this.BeginInvoke(isActiveBindingAction, DispatcherPriority.Loaded);
@@ -974,18 +972,18 @@ namespace MahApps.Metro.SimpleChildWindow
             if (this.partOverlay != null)
             {
                 this.partOverlay.MouseLeftButtonDown -= this.PartOverlayOnClose;
-                this.partOverlay.SizeChanged -= PartOverlay_SizeChanged;
+                this.partOverlay.SizeChanged -= this.PartOverlay_SizeChanged;
             }
 
             this.partOverlay = this.Template.FindName(PART_Overlay, this) as Grid;
             if (this.partOverlay != null)
             {
                 this.partOverlay.MouseLeftButtonDown += this.PartOverlayOnClose;
-                this.partOverlay.SizeChanged += PartOverlay_SizeChanged;
+                this.partOverlay.SizeChanged += this.PartOverlay_SizeChanged;
             }
 
             this.partWindow = this.Template.FindName(PART_Window, this) as Grid;
-            partWindow?.SetCurrentValue(RenderTransformProperty, this.moveTransform);
+            this.partWindow?.SetCurrentValue(RenderTransformProperty, this.moveTransform);
 
             this.icon = this.Template.FindName(PART_Icon, this) as ContentControl;
 
@@ -1167,13 +1165,13 @@ namespace MahApps.Metro.SimpleChildWindow
 #pragma warning disable 618
         private string GetCaption(int id)
         {
-            if (user32 == null)
+            if (this.user32 == null)
             {
-                user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
+                this.user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
             }
 
             var sb = new StringBuilder(256);
-            UnsafeNativeMethods.LoadString(user32, (uint)id, sb, sb.Capacity);
+            UnsafeNativeMethods.LoadString(this.user32, (uint)id, sb, sb.Capacity);
             return sb.ToString().Replace("&", "");
         }
 #pragma warning restore 618

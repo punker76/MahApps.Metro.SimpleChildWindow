@@ -7,140 +7,145 @@ using System.Windows.Input;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
-	/// <summary>
-	/// A static class to show ChildWindow's
-	/// </summary>
-	public static class ChildWindowManager
-	{
-		/// <summary>
-		/// An enumeration to control the fill behavior of the behavior
-		/// </summary>
-		public enum OverlayFillBehavior
-		{
-			/// <summary>
-			/// The overlay covers the full window
-			/// </summary>
-			FullWindow,
+    /// <summary>
+    /// A static class to show ChildWindow's
+    /// </summary>
+    public static class ChildWindowManager
+    {
+        /// <summary>
+        /// An enumeration to control the fill behavior of the behavior
+        /// </summary>
+        public enum OverlayFillBehavior
+        {
+            /// <summary>
+            /// The overlay covers the full window
+            /// </summary>
+            FullWindow,
 
-			/// <summary>
-			/// The overlay covers only then window content, so the window title bar is useable
-			/// </summary>
-			WindowContent
-		}
+            /// <summary>
+            /// The overlay covers only then window content, so the window title bar is useable
+            /// </summary>
+            WindowContent
+        }
 
-		/// <summary>
-		/// Shows the given child window on the MetroWindow dialog container in an asynchronous way.
-		/// </summary>
-		/// <param name="window">The owning window with a container of the child window.</param>
-		/// <param name="dialog">A child window instance.</param>
-		/// <param name="overlayFillBehavior">The overlay fill behavior.</param>
-		/// <returns>
-		/// A task representing the operation.
-		/// </returns>
-		/// <exception cref="System.InvalidOperationException">
-		/// The provided child window can not add, the container can not be found.
-		/// or
-		/// The provided child window is already visible in the specified window.
-		/// </exception>
-		public static Task ShowChildWindowAsync(this Window window, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
-		{
-			return window.ShowChildWindowAsync<object>(dialog, overlayFillBehavior);
-		}
+        /// <summary>
+        /// Shows the given child window on the MetroWindow dialog container in an asynchronous way.
+        /// </summary>
+        /// <param name="window">The owning window with a container of the child window.</param>
+        /// <param name="dialog">A child window instance.</param>
+        /// <param name="overlayFillBehavior">The overlay fill behavior.</param>
+        /// <returns>
+        /// A task representing the operation.
+        /// </returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// The provided child window can not add, the container can not be found.
+        /// or
+        /// The provided child window is already visible in the specified window.
+        /// </exception>
+        public static Task ShowChildWindowAsync(this Window window, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
+        {
+            return window.ShowChildWindowAsync<object>(dialog, overlayFillBehavior);
+        }
 
-		/// <summary>
-		/// Shows the given child window on the MetroWindow dialog container in an asynchronous way.
-		/// When the dialog was closed it returns a result.
-		/// </summary>
-		/// <param name="window">The owning window with a container of the child window.</param>
-		/// <param name="dialog">A child window instance.</param>
-		/// <param name="overlayFillBehavior">The overlay fill behavior.</param>
-		/// <returns>
-		/// A task representing the operation.
-		/// </returns>
-		/// <exception cref="System.InvalidOperationException">
-		/// The provided child window can not add, the container can not be found.
-		/// or
-		/// The provided child window is already visible in the specified window.
-		/// </exception>
-		public static Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
-		{
-			window.Dispatcher.VerifyAccess();
-			var metroDialogContainer = window.Template.FindName("PART_MetroActiveDialogContainer", window) as Grid;
-			metroDialogContainer = metroDialogContainer ?? window.Template.FindName("PART_MetroInactiveDialogsContainer", window) as Grid;
-			if (metroDialogContainer == null)
-			{
-				throw new InvalidOperationException("The provided child window can not add, there is no container defined.");
-			}
-			if (metroDialogContainer.Children.Contains(dialog))
-			{
-				throw new InvalidOperationException("The provided child window is already visible in the specified window.");
-			}
-			if (overlayFillBehavior == OverlayFillBehavior.WindowContent)
-			{
-				metroDialogContainer.SetCurrentValue(Grid.RowProperty, (int)metroDialogContainer.GetValue(Grid.RowProperty) + 1);
-				metroDialogContainer.SetCurrentValue(Grid.RowSpanProperty, 1);
-			}
-			return ShowChildWindowInternalAsync<TResult>(dialog, metroDialogContainer);
-		}
+        /// <summary>
+        /// Shows the given child window on the MetroWindow dialog container in an asynchronous way.
+        /// When the dialog was closed it returns a result.
+        /// </summary>
+        /// <param name="window">The owning window with a container of the child window.</param>
+        /// <param name="dialog">A child window instance.</param>
+        /// <param name="overlayFillBehavior">The overlay fill behavior.</param>
+        /// <returns>
+        /// A task representing the operation.
+        /// </returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// The provided child window can not add, the container can not be found.
+        /// or
+        /// The provided child window is already visible in the specified window.
+        /// </exception>
+        public static Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
+        {
+            window.Dispatcher.VerifyAccess();
+            var metroDialogContainer = window.Template.FindName("PART_MetroActiveDialogContainer", window) as Grid;
+            metroDialogContainer = metroDialogContainer ?? window.Template.FindName("PART_MetroInactiveDialogsContainer", window) as Grid;
+            if (metroDialogContainer == null)
+            {
+                throw new InvalidOperationException("The provided child window can not add, there is no container defined.");
+            }
 
-		/// <summary>
-		/// Shows the given child window on the given container in an asynchronous way.
-		/// When the dialog was closed it returns a result.
-		/// </summary>
-		/// <param name="window">The owning window with a container of the child window.</param>
-		/// <param name="dialog">A child window instance.</param>
-		/// <param name="container">The container.</param>
-		/// <returns></returns>
-		/// <exception cref="System.InvalidOperationException">
-		/// The provided child window can not add, there is no container defined.
-		/// or
-		/// The provided child window is already visible in the specified window.
-		/// </exception>
-		public static Task ShowChildWindowAsync(this Window window, ChildWindow dialog, Panel container)
-		{
-			return window.ShowChildWindowAsync<object>(dialog, container);
-		}
+            if (metroDialogContainer.Children.Contains(dialog))
+            {
+                throw new InvalidOperationException("The provided child window is already visible in the specified window.");
+            }
 
-		/// <summary>
-		/// Shows the given child window on the given container in an asynchronous way.
-		/// </summary>
-		/// <param name="window">The owning window with a container of the child window.</param>
-		/// <param name="dialog">A child window instance.</param>
-		/// <param name="container">The container.</param>
-		/// <returns></returns>
-		/// <exception cref="System.InvalidOperationException">
-		/// The provided child window can not add, there is no container defined.
-		/// or
-		/// The provided child window is already visible in the specified window.
-		/// </exception>
-		public static Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, Panel container)
-		{
-			window.Dispatcher.VerifyAccess();
-			if (container == null)
-			{
-				throw new InvalidOperationException("The provided child window can not add, there is no container defined.");
-			}
-			if (container.Children.Contains(dialog))
-			{
-				throw new InvalidOperationException("The provided child window is already visible in the specified window.");
-			}
-			return ShowChildWindowInternalAsync<TResult>(dialog, container);
-		}
+            if (overlayFillBehavior == OverlayFillBehavior.WindowContent)
+            {
+                metroDialogContainer.SetCurrentValue(Grid.RowProperty, (int)metroDialogContainer.GetValue(Grid.RowProperty) + 1);
+                metroDialogContainer.SetCurrentValue(Grid.RowSpanProperty, 1);
+            }
 
-		private static Task<TResult> ShowChildWindowInternalAsync<TResult>(ChildWindow dialog, Panel container)
-		{
-			return AddDialogToContainerAsync(dialog, container)
-				.ContinueWith(task => { return (Task<TResult>) dialog.Dispatcher.Invoke(new Func<Task<TResult>>(() => OpenDialogAsync<TResult>(dialog, container))); })
-				.Unwrap();
-		}
+            return ShowChildWindowInternalAsync<TResult>(dialog, metroDialogContainer);
+        }
 
-		private static Task AddDialogToContainerAsync(ChildWindow dialog, Panel container)
-		{
-			return Task.Factory.StartNew(() => dialog.Dispatcher.Invoke(new Action(() => container.Children.Add(dialog))));
-		}
+        /// <summary>
+        /// Shows the given child window on the given container in an asynchronous way.
+        /// When the dialog was closed it returns a result.
+        /// </summary>
+        /// <param name="window">The owning window with a container of the child window.</param>
+        /// <param name="dialog">A child window instance.</param>
+        /// <param name="container">The container.</param>
+        /// <returns></returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// The provided child window can not add, there is no container defined.
+        /// or
+        /// The provided child window is already visible in the specified window.
+        /// </exception>
+        public static Task ShowChildWindowAsync(this Window window, ChildWindow dialog, Panel container)
+        {
+            return window.ShowChildWindowAsync<object>(dialog, container);
+        }
 
-		private static Task<TResult> OpenDialogAsync<TResult>(ChildWindow dialog, Panel container)
-		{
+        /// <summary>
+        /// Shows the given child window on the given container in an asynchronous way.
+        /// </summary>
+        /// <param name="window">The owning window with a container of the child window.</param>
+        /// <param name="dialog">A child window instance.</param>
+        /// <param name="container">The container.</param>
+        /// <returns></returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// The provided child window can not add, there is no container defined.
+        /// or
+        /// The provided child window is already visible in the specified window.
+        /// </exception>
+        public static Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, Panel container)
+        {
+            window.Dispatcher.VerifyAccess();
+            if (container == null)
+            {
+                throw new InvalidOperationException("The provided child window can not add, there is no container defined.");
+            }
+
+            if (container.Children.Contains(dialog))
+            {
+                throw new InvalidOperationException("The provided child window is already visible in the specified window.");
+            }
+
+            return ShowChildWindowInternalAsync<TResult>(dialog, container);
+        }
+
+        private static Task<TResult> ShowChildWindowInternalAsync<TResult>(ChildWindow dialog, Panel container)
+        {
+            return AddDialogToContainerAsync(dialog, container)
+                   .ContinueWith(task => { return (Task<TResult>)dialog.Dispatcher.Invoke(new Func<Task<TResult>>(() => OpenDialogAsync<TResult>(dialog, container))); })
+                   .Unwrap();
+        }
+
+        private static Task AddDialogToContainerAsync(ChildWindow dialog, Panel container)
+        {
+            return Task.Factory.StartNew(() => dialog.Dispatcher.Invoke(new Action(() => container.Children.Add(dialog))));
+        }
+
+        private static Task<TResult> OpenDialogAsync<TResult>(ChildWindow dialog, Panel container)
+        {
             void OnDialogPreviewMouseDown(object sender, MouseButtonEventArgs args)
             {
                 var elementOnTop = container.Children.OfType<UIElement>().OrderBy(c => c.GetValue(Panel.ZIndexProperty)).LastOrDefault();
@@ -154,7 +159,7 @@ namespace MahApps.Metro.SimpleChildWindow
 
             dialog.PreviewMouseDown += OnDialogPreviewMouseDown;
 
-			var tcs = new TaskCompletionSource<TResult>();
+            var tcs = new TaskCompletionSource<TResult>();
 
             void OnDialogClosingFinished(object sender, RoutedEventArgs args)
             {
@@ -166,9 +171,9 @@ namespace MahApps.Metro.SimpleChildWindow
 
             dialog.ClosingFinished += OnDialogClosingFinished;
 
-			dialog.SetCurrentValue(ChildWindow.IsOpenProperty, true);
+            dialog.SetCurrentValue(ChildWindow.IsOpenProperty, true);
 
-			return tcs.Task;
-		}
-	}
+            return tcs.Task;
+        }
+    }
 }
