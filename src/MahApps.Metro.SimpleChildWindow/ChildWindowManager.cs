@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
@@ -62,9 +60,10 @@ namespace MahApps.Metro.SimpleChildWindow
         /// or
         /// The provided child window is already visible in the specified window.
         /// </exception>
-        public static Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
+        public static async Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
         {
             window.Dispatcher.VerifyAccess();
+
             var metroDialogContainer = window.Template.FindName("PART_MetroActiveDialogContainer", window) as Grid;
             metroDialogContainer = metroDialogContainer ?? window.Template.FindName("PART_MetroInactiveDialogsContainer", window) as Grid;
             if (metroDialogContainer == null)
@@ -83,7 +82,7 @@ namespace MahApps.Metro.SimpleChildWindow
                 metroDialogContainer.SetCurrentValue(Grid.RowSpanProperty, 1);
             }
 
-            return ShowChildWindowInternalAsync<TResult>(dialog, metroDialogContainer);
+            return await ShowChildWindowInternalAsync<TResult>(dialog, metroDialogContainer);
         }
 
         /// <summary>
@@ -116,9 +115,10 @@ namespace MahApps.Metro.SimpleChildWindow
         /// or
         /// The provided child window is already visible in the specified window.
         /// </exception>
-        public static Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, Panel container)
+        public static async Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, Panel container)
         {
             window.Dispatcher.VerifyAccess();
+
             if (container == null)
             {
                 throw new InvalidOperationException("The provided child window can not add, there is no container defined.");
@@ -129,42 +129,23 @@ namespace MahApps.Metro.SimpleChildWindow
                 throw new InvalidOperationException("The provided child window is already visible in the specified window.");
             }
 
-            return ShowChildWindowInternalAsync<TResult>(dialog, container);
+            return await ShowChildWindowInternalAsync<TResult>(dialog, container);
         }
 
-        private static Task<TResult> ShowChildWindowInternalAsync<TResult>(ChildWindow dialog, Panel container)
+        private static async Task<TResult> ShowChildWindowInternalAsync<TResult>(ChildWindow dialog, Panel container)
         {
-            return AddDialogToContainerAsync(dialog, container)
-                   .ContinueWith(task => { return (Task<TResult>)dialog.Dispatcher.Invoke(new Func<Task<TResult>>(() => OpenDialogAsync<TResult>(dialog, container))); })
-                   .Unwrap();
+            container.Children.Add(dialog);
+
+            return await OpenDialogAsync<TResult>(dialog, container);
         }
 
-        private static Task AddDialogToContainerAsync(ChildWindow dialog, Panel container)
+        private static async Task<TResult> OpenDialogAsync<TResult>(ChildWindow dialog, Panel container)
         {
-            return Task.Factory.StartNew(() => dialog.Dispatcher.Invoke(new Action(() => container.Children.Add(dialog))));
-        }
-
-        private static Task<TResult> OpenDialogAsync<TResult>(ChildWindow dialog, Panel container)
-        {
-            void OnDialogPreviewMouseDown(object sender, MouseButtonEventArgs args)
-            {
-                var elementOnTop = container.Children.OfType<UIElement>().OrderBy(c => c.GetValue(Panel.ZIndexProperty)).LastOrDefault();
-                if (elementOnTop != null && !Equals(elementOnTop, dialog))
-                {
-                    var zIndex = (int)elementOnTop.GetValue(Panel.ZIndexProperty);
-                    elementOnTop.SetCurrentValue(Panel.ZIndexProperty, zIndex - 1);
-                    dialog.SetCurrentValue(Panel.ZIndexProperty, zIndex);
-                }
-            }
-
-            dialog.PreviewMouseDown += OnDialogPreviewMouseDown;
-
             var tcs = new TaskCompletionSource<TResult>();
 
             void OnDialogClosingFinished(object sender, RoutedEventArgs args)
             {
                 dialog.ClosingFinished -= OnDialogClosingFinished;
-                dialog.PreviewMouseDown -= OnDialogPreviewMouseDown;
                 container.Children.Remove(dialog);
                 tcs.TrySetResult(dialog.ChildWindowResult is TResult result ? result : (dialog.ClosedBy is TResult closedBy ? closedBy : default));
             }
@@ -173,7 +154,7 @@ namespace MahApps.Metro.SimpleChildWindow
 
             dialog.SetCurrentValue(ChildWindow.IsOpenProperty, true);
 
-            return tcs.Task;
+            return await tcs.Task;
         }
     }
 }
