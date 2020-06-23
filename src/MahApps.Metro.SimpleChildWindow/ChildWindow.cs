@@ -611,6 +611,23 @@ namespace MahApps.Metro.SimpleChildWindow
             set => this.SetValue(IsOpenProperty, value);
         }
 
+        protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseDown(e);
+
+            if (!e.Handled)
+            {
+                var container = this.Parent as Panel;
+                var elementOnTop = container?.Children.OfType<UIElement>().OrderBy(c => c.GetValue(Panel.ZIndexProperty)).LastOrDefault();
+                if (elementOnTop != null && !Equals(elementOnTop, this))
+                {
+                    var zIndexOnTop = (int)elementOnTop.GetValue(Panel.ZIndexProperty);
+                    elementOnTop.SetCurrentValue(Panel.ZIndexProperty, zIndexOnTop - 1);
+                    this.SetCurrentValue(Panel.ZIndexProperty, zIndexOnTop);
+                }
+            }
+        }
+
         private static void OnIsOpenChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             if (Equals(e.OldValue, e.NewValue))
@@ -632,7 +649,8 @@ namespace MahApps.Metro.SimpleChildWindow
                     }
 
                     var parent = childWindow.Parent as Panel;
-                    Panel.SetZIndex(childWindow, parent?.Children.Count + 1 ?? 99);
+                    // Panel.SetZIndex(childWindow, parent?.Children.Count + 1 ?? 99);
+                    Panel.SetZIndex(childWindow, parent?.Children.Count ?? 99);
 
                     childWindow.TryToSetFocusedElement();
 
