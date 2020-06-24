@@ -18,12 +18,12 @@
         <ProjectReference Include="..\MahApps.Metro.SimpleChildWindow\MahApps.Metro.SimpleChildWindow.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="MahApps.Metro.IconPacks" Version="4.*" />
-        <PackageReference Include="Fody" Version="6.*">
+        <PackageReference Include="MahApps.Metro.IconPacks" />
+        <PackageReference Include="Fody">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Costura.Fody" Version="4.*" />
+        <PackageReference Include="Costura.Fody" PrivateAssets="All" />
     </ItemGroup>
     <ItemGroup>
         <None Include="app.manifest" />

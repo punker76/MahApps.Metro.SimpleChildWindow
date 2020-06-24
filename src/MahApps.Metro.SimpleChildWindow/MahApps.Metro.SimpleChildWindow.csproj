@@ -8,8 +8,8 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="MahApps.Metro" Version="[2, 3)" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*">
+        <PackageReference Include="MahApps.Metro" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
