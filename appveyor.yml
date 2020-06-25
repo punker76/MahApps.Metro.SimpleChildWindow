@@ -4,8 +4,8 @@
 
 branches:
   only:
-    - dev
-    - master
+    - develop
+    - main
 
 environment:
   azure-key-vault-url:

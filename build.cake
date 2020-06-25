@@ -3,10 +3,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #module nuget:?package=Cake.DotNetTool.Module
-#tool "dotnet:?package=NuGetKeyVaultSignTool&version=1.2.18"
+#tool "dotnet:?package=NuGetKeyVaultSignTool&version=3.0.3"
 #tool "dotnet:?package=AzureSignTool&version=2.0.17"
 
-#tool GitVersion.CommandLine&version=5.0.1
+#tool GitVersion.CommandLine&version=5.3.6
 #tool gitreleasemanager
 #tool vswhere
 #addin Cake.Figlet
@@ -35,8 +35,8 @@ GitVersion gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVers
 
 var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
 var branchName = gitVersion.BranchName;
-var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("dev", branchName);
-var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", branchName);
+var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", branchName);
+var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("main", branchName);
 var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
 
 var latestInstallationPath = VSWhereLatest(new VSWhereLatestSettings { IncludePrerelease = true });

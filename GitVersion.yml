@@ -4,6 +4,7 @@ mode: ContinuousDeployment
 next-version: 2.0.0
 branches:
   master:
+    regex: ^main
     mode: ContinuousDeployment
     tag: rc
     increment: Minor
