@@ -20,6 +20,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+    - name: Install gpr tool
+      # Helper tool from Jamie Cansdale (GitHub Support) Thx!!!
+      run: dotnet tool install --tool-path tools gpr
     - name: Build with Cake Action
       env:
         azure-key-vault-url: ${{ secrets.AZURE_KEY_VAULT_URL }}
@@ -35,7 +38,8 @@ jobs:
         #verbosity: # optional, default is Normal
     - name: Publish NuGet
       if: success()
-      run: dotnet nuget push Publish\*.nupkg --source https://nuget.pkg.github.com/punker76/MahApps.Metro.SimpleChildWindow/index.json -k ${{ secrets.PACKAGE_ACCESS_TOKEN }}
+      #run: dotnet nuget push Publish\*.nupkg --source https://nuget.pkg.github.com/punker76/MahApps.Metro.SimpleChildWindow/index.json -k ${{ secrets.PACKAGE_ACCESS_TOKEN }}
+      run: tools/gpr push Publish\*.nupkg -k ${{ secrets.GITHUB_TOKEN }}
     - name: Upload Artifacts
       if: success()
       uses: actions/upload-artifact@v2
