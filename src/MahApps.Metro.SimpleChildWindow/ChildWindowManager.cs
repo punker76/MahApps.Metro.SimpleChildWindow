@@ -62,6 +62,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </exception>
         public static async Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
         {
+            var tcs = new TaskCompletionSource<TResult>();
+
             window.Dispatcher.VerifyAccess();
 
             var metroDialogContainer = window.Template.FindName("PART_MetroActiveDialogContainer", window) as Grid;
@@ -82,7 +84,7 @@ namespace MahApps.Metro.SimpleChildWindow
                 metroDialogContainer.SetCurrentValue(Grid.RowSpanProperty, 1);
             }
 
-            return await ShowChildWindowInternalAsync<TResult>(dialog, metroDialogContainer);
+            return await OpenDialogAsync(dialog, metroDialogContainer, tcs);
         }
 
         /// <summary>
@@ -109,7 +111,7 @@ namespace MahApps.Metro.SimpleChildWindow
         /// <param name="window">The owning window with a container of the child window.</param>
         /// <param name="dialog">A child window instance.</param>
         /// <param name="container">The container.</param>
-        /// <returns></returns>
+        /// <returns />
         /// <exception cref="System.InvalidOperationException">
         /// The provided child window can not add, there is no container defined.
         /// or
@@ -117,6 +119,8 @@ namespace MahApps.Metro.SimpleChildWindow
         /// </exception>
         public static async Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, Panel container)
         {
+            var tcs = new TaskCompletionSource<TResult>();
+
             window.Dispatcher.VerifyAccess();
 
             if (container == null)
@@ -129,19 +133,12 @@ namespace MahApps.Metro.SimpleChildWindow
                 throw new InvalidOperationException("The provided child window is already visible in the specified window.");
             }
 
-            return await ShowChildWindowInternalAsync<TResult>(dialog, container);
+            return await OpenDialogAsync(dialog, container, tcs);
         }
 
-        private static async Task<TResult> ShowChildWindowInternalAsync<TResult>(ChildWindow dialog, Panel container)
+        private static async Task<TResult> OpenDialogAsync<TResult>(ChildWindow dialog, Panel container, TaskCompletionSource<TResult> tcs)
         {
             container.Children.Add(dialog);
-
-            return await OpenDialogAsync<TResult>(dialog, container);
-        }
-
-        private static async Task<TResult> OpenDialogAsync<TResult>(ChildWindow dialog, Panel container)
-        {
-            var tcs = new TaskCompletionSource<TResult>();
 
             void OnDialogClosingFinished(object sender, RoutedEventArgs args)
             {
