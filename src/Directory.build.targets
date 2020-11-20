@@ -3,7 +3,7 @@
     <!-- Package references -->
     <ItemGroup>
         <PackageReference Update="MahApps.Metro" Version="[2.*, 3)" />
-        <PackageReference Update="JetBrains.Annotations" Version="2019.*" />
+        <PackageReference Update="JetBrains.Annotations" Version="2020.*" />
         <PackageReference Update="WpfAnalyzers" Version="2.4.*" />
         <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.*" />
         <PackageReference Update="MahApps.Metro.IconPacks" Version="4.*" />

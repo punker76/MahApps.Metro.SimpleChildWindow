@@ -3,10 +3,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #module nuget:?package=Cake.DotNetTool.Module
-#tool "dotnet:?package=NuGetKeyVaultSignTool&version=3.0.3"
+#tool "dotnet:?package=NuGetKeyVaultSignTool&version=3.1.6"
 #tool "dotnet:?package=AzureSignTool&version=2.0.17"
 
-#tool GitVersion.CommandLine&version=5.3.6
+#tool GitVersion.CommandLine&version=5.5.1
 #tool gitreleasemanager
 #tool vswhere
 #addin Cake.Figlet
