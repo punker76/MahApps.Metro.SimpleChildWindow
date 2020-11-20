@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #module nuget:?package=Cake.DotNetTool.Module
-#tool "dotnet:?package=NuGetKeyVaultSignTool&version=3.1.6"
+#tool "dotnet:?package=NuGetKeyVaultSignTool&version=1.2.28"
 #tool "dotnet:?package=AzureSignTool&version=2.0.17"
 
 #tool GitVersion.CommandLine&version=5.5.1
