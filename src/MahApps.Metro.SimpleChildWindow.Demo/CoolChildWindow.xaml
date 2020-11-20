@@ -4,15 +4,18 @@
                                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                               xmlns:properties="clr-namespace:MahApps.Metro.SimpleChildWindow.Demo.Properties"
                                xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
                                Title="Cool Window with long title"
                                d:DesignHeight="300"
                                d:DesignWidth="300"
-                               BorderBrush="{DynamicResource AccentBaseColorBrush}"
+                               BorderBrush="{DynamicResource MahApps.Brushes.AccentBase}"
                                BorderThickness="1"
                                ChildWindowWidth="300"
                                CloseOnOverlay="True"
-                               GlowBrush="{DynamicResource AccentColorBrush}"
+                               GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+                               OffsetX="{Binding Source={StaticResource Settings}, Path=Default.CoolWindow_X, Mode=TwoWay}"
+                               OffsetY="{Binding Source={StaticResource Settings}, Path=Default.CoolWindow_Y, Mode=TwoWay}"
                                ShowCloseButton="True"
                                mc:Ignorable="d">
 
@@ -21,13 +24,9 @@
                                   Height="22"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                  Foreground="{DynamicResource MahApps.Brushes.IdealForeground}"
                                   Kind="Cog" />
     </simpleChildWindow:ChildWindow.Icon>
-
-    <simpleChildWindow:ChildWindow.OverlayBrush>
-        <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
-    </simpleChildWindow:ChildWindow.OverlayBrush>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -41,7 +40,12 @@
                    FontSize="36"
                    FontWeight="Thin"
                    Text="Yepp, it works!" />
-        <TextBox Grid.Row="1" Margin="5" />
+        <TextBox Grid.Row="1"
+                 Margin="5"
+                 Text="{Binding Source={StaticResource Settings}, Path=Default.CoolWindow_X, Mode=TwoWay}" />
+        <TextBox Grid.Row="2"
+                 Margin="5"
+                 Text="{Binding Source={StaticResource Settings}, Path=Default.CoolWindow_Y, Mode=TwoWay}" />
         <UniformGrid Grid.Row="3"
                      Margin="5"
                      Columns="2">

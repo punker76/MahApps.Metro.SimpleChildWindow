@@ -6,8 +6,7 @@
                       Title="MahApps.Metro Simple ChildWindow Demo"
                       Width="700"
                       Height="600"
-                      GlowBrush="{DynamicResource AccentColorBrush}"
-                      SizeToContent="Height"
+                      GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
                       WindowStartupLocation="CenterScreen">
 
     <Grid x:Name="RootGrid">
@@ -49,7 +48,8 @@
                                        VerticalContentAlignment="Stretch"
                                        CloseByEscape="False"
                                        Closing="Child01_OnClosing"
-                                       IsAutoCloseEnabled="True">
+                                       IsAutoCloseEnabled="True"
+                                       OverlayBrush="Transparent">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

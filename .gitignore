@@ -63,6 +63,7 @@ artifacts/
 *.tmp
 *.tmp_proj
 *.log
+*.binlog
 *.vspscc
 *.vssscc
 .builds
@@ -254,3 +255,12 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Generated files
+*_wpftmp.csproj
+
+# cake
+[tT]ools/
+
+# XamlStyler
+!XamlStyler/

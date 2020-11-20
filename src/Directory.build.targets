@@ -1,0 +1,32 @@
+<Project>
+
+    <!-- Package references -->
+    <ItemGroup>
+        <PackageReference Update="MahApps.Metro" Version="[2.*, 3)" />
+        <PackageReference Update="JetBrains.Annotations" Version="2020.*" />
+        <PackageReference Update="WpfAnalyzers" Version="2.4.*" />
+        <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.*" />
+        <PackageReference Update="MahApps.Metro.IconPacks" Version="4.*" />
+        <PackageReference Update="Fody" Version="6.*" />
+        <PackageReference Update="Costura.Fody" Version="4.*" />
+    </ItemGroup>
+
+    <!-- AssemblyInfo -->
+    <PropertyGroup>
+        <Company>MahApps</Company>
+        <Product>MahApps.Metro.SimpleChildWindow</Product>
+        <Copyright>Copyright © 2014 - $([System.DateTime]::Today.ToString(yyyy)) Jan Karger</Copyright>
+        <Description>A simple child window for MahApps.Metro (A toolkit for creating Metro / Modern UI styled WPF apps).</Description>
+
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <Version>2.0.0.0</Version>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <FileVersion>2.0.0.0</FileVersion>
+        <InformationalVersion>2.0.0.0</InformationalVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Page Update="@(Page)" SubType="Designer" Generator="MSBuild:Compile" />
+    </ItemGroup>
+
+</Project>

@@ -17,6 +17,7 @@ issue-labels-include:
 - Feature
 - Enhancement
 - Feature Request
+- Improvement
 - Hacktoberfest
 issue-labels-exclude:
 - Internal Refactoring
@@ -26,6 +27,9 @@ issue-labels-exclude:
 - Duplicate
 - Invalid
 - OnHold
+- Housekeeping
+- Documentation
+- CleanUp / Typos
 issue-labels-alias:
     - name:    Documentation
       header:  Documentation
