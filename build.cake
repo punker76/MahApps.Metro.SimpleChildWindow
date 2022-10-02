@@ -2,14 +2,13 @@
 // TOOLS / ADDINS
 ///////////////////////////////////////////////////////////////////////////////
 
-#module nuget:?package=Cake.DotNetTool.Module
-#tool "dotnet:?package=NuGetKeyVaultSignTool&version=1.2.28"
-#tool "dotnet:?package=AzureSignTool&version=2.0.17"
+#tool dotnet:?package=NuGetKeyVaultSignTool&version=1.2.28
+#tool dotnet:?package=AzureSignTool&version=3.0.0
+#tool dotnet:?package=GitReleaseManager.Tool&version=0.12.1
+#tool dotnet:?package=GitVersion.Tool&version=5.6.3
 
-#tool GitVersion.CommandLine&version=5.5.1
-#tool gitreleasemanager
-#tool vswhere
-#addin Cake.Figlet
+#tool vswhere&version=2.8.4
+#addin nuget:?package=Cake.Figlet&version=2.0.1
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -313,19 +312,13 @@ Task("CreateRelease")
     .WithCriteria(() => !isPullRequest)
     .Does(() =>
 {
-    var username = EnvironmentVariable("GITHUB_USERNAME");
-    if (string.IsNullOrEmpty(username))
-    {
-        throw new Exception("The GITHUB_USERNAME environment variable is not defined.");
-    }
-
     var token = EnvironmentVariable("GITHUB_TOKEN");
     if (string.IsNullOrEmpty(token))
     {
         throw new Exception("The GITHUB_TOKEN environment variable is not defined.");
     }
 
-    GitReleaseManagerCreate(username, token, "punker76", repoName, new GitReleaseManagerCreateSettings {
+    GitReleaseManagerCreate(token, "punker76", repoName, new GitReleaseManagerCreateSettings {
         Milestone         = gitVersion.MajorMinorPatch,
         Name              = gitVersion.AssemblySemFileVer,
         Prerelease        = isDevelopBranch,
