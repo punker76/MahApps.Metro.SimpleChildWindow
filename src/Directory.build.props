@@ -18,4 +18,12 @@
         <Resource Include="**\*.png;**\*.jpg;**\*.ico;**\*.ttf" />
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" />
+        <PackageReference Include="WpfAnalyzers">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
 </Project>

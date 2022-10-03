@@ -11,7 +11,6 @@
     <valueConverter:EnumToVisibilityConverter x:Key="EnumToVisibilityCollapsedConverter"
                                               FalseValue="Visible"
                                               TrueValue="Collapsed" />
-    <mahConverters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.ChildWindow.Overlay" Opacity="0.7" Color="{DynamicResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
@@ -43,12 +42,12 @@
                                   BlurRadius="10"
                                   Opacity="0.8"
                                   ShadowDepth="0"
-                                  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(GlowBrush).Color, Mode=OneWay}" />
+                                  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=GlowBrush.Color, Mode=OneWay}" />
                 <DropShadowEffect x:Key="NonActiveGlowBrushEffect"
                                   BlurRadius="10"
                                   Opacity="0.8"
                                   ShadowDepth="0"
-                                  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(NonActiveGlowBrush).Color, Mode=OneWay}" />
+                                  Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NonActiveGlowBrush.Color, Mode=OneWay}" />
             </Grid.Resources>
 
             <Grid x:Name="PART_Window"
@@ -63,142 +62,138 @@
 
                 <Border x:Name="PART_GlowEffect"
                         Background="{TemplateBinding Background}"
-                        BorderBrush="Transparent"
+                        BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
                         Effect="{DynamicResource GlowBrushEffect}"
                         FocusVisualStyle="{x:Null}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         UseLayoutRounding="True"
                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableDropShadow, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                <Border x:Name="PART_Border"
-                        Background="{x:Null}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        FocusVisualStyle="{x:Null}"
-                        KeyboardNavigation.TabNavigation="None"
-                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                        UseLayoutRounding="True" />
+                <mahControls:ClipBorder x:Name="PART_Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding CornerRadius}"
+                                        FocusVisualStyle="{x:Null}"
+                                        KeyboardNavigation.TabNavigation="None"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        UseLayoutRounding="True">
 
-                <AdornerDecorator>
-                    <Grid KeyboardNavigation.ControlTabNavigation="Cycle"
-                          KeyboardNavigation.DirectionalNavigation="Cycle"
-                          KeyboardNavigation.TabNavigation="Cycle">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Left}}" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Right}}" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Bottom}}" />
-                        </Grid.RowDefinitions>
+                    <AdornerDecorator>
+                        <Grid KeyboardNavigation.ControlTabNavigation="Cycle"
+                              KeyboardNavigation.DirectionalNavigation="Cycle"
+                              KeyboardNavigation.TabNavigation="Cycle">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                        <Rectangle x:Name="PART_TitleBarBackground"
-                                   Grid.Row="1"
-                                   Grid.Column="1"
-                                   Fill="{TemplateBinding TitleBarBackground}"
-                                   Focusable="False"
-                                   StrokeThickness="0"
-                                   Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <Rectangle x:Name="PART_TitleBarBackground"
+                                       Grid.Row="0"
+                                       Grid.Column="0"
+                                       Fill="{TemplateBinding TitleBarBackground}"
+                                       Focusable="False"
+                                       StrokeThickness="0"
+                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                        <Grid x:Name="PART_Header"
-                              Grid.Row="1"
-                              Grid.Column="1"
-                              Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                              Focusable="False"
-                              Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid x:Name="PART_Header"
+                                  Grid.Row="0"
+                                  Grid.Column="0"
+                                  Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                  Focusable="False"
+                                  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                            <!--  icon  -->
-                            <ContentControl x:Name="PART_Icon"
-                                            Grid.Column="0"
-                                            Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                            MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                            HorizontalContentAlignment="Stretch"
-                                            VerticalContentAlignment="Stretch"
-                                            Content="{TemplateBinding Icon}"
-                                            ContentTemplate="{TemplateBinding IconTemplate}"
-                                            Focusable="False" />
+                                <!--  icon  -->
+                                <ContentControl x:Name="PART_Icon"
+                                                Grid.Column="0"
+                                                Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                HorizontalContentAlignment="Stretch"
+                                                VerticalContentAlignment="Stretch"
+                                                Content="{TemplateBinding Icon}"
+                                                ContentTemplate="{TemplateBinding IconTemplate}"
+                                                Focusable="False" />
 
-                            <!--  title  -->
-                            <mahControls:MetroThumbContentControl x:Name="PART_HeaderThumb"
-                                                                  Grid.Column="1"
-                                                                  Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                                  HorizontalAlignment="Stretch"
-                                                                  VerticalAlignment="Stretch"
-                                                                  HorizontalContentAlignment="{TemplateBinding TitleHorizontalAlignment}"
-                                                                  VerticalContentAlignment="{TemplateBinding TitleVerticalAlignment}"
-                                                                  Content="{TemplateBinding Title}"
-                                                                  ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
-                                                                  ContentTemplate="{TemplateBinding TitleTemplate}"
-                                                                  Focusable="False"
-                                                                  FontFamily="{TemplateBinding TitleFontFamily}"
-                                                                  FontSize="{TemplateBinding TitleFontSize}">
-                                <ContentControl.Foreground>
-                                    <MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
-                                        <Binding Mode="OneWay"
-                                                 Path="TitleBarBackground"
-                                                 RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Mode="OneWay"
-                                                 Path="TitleForeground"
-                                                 RelativeSource="{RelativeSource TemplatedParent}" />
-                                    </MultiBinding>
-                                </ContentControl.Foreground>
-                            </mahControls:MetroThumbContentControl>
+                                <!--  title  -->
+                                <mahControls:MetroThumbContentControl x:Name="PART_HeaderThumb"
+                                                                      Grid.Column="1"
+                                                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                                      HorizontalAlignment="Stretch"
+                                                                      VerticalAlignment="Stretch"
+                                                                      HorizontalContentAlignment="{TemplateBinding TitleHorizontalAlignment}"
+                                                                      VerticalContentAlignment="{TemplateBinding TitleVerticalAlignment}"
+                                                                      Content="{TemplateBinding Title}"
+                                                                      ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
+                                                                      ContentTemplate="{TemplateBinding TitleTemplate}"
+                                                                      Focusable="False"
+                                                                      FontFamily="{TemplateBinding TitleFontFamily}"
+                                                                      FontSize="{TemplateBinding TitleFontSize}">
+                                    <ContentControl.Foreground>
+                                        <MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
+                                            <Binding Mode="OneWay"
+                                                     Path="TitleBarBackground"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Mode="OneWay"
+                                                     Path="TitleForeground"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </ContentControl.Foreground>
+                                </mahControls:MetroThumbContentControl>
 
-                            <!--  close button  -->
-                            <Button x:Name="PART_CloseButton"
-                                    Grid.Column="2"
-                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    FocusVisualStyle="{StaticResource MahApps.Styles.ChildWindow.FocusVisualStyle}"
-                                    Focusable="False"
-                                    IsTabStop="True"
-                                    Style="{TemplateBinding CloseButtonStyle}"
-                                    ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type scw:ChildWindow}}, Path=CloseButtonToolTip, Mode=OneWay}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ShowCloseButton, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
-                                      Fill="{TemplateBinding TitleForeground}"
-                                      SnapsToDevicePixels="True" />
-                            </Button>
+                                <!--  close button  -->
+                                <Button x:Name="PART_CloseButton"
+                                        Grid.Column="2"
+                                        Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        FocusVisualStyle="{StaticResource MahApps.Styles.ChildWindow.FocusVisualStyle}"
+                                        Focusable="False"
+                                        IsTabStop="True"
+                                        Style="{TemplateBinding CloseButtonStyle}"
+                                        ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type scw:ChildWindow}}, Path=CloseButtonToolTip, Mode=OneWay}"
+                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ShowCloseButton, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+                                          Fill="{TemplateBinding TitleForeground}"
+                                          SnapsToDevicePixels="True" />
+                                </Button>
+                            </Grid>
+
+                            <Grid Grid.Row="1"
+                                  Grid.Column="0"
+                                  UseLayoutRounding="False">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Rectangle Grid.Column="0"
+                                           Width="48"
+                                           Height="48"
+                                           Margin="4 0 0 4"
+                                           VerticalAlignment="Center"
+                                           Visibility="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={StaticResource EnumToVisibilityCollapsedConverter}, ConverterParameter={x:Static MessageBoxImage.None}}">
+                                    <Rectangle.Fill>
+                                        <VisualBrush x:Name="iconBrush"
+                                                     Stretch="Fill"
+                                                     Visual="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={x:Static valueConverter:MessageBoxImageToImageSourceConverter.Instance}}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <ContentPresenter x:Name="PART_Content"
+                                                  Grid.Column="1"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+                            </Grid>
                         </Grid>
-
-                        <Grid Grid.Row="2"
-                              Grid.Column="1"
-                              UseLayoutRounding="False">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Rectangle Grid.Column="0"
-                                       Width="48"
-                                       Height="48"
-                                       Margin="4 0 0 4"
-                                       VerticalAlignment="Center"
-                                       Visibility="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={StaticResource EnumToVisibilityCollapsedConverter}, ConverterParameter={x:Static MessageBoxImage.None}}">
-                                <Rectangle.Fill>
-                                    <VisualBrush x:Name="iconBrush"
-                                                 Stretch="Fill"
-                                                 Visual="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ChildWindowImage, Mode=OneWay, Converter={x:Static valueConverter:MessageBoxImageToImageSourceConverter.Instance}}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <ContentPresenter x:Name="PART_Content"
-                                              Grid.Column="1"
-                                              Content="{TemplateBinding Content}"
-                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
-                        </Grid>
-                    </Grid>
-                </AdornerDecorator>
+                    </AdornerDecorator>
+                </mahControls:ClipBorder>
             </Grid>
 
             <VisualStateManager.VisualStateGroups>

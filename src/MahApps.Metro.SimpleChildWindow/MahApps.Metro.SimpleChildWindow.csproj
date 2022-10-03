@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
@@ -7,6 +8,7 @@
         <RootNamespace>MahApps.Metro.SimpleChildWindow</RootNamespace>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="MahApps.Metro" />
         <PackageReference Include="Microsoft.SourceLink.GitHub">
@@ -14,8 +16,13 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
     </ItemGroup>
+
     <ItemGroup>
-        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
-        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
+        <Compile DependentUpon="%(Filename)"
+                 SubType="Code"
+                 Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
+        <Compile DependentUpon="%(Filename)"
+                 SubType="Designer"
+                 Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
 </Project>
