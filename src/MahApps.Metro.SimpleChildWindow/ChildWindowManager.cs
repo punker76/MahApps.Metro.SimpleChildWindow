@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.SimpleChildWindow
 {
@@ -138,18 +139,24 @@ namespace MahApps.Metro.SimpleChildWindow
 
         private static async Task<TResult> OpenDialogAsync<TResult>(ChildWindow dialog, Panel container, TaskCompletionSource<TResult> tcs)
         {
-            container.Children.Add(dialog);
-
-            void OnDialogClosingFinished(object sender, RoutedEventArgs args)
+            if (!dialog.IsOpen)
             {
-                dialog.ClosingFinished -= OnDialogClosingFinished;
-                container.Children.Remove(dialog);
-                tcs.TrySetResult(dialog.ChildWindowResult is TResult result ? result : (dialog.ClosedBy is TResult closedBy ? closedBy : default));
+                if (dialog.TryFindParent<Panel>() is null)
+                {
+                    container.Children.Add(dialog);
+                }
+
+                void OnDialogClosingFinished(object sender, RoutedEventArgs args)
+                {
+                    dialog.ClosingFinished -= OnDialogClosingFinished;
+                    container.Children.Remove(dialog);
+                    tcs.TrySetResult(dialog.ChildWindowResult is TResult result ? result : (dialog.ClosedBy is TResult closedBy ? closedBy : default));
+                }
+
+                dialog.ClosingFinished += OnDialogClosingFinished;
+
+                dialog.SetCurrentValue(ChildWindow.IsOpenProperty, true);
             }
-
-            dialog.ClosingFinished += OnDialogClosingFinished;
-
-            dialog.SetCurrentValue(ChildWindow.IsOpenProperty, true);
 
             return await tcs.Task;
         }

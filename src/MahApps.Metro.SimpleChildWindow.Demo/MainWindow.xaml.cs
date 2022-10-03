@@ -17,6 +17,11 @@ namespace MahApps.Metro.SimpleChildWindow.Demo
             this.InitializeComponent();
         }
 
+        private async void Title_OnClick(object sender, RoutedEventArgs e)
+        {
+            await this.ShowChildWindowAsync(this.child01);
+        }
+
         private void FirstTest_OnClick(object sender, RoutedEventArgs e)
         {
             this.child01.SetCurrentValue(ChildWindow.IsOpenProperty, true);
