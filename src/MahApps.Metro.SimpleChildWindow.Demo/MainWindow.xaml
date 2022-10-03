@@ -46,8 +46,12 @@
                                        Padding="15"
                                        HorizontalContentAlignment="Stretch"
                                        VerticalContentAlignment="Stretch"
+                                       AutoCloseInterval="10000"
+                                       BorderBrush="Black"
+                                       BorderThickness="1"
                                        CloseByEscape="False"
                                        Closing="Child01_OnClosing"
+                                       CornerRadius="4"
                                        IsAutoCloseEnabled="True"
                                        OverlayBrush="Transparent">
             <Grid>

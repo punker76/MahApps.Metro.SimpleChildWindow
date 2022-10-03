@@ -306,6 +306,25 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new PropertyMetadata(true));
 
+        /// <summary>Identifies the <see cref="CornerRadius" /> dependency property. </summary>
+        /// <returns>The identifier for the <see cref="P:System.Windows.Controls.Border.CornerRadius" /> dependency property.</returns>
+        public static readonly DependencyProperty CornerRadiusProperty
+            = DependencyProperty.Register(nameof(CornerRadius),
+                                          typeof(CornerRadius),
+                                          typeof(ChildWindow),
+                                          new FrameworkPropertyMetadata(new CornerRadius(), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary>
+        /// Gets or sets a value that represents the degree to which the corners of a <see cref="SimpleChildWindow" /> are rounded.  </summary>
+        /// <returns>
+        /// The <see cref="T:System.Windows.CornerRadius" /> that describes the degree to which corners are rounded. This property has no default value.
+        /// </returns>
+        public CornerRadius CornerRadius
+        {
+            get => (CornerRadius)this.GetValue(Border.CornerRadiusProperty);
+            set => this.SetValue(Border.CornerRadiusProperty, (object)value);
+        }
+
         /// <summary>
         /// An event that will be raised when <see cref="IsOpen"/> dependency property changes.
         /// </summary>
