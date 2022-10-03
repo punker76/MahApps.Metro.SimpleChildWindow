@@ -27,6 +27,7 @@ namespace MahApps.Metro.SimpleChildWindow
     [TemplatePart(Name = PART_CloseButton, Type = typeof(Button))]
     [TemplatePart(Name = PART_Border, Type = typeof(Border))]
     [TemplatePart(Name = PART_Content, Type = typeof(ContentPresenter))]
+    [StyleTypedProperty(Property = nameof(CloseButtonStyle), StyleTargetType = typeof(Button))]
     public class ChildWindow : ContentControl
     {
         private const string PART_Overlay = "PART_Overlay";
@@ -39,12 +40,23 @@ namespace MahApps.Metro.SimpleChildWindow
         private const string PART_Border = "PART_Border";
         private const string PART_Content = "PART_Content";
 
+        private DispatcherTimer autoCloseTimer;
+
         /// <summary>Identifies the <see cref="AllowMove"/> dependency property.</summary>
         public static readonly DependencyProperty AllowMoveProperty
             = DependencyProperty.Register(nameof(AllowMove),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(default(bool)));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the child window can be moved inside the overlay container.
+        /// </summary>
+        public bool AllowMove
+        {
+            get => (bool)this.GetValue(AllowMoveProperty);
+            set => this.SetValue(AllowMoveProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="OffsetX"/> dependency property.</summary>
         public static readonly DependencyProperty OffsetXProperty
@@ -53,12 +65,46 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new UIPropertyMetadata(0d, OnOffsetXChanged));
 
+        /// <summary>
+        /// Gets or Sets the current X-Position of the ChildWindow.
+        /// </summary>
+        public double OffsetX
+        {
+            get => (double)this.GetValue(OffsetXProperty);
+            set => this.SetValue(OffsetXProperty, value);
+        }
+
+        private static void OnOffsetXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ChildWindow childWindow)
+            {
+                childWindow.moveTransform.SetCurrentValue(TranslateTransform.XProperty, e.NewValue);
+            }
+        }
+
         /// <summary>Identifies the <see cref="OffsetY"/> dependency property.</summary>
         public static readonly DependencyProperty OffsetYProperty
             = DependencyProperty.Register(nameof(OffsetY),
                                           typeof(double),
                                           typeof(ChildWindow),
                                           new UIPropertyMetadata(0d, OnOffsetYChanged));
+
+        /// <summary>
+        /// Gets or Sets the current Y-Position of the ChildWindow.
+        /// </summary>
+        public double OffsetY
+        {
+            get => (double)this.GetValue(OffsetYProperty);
+            set => this.SetValue(OffsetYProperty, value);
+        }
+
+        private static void OnOffsetYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ChildWindow childWindow)
+            {
+                childWindow.moveTransform.SetCurrentValue(TranslateTransform.YProperty, e.NewValue);
+            }
+        }
 
         /// <summary>Identifies the <see cref="IsModal"/> dependency property.</summary>
         public static readonly DependencyProperty IsModalProperty
@@ -67,12 +113,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the child window is modal.
+        /// </summary>
+        public bool IsModal
+        {
+            get => (bool)this.GetValue(IsModalProperty);
+            set => this.SetValue(IsModalProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="OverlayBrush"/> dependency property.</summary>
         public static readonly DependencyProperty OverlayBrushProperty
             = DependencyProperty.Register(nameof(OverlayBrush),
                                           typeof(Brush),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary>
+        /// Gets or sets the overlay brush.
+        /// </summary>
+        public Brush OverlayBrush
+        {
+            get => (Brush)this.GetValue(OverlayBrushProperty);
+            set => this.SetValue(OverlayBrushProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="CloseOnOverlay"/> dependency property.</summary>
         public static readonly DependencyProperty CloseOnOverlayProperty
@@ -81,12 +145,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new PropertyMetadata(default(bool)));
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the child window can be closed by clicking the overlay container.
+        /// </summary>
+        public bool CloseOnOverlay
+        {
+            get => (bool)this.GetValue(CloseOnOverlayProperty);
+            set => this.SetValue(CloseOnOverlayProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="CloseByEscape"/> dependency property.</summary>
         public static readonly DependencyProperty CloseByEscapeProperty
             = DependencyProperty.Register(nameof(CloseByEscape),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the child window can be closed by the Escape key.
+        /// </summary>
+        public bool CloseByEscape
+        {
+            get => (bool)this.GetValue(CloseByEscapeProperty);
+            set => this.SetValue(CloseByEscapeProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="ShowTitleBar"/> dependency property.</summary>
         public static readonly DependencyProperty ShowTitleBarProperty
@@ -95,12 +177,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new PropertyMetadata(true));
 
+        /// <summary>
+        /// Gets or sets whether the title bar is visible or not.
+        /// </summary>
+        public bool ShowTitleBar
+        {
+            get => (bool)this.GetValue(ShowTitleBarProperty);
+            set => this.SetValue(ShowTitleBarProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="TitleBarHeight"/> dependency property.</summary>
         public static readonly DependencyProperty TitleBarHeightProperty
             = DependencyProperty.Register(nameof(TitleBarHeight),
                                           typeof(int),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(30));
+
+        /// <summary>
+        /// Gets or sets the height of the title bar.
+        /// </summary>
+        public int TitleBarHeight
+        {
+            get => (int)this.GetValue(TitleBarHeightProperty);
+            set => this.SetValue(TitleBarHeightProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="TitleBarBackground"/> dependency property.</summary>
         public static readonly DependencyProperty TitleBarBackgroundProperty
@@ -109,12 +209,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender));
 
+        /// <summary>
+        /// Gets or sets the title bar background.
+        /// </summary>
+        public Brush TitleBarBackground
+        {
+            get => (Brush)this.GetValue(TitleBarBackgroundProperty);
+            set => this.SetValue(TitleBarBackgroundProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="TitleBarNonActiveBackground"/> dependency property.</summary>
         public static readonly DependencyProperty TitleBarNonActiveBackgroundProperty
             = DependencyProperty.Register(nameof(TitleBarNonActiveBackground),
                                           typeof(Brush),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(Brushes.Gray));
+
+        /// <summary>
+        /// Gets or sets the title bar background for non-active status.
+        /// </summary>
+        public Brush TitleBarNonActiveBackground
+        {
+            get => (Brush)this.GetValue(TitleBarNonActiveBackgroundProperty);
+            set => this.SetValue(TitleBarNonActiveBackgroundProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="NonActiveBorderBrush"/> dependency property.</summary>
         public static readonly DependencyProperty NonActiveBorderBrushProperty
@@ -123,6 +241,15 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new PropertyMetadata(Brushes.Gray));
 
+        /// <summary>
+        /// Gets or sets the border brush for non-active status.
+        /// </summary>
+        public Brush NonActiveBorderBrush
+        {
+            get => (Brush)this.GetValue(NonActiveBorderBrushProperty);
+            set => this.SetValue(NonActiveBorderBrushProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="TitleForeground"/> dependency property.</summary>
         public static readonly DependencyProperty TitleForegroundProperty
             = DependencyProperty.Register(nameof(TitleForeground),
@@ -130,12 +257,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
 
+        /// <summary>
+        /// Gets or sets the title foreground.
+        /// </summary>
+        public Brush TitleForeground
+        {
+            get => (Brush)this.GetValue(TitleForegroundProperty);
+            set => this.SetValue(TitleForegroundProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="Title"/> dependency property.</summary>
         public static readonly DependencyProperty TitleProperty
             = DependencyProperty.Register(nameof(Title),
                                           typeof(string),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(default(string)));
+
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        public string Title
+        {
+            get => (string)this.GetValue(TitleProperty);
+            set => this.SetValue(TitleProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="TitleCharacterCasing"/> dependency property.</summary>
         public static readonly DependencyProperty TitleCharacterCasingProperty
@@ -145,12 +290,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure),
                                           value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
 
+        /// <summary>
+        /// Gets or sets the character casing of the title.
+        /// </summary>
+        public CharacterCasing TitleCharacterCasing
+        {
+            get => (CharacterCasing)this.GetValue(TitleCharacterCasingProperty);
+            set => this.SetValue(TitleCharacterCasingProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="TitleHorizontalAlignment"/> dependency property.</summary>
         public static readonly DependencyProperty TitleHorizontalAlignmentProperty
             = DependencyProperty.Register(nameof(TitleHorizontalAlignment),
                                           typeof(HorizontalAlignment),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(HorizontalAlignment.Stretch));
+
+        /// <summary>
+        /// Gets or sets the title horizontal alignment.
+        /// </summary>
+        public HorizontalAlignment TitleHorizontalAlignment
+        {
+            get => (HorizontalAlignment)this.GetValue(TitleHorizontalAlignmentProperty);
+            set => this.SetValue(TitleHorizontalAlignmentProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="TitleVerticalAlignment"/> dependency property.</summary>
         public static readonly DependencyProperty TitleVerticalAlignmentProperty
@@ -159,12 +322,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new PropertyMetadata(VerticalAlignment.Center));
 
+        /// <summary>
+        /// Gets or sets the title vertical alignment.
+        /// </summary>
+        public VerticalAlignment TitleVerticalAlignment
+        {
+            get => (VerticalAlignment)this.GetValue(TitleVerticalAlignmentProperty);
+            set => this.SetValue(TitleVerticalAlignmentProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="TitleTemplate"/> dependency property.</summary>
         public static readonly DependencyProperty TitleTemplateProperty
             = DependencyProperty.Register(nameof(TitleTemplate),
                                           typeof(DataTemplate),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the title content template to show a custom title.
+        /// </summary>
+        public DataTemplate TitleTemplate
+        {
+            get => (DataTemplate)this.GetValue(TitleTemplateProperty);
+            set => this.SetValue(TitleTemplateProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="TitleFontSize"/> dependency property.</summary>
         public static readonly DependencyProperty TitleFontSizeProperty
@@ -173,12 +354,32 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(SystemFonts.CaptionFontSize, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
 
+        /// <summary> 
+        /// The FontSize property specifies the size of the title.
+        /// </summary>
+        [TypeConverter(typeof(FontSizeConverter))]
+        public double TitleFontSize
+        {
+            get => (double)this.GetValue(TitleFontSizeProperty);
+            set => this.SetValue(TitleFontSizeProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="TitleFontFamily"/> dependency property.</summary>
         public static readonly DependencyProperty TitleFontFamilyProperty
             = DependencyProperty.Register(nameof(TitleFontFamily),
                                           typeof(FontFamily),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(SystemFonts.CaptionFontFamily, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary> 
+        /// The FontFamily property specifies the font family of the title.
+        /// </summary>
+        [Bindable(true)]
+        public FontFamily TitleFontFamily
+        {
+            get => (FontFamily)this.GetValue(TitleFontFamilyProperty);
+            set => this.SetValue(TitleFontFamilyProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="Icon"/> dependency property.</summary>
         public static readonly DependencyProperty IconProperty
@@ -187,12 +388,32 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
+        /// <summary>
+        /// Gets or sets a icon for the title bar.
+        /// </summary>
+        [Bindable(true)]
+        public object Icon
+        {
+            get => this.GetValue(IconProperty);
+            set => this.SetValue(IconProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="IconTemplate"/> dependency property.</summary>
         public static readonly DependencyProperty IconTemplateProperty
             = DependencyProperty.Register(nameof(IconTemplate),
                                           typeof(DataTemplate),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+        /// <summary>
+        /// Gets or sets a icon content template for the title bar.
+        /// </summary>
+        [Bindable(true)]
+        public DataTemplate IconTemplate
+        {
+            get => (DataTemplate)this.GetValue(IconTemplateProperty);
+            set => this.SetValue(IconTemplateProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="ShowCloseButton"/> dependency property.</summary>
         public static readonly DependencyProperty ShowCloseButtonProperty
@@ -201,12 +422,31 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
+        /// <summary>
+        /// Gets or sets if the close button is visible.
+        /// </summary>
+        public bool ShowCloseButton
+        {
+            get => (bool)this.GetValue(ShowCloseButtonProperty);
+            set => this.SetValue(ShowCloseButtonProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="CloseButtonStyle"/> dependency property.</summary>
         public static readonly DependencyProperty CloseButtonStyleProperty
             = DependencyProperty.Register(nameof(CloseButtonStyle),
                                           typeof(Style),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+        /// <summary>
+        /// Gets or sets the close button style.
+        /// </summary>
+        [Bindable(true)]
+        public Style CloseButtonStyle
+        {
+            get => (Style)this.GetValue(CloseButtonStyleProperty);
+            set => this.SetValue(CloseButtonStyleProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="CloseButtonCommand"/> dependency property.</summary>
         public static readonly DependencyProperty CloseButtonCommandProperty
@@ -215,12 +455,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new PropertyMetadata(default(ICommand)));
 
+        /// <summary>
+        /// Gets or sets the command that is executed when the Close Button is clicked.
+        /// </summary>
+        public ICommand CloseButtonCommand
+        {
+            get => (ICommand)this.GetValue(CloseButtonCommandProperty);
+            set => this.SetValue(CloseButtonCommandProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="CloseButtonCommandParameter"/> dependency property.</summary>
         public static readonly DependencyProperty CloseButtonCommandParameterProperty
             = DependencyProperty.Register(nameof(CloseButtonCommandParameter),
                                           typeof(object),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the command parameter that is used by the CloseButtonCommand when the Close Button is clicked.
+        /// </summary>
+        public object CloseButtonCommandParameter
+        {
+            get => this.GetValue(CloseButtonCommandParameterProperty);
+            set => this.SetValue(CloseButtonCommandParameterProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="IsOpen"/> dependency property.</summary>
         public static readonly DependencyProperty IsOpenProperty
@@ -229,12 +487,36 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsOpenChanged));
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is open or closed.
+        /// </summary>
+        public bool IsOpen
+        {
+            get => (bool)this.GetValue(IsOpenProperty);
+            set => this.SetValue(IsOpenProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="ChildWindowWidth"/> dependency property.</summary>
         public static readonly DependencyProperty ChildWindowWidthProperty
             = DependencyProperty.Register(nameof(ChildWindowWidth),
                                           typeof(double),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
+
+        /// <summary>
+        /// Gets or sets the width of the child window.
+        /// </summary>
+        public double ChildWindowWidth
+        {
+            get => (double)this.GetValue(ChildWindowWidthProperty);
+            set => this.SetValue(ChildWindowWidthProperty, value);
+        }
+
+        private static bool IsWidthHeightValid(object value)
+        {
+            var v = (double)value;
+            return (double.IsNaN(v)) || (v >= 0.0d && !double.IsPositiveInfinity(v));
+        }
 
         /// <summary>Identifies the <see cref="ChildWindowHeight"/> dependency property.</summary>
         public static readonly DependencyProperty ChildWindowHeightProperty
@@ -243,12 +525,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
 
+        /// <summary>
+        /// Gets or sets the height of the child window.
+        /// </summary>
+        public double ChildWindowHeight
+        {
+            get => (double)this.GetValue(ChildWindowHeightProperty);
+            set => this.SetValue(ChildWindowHeightProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="ChildWindowImage"/> dependency property.</summary>
         public static readonly DependencyProperty ChildWindowImageProperty
             = DependencyProperty.Register(nameof(ChildWindowImage),
                                           typeof(MessageBoxImage),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(MessageBoxImage.None, FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Gets or sets which image is shown on the left side of the window content.
+        /// </summary>
+        public MessageBoxImage ChildWindowImage
+        {
+            get => (MessageBoxImage)this.GetValue(ChildWindowImageProperty);
+            set => this.SetValue(ChildWindowImageProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="EnableDropShadow"/> dependency property.</summary>
         public static readonly DependencyProperty EnableDropShadowProperty
@@ -257,12 +557,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the window has a drop shadow (glow brush).
+        /// </summary>
+        public bool EnableDropShadow
+        {
+            get => (bool)this.GetValue(EnableDropShadowProperty);
+            set => this.SetValue(EnableDropShadowProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="AllowFocusElement"/> dependency property.</summary>
         public static readonly DependencyProperty AllowFocusElementProperty
             = DependencyProperty.Register(nameof(AllowFocusElement),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the child window should try focus an element.
+        /// </summary>
+        public bool AllowFocusElement
+        {
+            get => (bool)this.GetValue(AllowFocusElementProperty);
+            set => this.SetValue(AllowFocusElementProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="FocusedElement"/> dependency property.</summary>
         public static readonly DependencyProperty FocusedElementProperty
@@ -271,12 +589,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new UIPropertyMetadata(null));
 
+        /// <summary>
+        /// Gets or sets the focused element.
+        /// </summary>
+        public FrameworkElement FocusedElement
+        {
+            get => (FrameworkElement)this.GetValue(FocusedElementProperty);
+            set => this.SetValue(FocusedElementProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="GlowBrush"/> dependency property.</summary>
         public static readonly DependencyProperty GlowBrushProperty
             = DependencyProperty.Register(nameof(GlowBrush),
                                           typeof(SolidColorBrush),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary>
+        /// Gets or sets the glow brush (drop shadow).
+        /// </summary>
+        public SolidColorBrush GlowBrush
+        {
+            get => (SolidColorBrush)this.GetValue(GlowBrushProperty);
+            set => this.SetValue(GlowBrushProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="NonActiveGlowBrush"/> dependency property.</summary>
         public static readonly DependencyProperty NonActiveGlowBrushProperty
@@ -285,12 +621,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new PropertyMetadata(Brushes.Gray));
 
+        /// <summary>
+        /// Gets or sets the glow brush (drop shadow) for non-active status.
+        /// </summary>
+        public SolidColorBrush NonActiveGlowBrush
+        {
+            get => (SolidColorBrush)this.GetValue(NonActiveGlowBrushProperty);
+            set => this.SetValue(NonActiveGlowBrushProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="IsAutoCloseEnabled"/> dependency property.</summary>
         public static readonly DependencyProperty IsAutoCloseEnabledProperty
             = DependencyProperty.Register(nameof(IsAutoCloseEnabled),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(false, OnIsAutoCloseEnabledChanged));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the ChildWindow should auto close after AutoCloseInterval has passed.
+        /// </summary>
+        public bool IsAutoCloseEnabled
+        {
+            get => (bool)this.GetValue(IsAutoCloseEnabledProperty);
+            set => this.SetValue(IsAutoCloseEnabledProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="AutoCloseInterval"/> dependency property.</summary>
         public static readonly DependencyProperty AutoCloseIntervalProperty
@@ -299,12 +653,30 @@ namespace MahApps.Metro.SimpleChildWindow
                                           typeof(ChildWindow),
                                           new FrameworkPropertyMetadata(5000L, OnAutoCloseIntervalChanged));
 
+        /// <summary>
+        /// Gets or sets the time in milliseconds when the ChildWindow should auto close.
+        /// </summary>
+        public long AutoCloseInterval
+        {
+            get => (long)this.GetValue(AutoCloseIntervalProperty);
+            set => this.SetValue(AutoCloseIntervalProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="IsWindowHostActive"/> dependency property.</summary>
         public static readonly DependencyProperty IsWindowHostActiveProperty
             = DependencyProperty.Register(nameof(IsWindowHostActive),
                                           typeof(bool),
                                           typeof(ChildWindow),
                                           new PropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the host Window is active or not.
+        /// </summary>
+        public bool IsWindowHostActive
+        {
+            get => (bool)this.GetValue(IsWindowHostActiveProperty);
+            set => this.SetValue(IsWindowHostActiveProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="CornerRadius" /> dependency property. </summary>
         /// <returns>The identifier for the <see cref="P:System.Windows.Controls.Border.CornerRadius" /> dependency property.</returns>
@@ -364,270 +736,6 @@ namespace MahApps.Metro.SimpleChildWindow
         {
             add => this.AddHandler(ClosingFinishedEvent, value);
             remove => this.RemoveHandler(ClosingFinishedEvent, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the child window can be moved inside the overlay container.
-        /// </summary>
-        public bool AllowMove
-        {
-            get => (bool)this.GetValue(AllowMoveProperty);
-            set => this.SetValue(AllowMoveProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or Sets the current X-Position of the ChildWindow.
-        /// </summary>
-        public double OffsetX
-        {
-            get => (double)this.GetValue(OffsetXProperty);
-            set => this.SetValue(OffsetXProperty, value);
-        }
-
-        private static void OnOffsetXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is ChildWindow childWindow)
-            {
-                childWindow.moveTransform.SetCurrentValue(TranslateTransform.XProperty, e.NewValue);
-            }
-        }
-
-        /// <summary>
-        /// Gets or Sets the current Y-Position of the ChildWindow.
-        /// </summary>
-        public double OffsetY
-        {
-            get => (double)this.GetValue(OffsetYProperty);
-            set => this.SetValue(OffsetYProperty, value);
-        }
-
-        private static void OnOffsetYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is ChildWindow childWindow)
-            {
-                childWindow.moveTransform.SetCurrentValue(TranslateTransform.YProperty, e.NewValue);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the child window is modal.
-        /// </summary>
-        public bool IsModal
-        {
-            get => (bool)this.GetValue(IsModalProperty);
-            set => this.SetValue(IsModalProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the overlay brush.
-        /// </summary>
-        public Brush OverlayBrush
-        {
-            get => (Brush)this.GetValue(OverlayBrushProperty);
-            set => this.SetValue(OverlayBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the child window can be closed by clicking the overlay container.
-        /// </summary>
-        public bool CloseOnOverlay
-        {
-            get => (bool)this.GetValue(CloseOnOverlayProperty);
-            set => this.SetValue(CloseOnOverlayProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the child window can be closed by the Escape key.
-        /// </summary>
-        public bool CloseByEscape
-        {
-            get => (bool)this.GetValue(CloseByEscapeProperty);
-            set => this.SetValue(CloseByEscapeProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets whether the title bar is visible or not.
-        /// </summary>
-        public bool ShowTitleBar
-        {
-            get => (bool)this.GetValue(ShowTitleBarProperty);
-            set => this.SetValue(ShowTitleBarProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the height of the title bar.
-        /// </summary>
-        public int TitleBarHeight
-        {
-            get => (int)this.GetValue(TitleBarHeightProperty);
-            set => this.SetValue(TitleBarHeightProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the title bar background.
-        /// </summary>
-        public Brush TitleBarBackground
-        {
-            get => (Brush)this.GetValue(TitleBarBackgroundProperty);
-            set => this.SetValue(TitleBarBackgroundProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the title bar background for non-active status.
-        /// </summary>
-        public Brush TitleBarNonActiveBackground
-        {
-            get => (Brush)this.GetValue(TitleBarNonActiveBackgroundProperty);
-            set => this.SetValue(TitleBarNonActiveBackgroundProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the border brush for non-active status.
-        /// </summary>
-        public Brush NonActiveBorderBrush
-        {
-            get => (Brush)this.GetValue(NonActiveBorderBrushProperty);
-            set => this.SetValue(NonActiveBorderBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the title foreground.
-        /// </summary>
-        public Brush TitleForeground
-        {
-            get => (Brush)this.GetValue(TitleForegroundProperty);
-            set => this.SetValue(TitleForegroundProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the title.
-        /// </summary>
-        public string Title
-        {
-            get => (string)this.GetValue(TitleProperty);
-            set => this.SetValue(TitleProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the character casing of the title.
-        /// </summary>
-        public CharacterCasing TitleCharacterCasing
-        {
-            get => (CharacterCasing)this.GetValue(TitleCharacterCasingProperty);
-            set => this.SetValue(TitleCharacterCasingProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the title horizontal alignment.
-        /// </summary>
-        public HorizontalAlignment TitleHorizontalAlignment
-        {
-            get => (HorizontalAlignment)this.GetValue(TitleHorizontalAlignmentProperty);
-            set => this.SetValue(TitleHorizontalAlignmentProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the title vertical alignment.
-        /// </summary>
-        public VerticalAlignment TitleVerticalAlignment
-        {
-            get => (VerticalAlignment)this.GetValue(TitleVerticalAlignmentProperty);
-            set => this.SetValue(TitleVerticalAlignmentProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the title content template to show a custom title.
-        /// </summary>
-        public DataTemplate TitleTemplate
-        {
-            get => (DataTemplate)this.GetValue(TitleTemplateProperty);
-            set => this.SetValue(TitleTemplateProperty, value);
-        }
-
-        /// <summary> 
-        /// The FontSize property specifies the size of the title.
-        /// </summary>
-        [TypeConverter(typeof(FontSizeConverter))]
-        public double TitleFontSize
-        {
-            get => (double)this.GetValue(TitleFontSizeProperty);
-            set => this.SetValue(TitleFontSizeProperty, value);
-        }
-
-        /// <summary> 
-        /// The FontFamily property specifies the font family of the title.
-        /// </summary>
-        [Bindable(true)]
-        public FontFamily TitleFontFamily
-        {
-            get => (FontFamily)this.GetValue(TitleFontFamilyProperty);
-            set => this.SetValue(TitleFontFamilyProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a icon for the title bar.
-        /// </summary>
-        [Bindable(true)]
-        public object Icon
-        {
-            get => this.GetValue(IconProperty);
-            set => this.SetValue(IconProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a icon content template for the title bar.
-        /// </summary>
-        [Bindable(true)]
-        public DataTemplate IconTemplate
-        {
-            get => (DataTemplate)this.GetValue(IconTemplateProperty);
-            set => this.SetValue(IconTemplateProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets if the close button is visible.
-        /// </summary>
-        public bool ShowCloseButton
-        {
-            get => (bool)this.GetValue(ShowCloseButtonProperty);
-            set => this.SetValue(ShowCloseButtonProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the close button style.
-        /// </summary>
-        [Bindable(true)]
-        public Style CloseButtonStyle
-        {
-            get => (Style)this.GetValue(CloseButtonStyleProperty);
-            set => this.SetValue(CloseButtonStyleProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the command that is executed when the Close Button is clicked.
-        /// </summary>
-        public ICommand CloseButtonCommand
-        {
-            get => (ICommand)this.GetValue(CloseButtonCommandProperty);
-            set => this.SetValue(CloseButtonCommandProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the command parameter that is used by the CloseButtonCommand when the Close Button is clicked.
-        /// </summary>
-        public object CloseButtonCommandParameter
-        {
-            get => this.GetValue(CloseButtonCommandParameterProperty);
-            set => this.SetValue(CloseButtonCommandParameterProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is open or closed.
-        /// </summary>
-        public bool IsOpen
-        {
-            get => (bool)this.GetValue(IsOpenProperty);
-            set => this.SetValue(IsOpenProperty, value);
         }
 
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
@@ -742,111 +850,6 @@ namespace MahApps.Metro.SimpleChildWindow
         }
 
         /// <summary>
-        /// Gets or sets the width of the child window.
-        /// </summary>
-        public double ChildWindowWidth
-        {
-            get => (double)this.GetValue(ChildWindowWidthProperty);
-            set => this.SetValue(ChildWindowWidthProperty, value);
-        }
-
-        private static bool IsWidthHeightValid(object value)
-        {
-            var v = (double)value;
-            return (double.IsNaN(v)) || (v >= 0.0d && !double.IsPositiveInfinity(v));
-        }
-
-        /// <summary>
-        /// Gets or sets the height of the child window.
-        /// </summary>
-        public double ChildWindowHeight
-        {
-            get => (double)this.GetValue(ChildWindowHeightProperty);
-            set => this.SetValue(ChildWindowHeightProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets which image is shown on the left side of the window content.
-        /// </summary>
-        public MessageBoxImage ChildWindowImage
-        {
-            get => (MessageBoxImage)this.GetValue(ChildWindowImageProperty);
-            set => this.SetValue(ChildWindowImageProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the window has a drop shadow (glow brush).
-        /// </summary>
-        public bool EnableDropShadow
-        {
-            get => (bool)this.GetValue(EnableDropShadowProperty);
-            set => this.SetValue(EnableDropShadowProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the child window should try focus an element.
-        /// </summary>
-        public bool AllowFocusElement
-        {
-            get => (bool)this.GetValue(AllowFocusElementProperty);
-            set => this.SetValue(AllowFocusElementProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the focused element.
-        /// </summary>
-        public FrameworkElement FocusedElement
-        {
-            get => (FrameworkElement)this.GetValue(FocusedElementProperty);
-            set => this.SetValue(FocusedElementProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the glow brush (drop shadow).
-        /// </summary>
-        public SolidColorBrush GlowBrush
-        {
-            get => (SolidColorBrush)this.GetValue(GlowBrushProperty);
-            set => this.SetValue(GlowBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the glow brush (drop shadow) for non-active status.
-        /// </summary>
-        public SolidColorBrush NonActiveGlowBrush
-        {
-            get => (SolidColorBrush)this.GetValue(NonActiveGlowBrushProperty);
-            set => this.SetValue(NonActiveGlowBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the ChildWindow should auto close after AutoCloseInterval has passed.
-        /// </summary>
-        public bool IsAutoCloseEnabled
-        {
-            get => (bool)this.GetValue(IsAutoCloseEnabledProperty);
-            set => this.SetValue(IsAutoCloseEnabledProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the time in milliseconds when the ChildWindow should auto close.
-        /// </summary>
-        public long AutoCloseInterval
-        {
-            get => (long)this.GetValue(AutoCloseIntervalProperty);
-            set => this.SetValue(AutoCloseIntervalProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the host Window is active or not.
-        /// </summary>
-        public bool IsWindowHostActive
-        {
-            get => (bool)this.GetValue(IsWindowHostActiveProperty);
-            set => this.SetValue(IsWindowHostActiveProperty, value);
-        }
-
-        /// <summary>
         /// Gets the child window result when the dialog will be closed.
         /// </summary>
         public object ChildWindowResult { get; protected set; }
@@ -855,8 +858,6 @@ namespace MahApps.Metro.SimpleChildWindow
         /// Gets the dialog close reason.
         /// </summary>
         public CloseReason ClosedBy { get; private set; } = CloseReason.None;
-
-        DispatcherTimer autoCloseTimer;
 
         private static void OnIsAutoCloseEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -928,13 +929,13 @@ namespace MahApps.Metro.SimpleChildWindow
             this.StopAutoCloseTimer();
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                this.autoCloseTimer.Start();
+                this.autoCloseTimer?.Start();
             }
         }
 
         private void StopAutoCloseTimer()
         {
-            if ((this.autoCloseTimer != null) && (this.autoCloseTimer.IsEnabled))
+            if (this.autoCloseTimer is { IsEnabled: true })
             {
                 this.autoCloseTimer.Stop();
             }
