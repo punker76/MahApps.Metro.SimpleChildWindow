@@ -1,13 +1,19 @@
-﻿<Controls:MetroWindow x:Class="MahApps.Metro.SimpleChildWindow.Demo.MainWindow"
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-                      xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
-                      Title="MahApps.Metro Simple ChildWindow Demo"
-                      Width="700"
-                      Height="600"
-                      GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
-                      WindowStartupLocation="CenterScreen">
+﻿<mah:MetroWindow x:Class="MahApps.Metro.SimpleChildWindow.Demo.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+                 Title="MahApps.Metro Simple ChildWindow Demo"
+                 Width="700"
+                 Height="600"
+                 GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+                 WindowStartupLocation="CenterScreen">
+
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button Click="Title_OnClick" Content="Test Dialog" />
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
 
     <Grid x:Name="RootGrid">
 
@@ -46,8 +52,12 @@
                                        Padding="15"
                                        HorizontalContentAlignment="Stretch"
                                        VerticalContentAlignment="Stretch"
+                                       AutoCloseInterval="10000"
+                                       BorderBrush="Black"
+                                       BorderThickness="1"
                                        CloseByEscape="False"
                                        Closing="Child01_OnClosing"
+                                       CornerRadius="4"
                                        IsAutoCloseEnabled="True"
                                        OverlayBrush="Transparent">
             <Grid>
@@ -78,4 +88,4 @@
 
     </Grid>
 
-</Controls:MetroWindow>
+</mah:MetroWindow>

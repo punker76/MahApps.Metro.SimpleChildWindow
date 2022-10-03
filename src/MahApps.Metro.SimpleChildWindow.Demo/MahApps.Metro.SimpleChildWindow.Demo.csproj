@@ -14,9 +14,11 @@
         <NoWarn>SA1652</NoWarn>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
+    
     <ItemGroup>
         <ProjectReference Include="..\MahApps.Metro.SimpleChildWindow\MahApps.Metro.SimpleChildWindow.csproj" />
     </ItemGroup>
+    
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" />
         <PackageReference Include="Fody">
@@ -25,6 +27,7 @@
         </PackageReference>
         <PackageReference Include="Costura.Fody" PrivateAssets="All" />
     </ItemGroup>
+
     <ItemGroup>
         <None Include="app.manifest" />
         <None Remove="App.config" />
@@ -32,10 +35,12 @@
             <TargetPath>$(AssemblyName).exe.config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
+    
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
+    
     <ItemGroup>
       <Compile Update="Properties\Settings.Designer.cs">
         <DesignTimeSharedInput>True</DesignTimeSharedInput>

@@ -1,11 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MahApps.Metro.SimpleChildWindow", "MahApps.Metro.SimpleChildWindow\MahApps.Metro.SimpleChildWindow.csproj", "{EBC1D848-F291-492F-9280-82E3175FF67E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MahApps.Metro.SimpleChildWindow.Demo", "MahApps.Metro.SimpleChildWindow.Demo\MahApps.Metro.SimpleChildWindow.Demo.csproj", "{0F56EDA9-CF7F-4C49-A67B-3FCD434D4902}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A06081BD-068C-4F77-8DE7-DB8297C5BCC0}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.build.props = Directory.build.props
+		Directory.build.targets = Directory.build.targets
+		global.json = global.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
