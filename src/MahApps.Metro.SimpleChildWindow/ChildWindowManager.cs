@@ -30,7 +30,7 @@ namespace MahApps.Metro.SimpleChildWindow
         /// <summary>
         /// Shows the given child window on the MetroWindow dialog container in an asynchronous way.
         /// </summary>
-        /// <param name="window">The owning window with a container of the child window.</param>
+        /// <param name="control">The owning control with a container for the child window.</param>
         /// <param name="dialog">A child window instance.</param>
         /// <param name="overlayFillBehavior">The overlay fill behavior.</param>
         /// <returns>
@@ -41,16 +41,16 @@ namespace MahApps.Metro.SimpleChildWindow
         /// or
         /// The provided child window is already visible in the specified window.
         /// </exception>
-        public static Task ShowChildWindowAsync(this Window window, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
+        public static Task ShowChildWindowAsync(this Control control, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
         {
-            return window.ShowChildWindowAsync<object>(dialog, overlayFillBehavior);
+            return control.ShowChildWindowAsync<object>(dialog, overlayFillBehavior);
         }
 
         /// <summary>
         /// Shows the given child window on the MetroWindow dialog container in an asynchronous way.
         /// When the dialog was closed it returns a result.
         /// </summary>
-        /// <param name="window">The owning window with a container of the child window.</param>
+        /// <param name="control">The owning control with a container for the child window.</param>
         /// <param name="dialog">A child window instance.</param>
         /// <param name="overlayFillBehavior">The overlay fill behavior.</param>
         /// <returns>
@@ -61,14 +61,14 @@ namespace MahApps.Metro.SimpleChildWindow
         /// or
         /// The provided child window is already visible in the specified window.
         /// </exception>
-        public static async Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
+        public static async Task<TResult> ShowChildWindowAsync<TResult>(this Control control, ChildWindow dialog, OverlayFillBehavior overlayFillBehavior = OverlayFillBehavior.WindowContent)
         {
             var tcs = new TaskCompletionSource<TResult>();
 
-            window.Dispatcher.VerifyAccess();
+            control.Dispatcher.VerifyAccess();
 
-            var metroDialogContainer = window.Template.FindName("PART_MetroActiveDialogContainer", window) as Grid;
-            metroDialogContainer = metroDialogContainer ?? window.Template.FindName("PART_MetroInactiveDialogsContainer", window) as Grid;
+            var metroDialogContainer = control.Template.FindName("PART_MetroActiveDialogContainer", control) as Grid;
+            metroDialogContainer = metroDialogContainer ?? control.Template.FindName("PART_MetroInactiveDialogsContainer", control) as Grid;
             if (metroDialogContainer == null)
             {
                 throw new InvalidOperationException("The provided child window can not add, there is no container defined.");
@@ -92,7 +92,7 @@ namespace MahApps.Metro.SimpleChildWindow
         /// Shows the given child window on the given container in an asynchronous way.
         /// When the dialog was closed it returns a result.
         /// </summary>
-        /// <param name="window">The owning window with a container of the child window.</param>
+        /// <param name="control">The owning control with a container for the child window.</param>
         /// <param name="dialog">A child window instance.</param>
         /// <param name="container">The container.</param>
         /// <returns></returns>
@@ -101,15 +101,15 @@ namespace MahApps.Metro.SimpleChildWindow
         /// or
         /// The provided child window is already visible in the specified window.
         /// </exception>
-        public static Task ShowChildWindowAsync(this Window window, ChildWindow dialog, Panel container)
+        public static Task ShowChildWindowAsync(this Control control, ChildWindow dialog, Panel container)
         {
-            return window.ShowChildWindowAsync<object>(dialog, container);
+            return control.ShowChildWindowAsync<object>(dialog, container);
         }
 
         /// <summary>
         /// Shows the given child window on the given container in an asynchronous way.
         /// </summary>
-        /// <param name="window">The owning window with a container of the child window.</param>
+        /// <param name="control">The owning control with a container for the child window.</param>
         /// <param name="dialog">A child window instance.</param>
         /// <param name="container">The container.</param>
         /// <returns />
@@ -118,11 +118,11 @@ namespace MahApps.Metro.SimpleChildWindow
         /// or
         /// The provided child window is already visible in the specified window.
         /// </exception>
-        public static async Task<TResult> ShowChildWindowAsync<TResult>(this Window window, ChildWindow dialog, Panel container)
+        public static async Task<TResult> ShowChildWindowAsync<TResult>(this Control control, ChildWindow dialog, Panel container)
         {
             var tcs = new TaskCompletionSource<TResult>();
 
-            window.Dispatcher.VerifyAccess();
+            control.Dispatcher.VerifyAccess();
 
             if (container == null)
             {
