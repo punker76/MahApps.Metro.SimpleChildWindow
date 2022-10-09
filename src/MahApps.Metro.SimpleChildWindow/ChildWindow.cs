@@ -534,6 +534,71 @@ namespace MahApps.Metro.SimpleChildWindow
             set => this.SetValue(ChildWindowHeightProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="ChildWindowMinWidth"/> dependency property.</summary>
+        public static readonly DependencyProperty ChildWindowMinWidthProperty
+            = DependencyProperty.Register(nameof(ChildWindowMinWidth),
+                                          typeof(double),
+                                          typeof(ChildWindow),
+                                          new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
+
+        /// <summary>
+        /// Gets or sets the min width of the child window.
+        /// </summary>
+        public double ChildWindowMinWidth
+        {
+            get => (double)this.GetValue(ChildWindowMinWidthProperty);
+            set => this.SetValue(ChildWindowMinWidthProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ChildWindowMinHeight"/> dependency property.</summary>
+        public static readonly DependencyProperty ChildWindowMinHeightProperty
+            = DependencyProperty.Register(nameof(ChildWindowMinHeight),
+                                          typeof(double),
+                                          typeof(ChildWindow),
+                                          new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
+
+        /// <summary>
+        /// Gets or sets the min height of the child window.
+        /// </summary>
+        public double ChildWindowMinHeight
+        {
+            get => (double)this.GetValue(ChildWindowMinHeightProperty);
+            set => this.SetValue(ChildWindowMinHeightProperty, value);
+        }
+
+
+        /// <summary>Identifies the <see cref="ChildWindowMaxWidth"/> dependency property.</summary>
+        public static readonly DependencyProperty ChildWindowMaxWidthProperty
+            = DependencyProperty.Register(nameof(ChildWindowMaxWidth),
+                                          typeof(double),
+                                          typeof(ChildWindow),
+                                          new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
+
+        /// <summary>
+        /// Gets or sets the max width of the child window.
+        /// </summary>
+        public double ChildWindowMaxWidth
+        {
+            get => (double)this.GetValue(ChildWindowMaxWidthProperty);
+            set => this.SetValue(ChildWindowMaxWidthProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ChildWindowMaxHeight"/> dependency property.</summary>
+        public static readonly DependencyProperty ChildWindowMaxHeightProperty
+            = DependencyProperty.Register(nameof(ChildWindowMaxHeight),
+                                          typeof(double),
+                                          typeof(ChildWindow),
+                                          new FrameworkPropertyMetadata(Double.NaN, FrameworkPropertyMetadataOptions.AffectsMeasure), IsWidthHeightValid);
+
+        /// <summary>
+        /// Gets or sets the max height of the child window.
+        /// </summary>
+        public double ChildWindowMaxHeight
+        {
+            get => (double)this.GetValue(ChildWindowMaxHeightProperty);
+            set => this.SetValue(ChildWindowMaxHeightProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="ChildWindowImage"/> dependency property.</summary>
         public static readonly DependencyProperty ChildWindowImageProperty
             = DependencyProperty.Register(nameof(ChildWindowImage),
