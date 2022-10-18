@@ -10,7 +10,7 @@
     A simple child window for <a href="https://github.com/MahApps/MahApps.Metro">MahApps.Metro</a>.
   </p>
   <p>
-    Supporting .NET Framework (4.5+) and .NET Core (3.0 and 3.1)
+    Supporting .NET Framework 4.6.2 and greater, .NET Core 3.0 and 3.1, .NET 5 (on Windows)
   </p>
   <a href="https://gitter.im/punker76/MahApps.Metro.SimpleChildWindow">
     <img src="https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square">
@@ -85,26 +85,13 @@ We use these awesome tools to develop, Build and deploy MahApps.Metro.SimpleChil
 
 This framework is free and can be used for free, open source and commercial applications. MahApps.Metro and MahApps.Metro.SimpleChildWindow (all code, NuGets and binaries) are under the [MIT License (MIT)](./LICENSE). It's tested, used and contributed by many awesome people. So hit the magic :star: button, we appreciate it!!! :pray:
 
-The core team members, MahApps.Metro contributors and contributors in the ecosystem do this open source work in their free time. If you use MahApps.Metro a serious task, and you'd like us to invest more time on it, please donate. This project increases your income/productivity/usabilty too.
+The core team member(s), MahApps.Metro contributors and contributors in the ecosystem do this open source work in their free time. If you use MahApps.Metro a serious task, and you'd like us to invest more time on it, please donate. This project increases your income/productivity/usability too.
 
 [Become a sponsor](https://github.com/sponsors/punker76) and show your support to this open source project.
-
-Does your company use MahApps.Metro or MahApps.Metro.SimpleChildWindow?  Ask your manager or marketing team if your company would be interested in supporting our project.  Support will allow the maintainers to dedicate more time for maintenance and new features for everyone.  Also, your company's logo can be shown [on GitHub](https://github.com/MahApps/MahApps.Metro#readme) and on [our site](https://mahapps.com) - who doesn't want a little extra exposure?
 
 # :pray: All OpenCollective (archived) Backers :heart:
 
 [![Backers](https://opencollective.com/mahappsmetro/backers.svg?button=false)](https://opencollective.com/mahappsmetro#section-contributors)
-
-## Why charge/sponsor for open source?
-
- * [Open-Source Maintainers are Jerks! | Nick Randolph & Geoffrey Huntley](https://vimeo.com/296579853)
- * [FOSS is free as in toilet | Geoffroy Couprie](http://unhandledexpression.com/general/2018/11/27/foss-is-free-as-in-toilet.html)
- * [How to Charge for your Open Source | Mike Perham](https://www.mikeperham.com/2015/11/23/how-to-charge-for-your-open-source/)
- * [Sustain OSS: The Report](https://sustainoss.org/assets/pdf/SustainOSS-west-2017-report.pdf)
- * [Open Source Maintainers Owe You Nothing | Mike McQuaid](https://mikemcquaid.com/2018/03/19/open-source-maintainers-owe-you-nothing/)
- * [Who should fund open source projects? | Jane Elizabeth](https://jaxenter.com/who-funds-open-source-projects-133222.html)
- * [Apply at OSS Inc today| Ryan Chenkie](https://twitter.com/ryanchenkie/status/1067801413974032385)
- * [The Ethics of Unpaid Labor and the OSS Community | Ashe Dryden](https://www.ashedryden.com/blog/the-ethics-of-unpaid-labor-and-the-oss-community)
 
 ## Samples
 

@@ -4,7 +4,7 @@
     <PropertyGroup>
         <AssemblyName>MahApps.Metro.SimpleChildWindow.Demo</AssemblyName>
         <RootNamespace>MahApps.Metro.SimpleChildWindow.Demo</RootNamespace>
-        <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) ">true</DisableFody>
+        <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(DefineConstants.Contains(NETCOREAPP)) == true ">true</DisableFody>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
@@ -30,6 +30,9 @@
 
     <ItemGroup>
         <None Include="app.manifest" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
         <None Remove="App.config" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
             <TargetPath>$(AssemblyName).exe.config</TargetPath>
