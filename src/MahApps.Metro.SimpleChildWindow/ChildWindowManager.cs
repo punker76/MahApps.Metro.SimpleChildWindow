@@ -139,9 +139,11 @@ namespace MahApps.Metro.SimpleChildWindow
 
         private static async Task<TResult> OpenDialogAsync<TResult>(ChildWindow dialog, Panel container, TaskCompletionSource<TResult> tcs)
         {
-            if (!dialog.IsOpen)
+            var hasParent = dialog.TryFindParent<Panel>() is not null;
+
+            if (!dialog.IsOpen || !hasParent)
             {
-                if (dialog.TryFindParent<Panel>() is null)
+                if (!hasParent)
                 {
                     container.Children.Add(dialog);
                 }
