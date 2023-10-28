@@ -32,13 +32,6 @@
         <None Include="app.manifest" />
     </ItemGroup>
 
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
-        <None Remove="App.config" />
-        <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
-            <TargetPath>$(AssemblyName).exe.config</TargetPath>
-        </AppConfigWithTargetPath>
-    </ItemGroup>
-    
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
