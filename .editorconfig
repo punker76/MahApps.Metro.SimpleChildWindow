@@ -9,7 +9,7 @@ end_of_line = CRLF
 indent_style = space
 indent_size = 4
 
-[*.{md,yml}]
+[*.{md,yml,json}]
 indent_style = space
 indent_size = 2
 
@@ -17,3 +17,6 @@ indent_size = 2
 [*.cs]
 # WPF0011: Containing type should be used as registered owner.
 dotnet_diagnostic.WPF0011.severity = error
+
+# WPF0132: Use PART prefix.
+dotnet_diagnostic.WPF0132.severity = suggestion
