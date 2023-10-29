@@ -1,0 +1,15 @@
+<Project>
+    <PropertyGroup>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    </PropertyGroup>
+
+    <ItemGroup Label="Build">
+        <PackageVersion Include="MahApps.Metro" Version="[2.4.10, 3)" />
+        <PackageVersion Include="JetBrains.Annotations" Version="2023.2.0" />
+        <PackageVersion Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+        <PackageVersion Include="Costura.Fody" Version="5.7.0" />
+
+        <PackageVersion Include="WpfAnalyzers" Version="4.1.1" />
+    </ItemGroup>
+</Project>
