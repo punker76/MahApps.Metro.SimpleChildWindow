@@ -1,15 +1,4 @@
-<Project>
-
-    <!-- Package references -->
-    <ItemGroup>
-        <PackageReference Update="MahApps.Metro" Version="[2.*, 3)" />
-        <PackageReference Update="JetBrains.Annotations" Version="2022.1.0" />
-        <PackageReference Update="WpfAnalyzers" Version="4.1.1" />
-        <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" />
-        <PackageReference Update="MahApps.Metro.IconPacks" Version="4.11.0" />
-        <PackageReference Update="Fody" Version="6.*" />
-        <PackageReference Update="Costura.Fody" Version="4.*" />
-    </ItemGroup>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
     <!-- AssemblyInfo -->
     <PropertyGroup>
@@ -28,5 +17,9 @@
     <ItemGroup>
         <Page Update="@(Page)" SubType="Designer" Generator="MSBuild:Compile" />
     </ItemGroup>
+
+    <PropertyGroup>
+        <TargetFrameworkMonikerAssemblyAttributesPath>$([System.IO.Path]::Combine('$(IntermediateOutputPath)','$(TargetFrameworkMoniker).AssemblyAttributes$(DefaultLanguageSourceExtension)'))</TargetFrameworkMonikerAssemblyAttributesPath>
+    </PropertyGroup>
 
 </Project>

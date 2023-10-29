@@ -8,24 +8,24 @@
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
-    </PropertyGroup>
-    <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <NoWarn>SA1652</NoWarn>
+        <NoWarn>SA1652;WPF0041</NoWarn>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <ProjectReference Include="..\MahApps.Metro.SimpleChildWindow\MahApps.Metro.SimpleChildWindow.csproj" />
     </ItemGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" />
-        <PackageReference Include="Fody">
+    </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
+        <PackageReference Include="Costura.Fody">
           <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <IncludeAssets>compile; runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Costura.Fody" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>
