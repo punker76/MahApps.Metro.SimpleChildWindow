@@ -1,5 +1,8 @@
 <!-- [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine) -->
 
+> [!IMPORTANT]
+> This repository has been archived. Development continues at [MahApps/MahApps.Metro.SimpleChildWindow](https://github.com/MahApps/MahApps.Metro.SimpleChildWindow).
+
 <div align="center">
   <br />
   <a href="https://github.com/punker76/MahApps.Metro.SimpleChildWindow">
